@@ -7,7 +7,11 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-icon',
     '@sidebase/nuxt-auth',
+    'nuxt-mongoose',
   ],
+  mongoose: {
+    uri: process.env.MONGODB_URI,
+  },
 
   css: ['~/assets/styles/index.css'],
 

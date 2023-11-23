@@ -15,12 +15,15 @@
     "@nuxtjs/google-fonts": "^3.0.2",
     "@nuxtjs/tailwindcss": "^6.10.0",
     "@sidebase/nuxt-auth": "^0.6.1",
+    "@types/bcrypt": "^5.0.2",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.6",
+    "nuxt-mongoose": "^1.0.3",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "next-auth": "^4.21.1"
   }
 }
