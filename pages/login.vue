@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 const { signIn, data } = useAuth()
 
+definePageMeta({
+  middleware: 'auth',
+})
+
 const loginInfo = reactive({
   email: '',
   password: '',
@@ -14,16 +18,22 @@ async function handleLogin() {
   if (loginInfo.email.trim() && loginInfo.password.trim()) {
     isLoading.value = true
     try {
-      const res = await $fetch('/api/login', {
-        method: 'POST',
-        body: loginInfo,
-      })
+      const user = await signIn('credentials', loginInfo)
+      console.log(user)
 
-      if (res) {
+      if (user) {
+        console.log(user)
+        console.log(user?.error)
         navigateTo('/')
+      } else {
+        console.log('Invalid credentials')
       }
     } catch (err: any) {
-      error.value = err.data.message
+      if (err.data && err.data.error) {
+        error.value = err.data.error
+      } else {
+        console.log('Unexpected error:', err)
+      }
     } finally {
       isLoading.value = false
     }
@@ -32,9 +42,9 @@ async function handleLogin() {
 </script>
 
 <template>
-  <section class="my-8">
+  <section class="my-8 max-w-xs mx-auto">
     <h1 class="text-center text-primary text-4xl">Login</h1>
-    <form class="block max-w-xs mx-auto mt-8" @submit.prevent="handleLogin">
+    <form class="block mt-8" @submit.prevent="handleLogin">
       <input
         type="text"
         name="email"
@@ -45,11 +55,11 @@ async function handleLogin() {
 
       <input
         type="password"
+        name="password"
         placeholder="password"
         v-model="loginInfo.password"
         :disabled="isLoading"
       />
-
       <button
         :disabled="
           !loginInfo.email.trim() || !loginInfo.password.trim() || isLoading

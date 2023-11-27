@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 const { signIn } = useAuth()
 
+definePageMeta({
+  middleware: 'auth',
+})
+
 const registerInfo = reactive({
   email: '',
   password: '',
@@ -68,9 +72,9 @@ async function handleRegister() {
 </script>
 
 <template>
-  <section class="my-8">
+  <section class="my-8 max-w-xs mx-auto">
     <h1 class="text-center text-primary text-4xl">Register</h1>
-    <form class="block max-w-xs mx-auto mt-8" @submit.prevent="handleRegister">
+    <form class="block mt-8" @submit.prevent="handleRegister">
       <input
         type="text"
         name="email"
@@ -122,15 +126,15 @@ async function handleRegister() {
 
         <template v-else>Register</template>
       </button>
-      <p class="my-2 text-center text-slate-600">or continue with google</p>
-      <button class="flex items-center" @click="signIn('google')">
-        <Icon name="logos:google-icon" /> Log in with google
-      </button>
-      <p class="text-slate-600 text-center mt-2">
-        Already have an account?<NuxtLink to="/login" class="underline">
-          Log in &raquo;</NuxtLink
-        >
-      </p>
     </form>
+    <p class="my-2 text-center text-slate-600">or continue with google</p>
+    <button class="flex items-center" @click="signIn('google')">
+      <Icon name="logos:google-icon" /> Log in with google
+    </button>
+    <p class="text-slate-600 text-center mt-2">
+      Already have an account?<NuxtLink to="/login" class="underline">
+        Log in &raquo;</NuxtLink
+      >
+    </p>
   </section>
 </template>

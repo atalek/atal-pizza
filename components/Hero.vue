@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="hidden md:block w-full h-full">
-      <img src="/pizza.png" class="object-fill" alt="pizza" />
+      <img src="~/assets/images/pizza.png" class="object-fill" alt="pizza" />
     </div>
   </section>
 </template>

@@ -6,7 +6,7 @@
   >
     <div class="text-center">
       <img
-        src="pizza.png"
+        src="~/assets/images/pizza.png"
         class="max-h-auto max-h-24 block mx-auto"
         alt="pizza"
       />

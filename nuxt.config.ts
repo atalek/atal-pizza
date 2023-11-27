@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     'nuxt-mongoose',
   ],
+
   mongoose: {
     uri: process.env.MONGODB_URI,
   },
@@ -18,5 +19,5 @@ export default defineNuxtConfig({
   googleFonts: {
     families: { Roboto: true },
   },
-  auth: { provider: { type: 'authjs' } },
+  auth: { baseURL: process.env.AUTH_ORIGIN, provider: { type: 'authjs' } },
 })
