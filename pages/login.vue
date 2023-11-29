@@ -18,19 +18,10 @@ async function handleLogin() {
   if (loginInfo.email.trim() && loginInfo.password.trim()) {
     isLoading.value = true
     try {
-      const user = await signIn('credentials', {
+      await signIn('credentials', {
         ...loginInfo,
         callbackUrl: '/',
       })
-      console.log(user)
-
-      if (user) {
-        console.log(user)
-        console.log(user?.error)
-        navigateTo('/')
-      } else {
-        console.log('Invalid credentials')
-      }
     } catch (err: any) {
       if (err.data && err.data.error) {
         error.value = err.data.error
@@ -46,7 +37,7 @@ async function handleLogin() {
 
 <template>
   <section class="my-8 max-w-xs mx-auto">
-    <h1 class="text-center text-primary text-4xl">Login</h1>
+    <h1 class="text-center text-primary text-4xl">Log in</h1>
     <form class="block mt-8" @submit.prevent="handleLogin">
       <input
         type="text"
@@ -74,7 +65,7 @@ async function handleLogin() {
           Logging in <Icon name="svg-spinners:180-ring" class="h-5" />
         </template>
 
-        <template v-else>Login</template>
+        <template v-else>Log in</template>
       </button>
       <div v-if="error" class="my-1 text-red-600 text-sm text-center">
         <p>{{ error }}</p>
@@ -83,7 +74,7 @@ async function handleLogin() {
     </form>
     <button
       class="flex items-center"
-      @click.prevent="() => signIn('google', { callbackUrl: '/' })"
+      @click.prevent="signIn('google', { callbackUrl: '/' })"
     >
       <Icon name="logos:google-icon" /> Log in with google
     </button>

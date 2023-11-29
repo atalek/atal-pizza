@@ -69,25 +69,6 @@ export default NuxtAuthHandler({
           })
         }
       },
-      // async authorize(credentials: { email: string; password: string }) {
-      //   if (!credentials) throw new Error('Missing credentials')
-      //   const user = await User.findOne({ email: credentials.email })
-      //   if (!user) throw new Error('User with that email does not exist')
-      //   const passwordOk =
-      //     user && (await user.matchPassword(credentials.password))
-
-      //   if (!passwordOk) throw new Error('Invalid email or password')
-
-      //   console.log(user)
-      //   if (passwordOk) {
-      //     return {
-      //       ...user.toObject(),
-      //       password: undefined,
-      //     }
-      //   }
-
-      //   return null
-      // },
     }),
   ],
   session: {
