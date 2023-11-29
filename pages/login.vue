@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { signIn, data } = useAuth()
+const { signIn } = useAuth()
 
 definePageMeta({
   middleware: 'auth',
@@ -18,7 +18,10 @@ async function handleLogin() {
   if (loginInfo.email.trim() && loginInfo.password.trim()) {
     isLoading.value = true
     try {
-      const user = await signIn('credentials', loginInfo)
+      const user = await signIn('credentials', {
+        ...loginInfo,
+        callbackUrl: '/',
+      })
       console.log(user)
 
       if (user) {
@@ -77,14 +80,17 @@ async function handleLogin() {
         <p>{{ error }}</p>
       </div>
       <p class="my-2 text-center text-slate-600">or continue with google</p>
-      <button class="flex items-center" @click="signIn('google')">
-        <Icon name="logos:google-icon" /> Log in with google
-      </button>
-      <p class="text-slate-600 text-center mt-2">
-        Don&lsquo;t have an account?<NuxtLink to="/register" class="underline">
-          Register &raquo;</NuxtLink
-        >
-      </p>
     </form>
+    <button
+      class="flex items-center"
+      @click.prevent="() => signIn('google', { callbackUrl: '/' })"
+    >
+      <Icon name="logos:google-icon" /> Log in with google
+    </button>
+    <p class="text-slate-600 text-center mt-2">
+      Don&lsquo;t have an account?<NuxtLink to="/register" class="underline">
+        Register &raquo;</NuxtLink
+      >
+    </p>
   </section>
 </template>

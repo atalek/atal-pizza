@@ -56,7 +56,7 @@ async function handleRegister() {
       })
 
       if (res) {
-        navigateTo('/')
+        await signIn('credentials', { ...registerInfo, callbackUrl: '/' })
       }
     } catch (err: any) {
       if (err.data.message === 'User with that email already exists') {
@@ -128,7 +128,10 @@ async function handleRegister() {
       </button>
     </form>
     <p class="my-2 text-center text-slate-600">or continue with google</p>
-    <button class="flex items-center" @click="signIn('google')">
+    <button
+      class="flex items-center"
+      @click.prevent="() => signIn('google', { callbackUrl: '/' })"
+    >
       <Icon name="logos:google-icon" /> Log in with google
     </button>
     <p class="text-slate-600 text-center mt-2">

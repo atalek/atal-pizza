@@ -1,5 +1,3 @@
-import User from '../models/User'
-
 export default defineEventHandler(async event => {
   const body = await readBody<{ email: string; password: string }>(event)
 
@@ -10,14 +8,14 @@ export default defineEventHandler(async event => {
       return { ...user.toObject(), password: undefined }
     } else {
       throw createError({
-        statusCode: 401,
+        statusCode: 404,
         statusMessage: 'Bad request',
         message: 'Invalid email or password',
       })
     }
   } catch (error: any) {
     throw createError({
-      statusCode: error.statusCode || 401,
+      statusCode: error.statusCode || 404,
       statusMessage: error.statusMessage || 'Bad Request',
       message: error.message || 'Invalid email or password',
     })

@@ -17,7 +17,11 @@ export default defineNuxtConfig({
   css: ['~/assets/styles/index.css'],
 
   googleFonts: {
-    families: { Roboto: true },
+    families: { Roboto: [400, 600, 700, 800] },
   },
-  auth: { baseURL: process.env.AUTH_ORIGIN, provider: { type: 'authjs' } },
+
+  auth: {
+    baseURL: process.env.AUTH_ORIGIN,
+    provider: { type: 'authjs' },
+  },
 })

@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 const { data, status, signOut } = useAuth()
-console.log(status.value)
+const userData = ref(data?.value?.user)
 
-async function handleSignOut() {
-  await signOut({ redirect: false })
-  navigateTo('/')
+let userName = ref(userData?.value?.name || userData?.value?.email)
+
+if (userName?.value?.includes(' ')) {
+  userName.value = userName?.value?.split(' ')[0]
 }
 </script>
 
@@ -19,7 +20,7 @@ async function handleSignOut() {
       <NuxtLink href="/">About</NuxtLink>
       <NuxtLink href="/">Contact</NuxtLink>
     </nav>
-    {{ data }}
+
     <nav class="flex items-center gap-4 text-slate-600">
       <div v-if="status === 'unauthenticated'">
         <NuxtLink href="/login" class="px-8 py-2 font-semibold">Login</NuxtLink>
@@ -30,6 +31,12 @@ async function handleSignOut() {
         >
       </div>
       <div v-if="status === 'authenticated'">
+        <NuxtLink
+          href="/profile"
+          class="px-8 py-2 font-semibold whitespace-nowrap"
+          >Hello, {{ userName }}</NuxtLink
+        >
+
         <NuxtLink
           @click.prevent="signOut"
           class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
