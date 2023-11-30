@@ -3,70 +3,88 @@ definePageMeta({
   middleware: 'guest',
 })
 
-const { data, signIn } = useAuth()
-const userImg = data.value?.user?.image
-const userName = ref(data.value?.user?.name || '')
-const error = ref('')
-const image = ref('')
 const isLoading = ref(false)
+const erorr = ref('')
+const { data: session } = useAuth()
+
+const { data: user, pending, error, refresh } = await useFetch('/api/profile')
 
 async function handleProfileInfoUpdate() {
-  if (userName.value.trim()) {
+  if (user?.value?.name.trim()) {
     isLoading.value = true
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
-        body: { name: userName.value },
+        body: { name: user?.value?.name },
       })
-
       if (res) {
-        location.reload()
+        refresh()
       }
     } catch (err: any) {
-      console.log(err)
       error.value = err.data.message
     } finally {
       isLoading.value = false
     }
   } else {
-    error.value = 'All fields are required'
+    erorr.value = 'All fields are required'
   }
 }
 
 async function handleFileChange(e: Event) {
-  const files = (e.target as HTMLInputElement).files as FileList
+  isLoading.value = true
+  try {
+    const files = (e.target as HTMLInputElement).files as FileList
 
-  if (files && files.length > 0) {
-    const data = new FormData()
-    data.set('file', files[0])
-    const res = await $fetch('/api/upload', {
-      method: 'POST',
-      body: data,
-      'Content-Type': 'multipart/form-data',
-    })
-    if (res) {
-      image.value = res
+    if (files && files.length > 0) {
+      const fileData = new FormData()
+      fileData.set('file', files[0])
+      const res = await $fetch('/api/upload', {
+        method: 'POST',
+        body: fileData,
+        'Content-Type': 'multipart/form-data',
+      })
+      if (res) {
+        refresh()
+      }
     }
+  } catch (err: any) {
+    erorr.value = err.data.message
+  } finally {
+    isLoading.value = false
   }
 }
+const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
 </script>
 
 <template>
   <section class="mt-8">
-    <Loader v-if="isLoading" />
     <h1 class="text-center text-primary font-semibold text-4xl mb-4">
       Profile
     </h1>
     <div class="max-w-md mx-auto">
+      <div v-if="isLoading || pending">
+        <Loader />
+        <InfoBox>Saving...</InfoBox>
+      </div>
+
       <div class="flex gap-4 items-center">
         <div class="p-2 rounded-lg">
-          {{ data?.user.picture }}
-          <NuxtImg
-            v-if="userImg"
-            :src="data!.user!.picture"
-            alt="avatar"
-            class="rounded-lg object-contain mb-1"
-          />
+          <template v-if="!googleImg">
+            <NuxtImg
+              :src="user?.image"
+              provider="s3Provider"
+              alt="avatar"
+              class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
+            />
+          </template>
+          <template v-else>
+            <NuxtImg
+              :src="session?.user?.picture"
+              alt="avatar"
+              class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
+            />
+          </template>
+
           <label>
             <input type="file" class="hidden" @change="handleFileChange" />
             <span
@@ -79,14 +97,15 @@ async function handleFileChange(e: Event) {
           <input
             type="text"
             placeholder="first and last name"
-            v-model="userName"
+            v-model="user!.name"
           />
-          <input type="email" :value="data?.user?.email" disabled />
+          <input type="email" :value="user?.email" disabled />
           <button type="submit">Save</button>
         </form>
       </div>
-      <div v-if="error">
-        <p class="text-center text-red-600">{{ error }}</p>
+
+      <div v-if="error || erorr">
+        <p class="text-center text-red-600">{{ error ? error : erorr }}</p>
       </div>
     </div>
   </section>

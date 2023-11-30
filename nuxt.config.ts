@@ -10,6 +10,12 @@ export default defineNuxtConfig({
     'nuxt-mongoose',
   ],
 
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.AWS_URL,
+    },
+  },
+
   mongoose: {
     uri: process.env.MONGODB_URI,
   },
@@ -18,6 +24,18 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: { Roboto: [400, 600, 700, 800] },
+  },
+
+  image: {
+    providers: {
+      s3Provider: {
+        name: 's3Provider',
+        provider: '~/providers/s3.ts',
+        options: {
+          baseURL: process.env.AWS_URL,
+        },
+      },
+    },
   },
 
   auth: {

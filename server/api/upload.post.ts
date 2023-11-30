@@ -1,8 +1,10 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { getServerSession } from '#auth'
 import { v4 as uuid } from 'uuid'
 
 export default defineEventHandler(async event => {
   const body = await readMultipartFormData(event)
+  const session = await getServerSession(event)
 
   const s3Client = new S3Client({
     region: 'eu-central-1',
@@ -18,7 +20,7 @@ export default defineEventHandler(async event => {
   const newFileName = uuid() + '.' + ext
   const bucket = 'food-orderink'
 
-  await s3Client.send(
+  const res = await s3Client.send(
     new PutObjectCommand({
       Bucket: bucket,
       Key: newFileName,
@@ -27,6 +29,13 @@ export default defineEventHandler(async event => {
       Body: file!.data,
     })
   )
-  const link = `https://food-orderink.s3.amazonaws.com/${newFileName}`
-  return link
+
+  if (res) {
+    User.findOneAndUpdate(
+      { email: session?.user?.email },
+      { image: newFileName }
+    ).exec()
+  }
+
+  return newFileName
 })
