@@ -12,7 +12,6 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const userSchema = new Schema<UserDocument>({
   name: {
     type: String,
-    lowercase: true,
   },
   email: {
     type: String,

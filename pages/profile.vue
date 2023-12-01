@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { toast } from 'vue3-toastify'
+
 definePageMeta({
   middleware: 'guest',
 })
@@ -6,6 +8,14 @@ definePageMeta({
 const isLoading = ref(false)
 const erorr = ref('')
 const { data: session } = useAuth()
+
+const userInfo = reactive({
+  phoneNumber: '',
+  streetAddress: '',
+  postalCode: '',
+  city: '',
+  country: '',
+})
 
 const { data: user, pending, error, refresh } = await useFetch('/api/profile')
 
@@ -15,10 +25,11 @@ async function handleProfileInfoUpdate() {
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
-        body: { name: user?.value?.name },
+        body: { name: user?.value?.name, userInfo },
       })
       if (res) {
         refresh()
+        toast.success('Profile info updated')
       }
     } catch (err: any) {
       error.value = err.data.message
@@ -45,6 +56,7 @@ async function handleFileChange(e: Event) {
       })
       if (res) {
         refresh()
+        toast.success('Profile picture updated')
       }
     }
   } catch (err: any) {
@@ -53,21 +65,25 @@ async function handleFileChange(e: Event) {
     isLoading.value = false
   }
 }
+const isAdmin = true
 const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
 </script>
 
 <template>
-  <section class="mt-8">
-    <h1 class="text-center text-primary font-semibold text-4xl mb-4">
-      Profile
-    </h1>
+  <section class="mt-6">
+    <UserTabs v-if="isAdmin" />
     <div class="max-w-md mx-auto">
-      <div v-if="isLoading || pending">
-        <Loader />
+      <div v-if="isLoading">
         <InfoBox>Saving...</InfoBox>
       </div>
 
-      <div class="flex gap-4 items-center">
+      <h1
+        v-if="!isAdmin"
+        class="text-center text-primary font-semibold text-4xl mb-4"
+      >
+        Profile
+      </h1>
+      <div class="flex gap-4 mt-4">
         <div class="p-2 rounded-lg">
           <template v-if="!googleImg">
             <NuxtImg
@@ -94,13 +110,70 @@ const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
           </label>
         </div>
         <form class="grow" @submit.prevent="handleProfileInfoUpdate">
+          <label for="name"> First and last name</label>
           <input
             type="text"
+            id="name"
             placeholder="first and last name"
             v-model="user!.name"
           />
-          <input type="email" :value="user?.email" disabled />
-          <button type="submit">Save</button>
+          <label for="name"> Email</label>
+          <input id="email" type="email" :value="user?.email" disabled />
+
+          <label for="phone"> Phone number</label>
+          <input
+            id="phone"
+            type="tel"
+            placeholder="Phone Number"
+            v-model="userInfo.phoneNumber"
+          />
+
+          <label for="street">Street address</label>
+          <input
+            id="street"
+            type="text"
+            placeholder="Street address"
+            v-model="userInfo.streetAddress"
+          />
+
+          <div class="flex gap-2">
+            <div>
+              <label for="postal-code"> Postal code</label>
+              <input
+                id="postal-code"
+                type="text"
+                placeholder="Postal Code"
+                v-model="userInfo.postalCode"
+              />
+            </div>
+
+            <div>
+              <label for="city">City</label>
+              <input
+                id="city"
+                type="text"
+                placeholder="City"
+                v-model="userInfo.city"
+              />
+            </div>
+          </div>
+
+          <label for="country">Country</label>
+          <input
+            id="country"
+            type="text"
+            placeholder="Country"
+            v-model="userInfo.country"
+          />
+
+          <template v-if="isLoading">
+            <button type="submit" :disabled="isLoading">
+              Saving...<Icon name="svg-spinners:180-ring" class="h-5" />
+            </button>
+          </template>
+          <template v-else>
+            <button type="submit">Save</button>
+          </template>
         </form>
       </div>
 
@@ -110,5 +183,3 @@ const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
     </div>
   </section>
 </template>
-
-<style scoped></style>

@@ -9,4 +9,8 @@ const { status } = useAuth()
   </NuxtLayout>
 </template>
 
-<style></style>
+<style>
+.Toastify__toast-body {
+  white-space: nowrap;
+}
+</style>
