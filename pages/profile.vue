@@ -31,6 +31,7 @@ const { data, pending, error, refresh } = await useFetch<UserData>(
 )
 
 const name = ref(data?.value?.user?.name || '')
+const image = ref('')
 const userInfo = reactive({
   phoneNumber: data.value?.userInfo.phone || '',
   streetAddress: data.value?.userInfo.streetAddress || '',
@@ -45,7 +46,7 @@ async function handleProfileInfoUpdate() {
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
-        body: { name: name.value, userInfo },
+        body: { name: name.value, image: image.value, userInfo },
       })
 
       if (res) {
@@ -76,6 +77,7 @@ async function handleFileChange(e: Event) {
         'Content-Type': 'multipart/form-data',
       })
       if (res) {
+        image.value = res
         refresh()
         toast.success('Profile picture updated')
       }
@@ -87,7 +89,7 @@ async function handleFileChange(e: Event) {
   }
 }
 
-const googleImg = ref()
+const googleImg = ref(false)
 
 if (data?.value?.user) {
   googleImg.value = computed(() =>

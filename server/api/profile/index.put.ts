@@ -2,6 +2,7 @@ import { getServerSession } from '#auth'
 
 type ProfileUpdateData = {
   name?: string
+  image?: string
   userInfo: {
     streetAddress?: string
     postalCode?: string
@@ -36,6 +37,7 @@ export default defineEventHandler(async event => {
 
   if (user || userInfo) {
     user!.name = body.name
+    user!.image = body.image
     await user?.save()
     return { user, userInfo }
   } else {
