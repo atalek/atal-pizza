@@ -1,6 +1,23 @@
 <script lang="ts" setup>
 import { toast } from 'vue3-toastify'
 
+type UserData = {
+  user: {
+    name?: string
+    email: string
+    image: string
+  }
+  userInfo: {
+    email: string
+    streetAddress: string
+    postalCode: string
+    city: string
+    country: string
+    phone: string
+    admin: boolean
+  }
+}
+
 definePageMeta({
   middleware: 'guest',
 })
@@ -9,24 +26,28 @@ const isLoading = ref(false)
 const erorr = ref('')
 const { data: session } = useAuth()
 
+const { data, pending, error, refresh } = await useFetch<UserData>(
+  '/api/profile'
+)
+
+const name = ref(data?.value?.user?.name || '')
 const userInfo = reactive({
-  phoneNumber: '',
-  streetAddress: '',
-  postalCode: '',
-  city: '',
-  country: '',
+  phoneNumber: data.value?.userInfo.phone || '',
+  streetAddress: data.value?.userInfo.streetAddress || '',
+  postalCode: data.value?.userInfo.postalCode || '',
+  city: data.value?.userInfo.city || '',
+  country: data.value?.userInfo.country || '',
 })
 
-const { data: user, pending, error, refresh } = await useFetch('/api/profile')
-
 async function handleProfileInfoUpdate() {
-  if (user?.value?.name.trim()) {
+  if (name.value.trim()) {
     isLoading.value = true
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
-        body: { name: user?.value?.name, userInfo },
+        body: { name: name.value, userInfo },
       })
+
       if (res) {
         refresh()
         toast.success('Profile info updated')
@@ -65,20 +86,28 @@ async function handleFileChange(e: Event) {
     isLoading.value = false
   }
 }
-const isAdmin = true
-const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
+
+const googleImg = ref()
+
+if (data?.value?.user) {
+  googleImg.value = computed(() =>
+    data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
+  )
+}
 </script>
 
 <template>
   <section class="mt-6">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs v-if="data?.userInfo?.admin" />
     <div class="max-w-md mx-auto">
-      <div v-if="isLoading">
+      <div v-if="isLoading" class="my-4">
         <InfoBox>Saving...</InfoBox>
       </div>
-
+      <div v-if="pending">
+        <Loader />
+      </div>
       <h1
-        v-if="!isAdmin"
+        v-if="!data?.userInfo?.admin"
         class="text-center text-primary font-semibold text-4xl mb-4"
       >
         Profile
@@ -87,7 +116,7 @@ const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
         <div class="p-2 rounded-lg">
           <template v-if="!googleImg">
             <NuxtImg
-              :src="user?.image"
+              :src="data?.user?.image"
               provider="s3Provider"
               alt="avatar"
               class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
@@ -115,10 +144,10 @@ const googleImg = computed(() => user?.value?.image.startsWith('https://lh3.'))
             type="text"
             id="name"
             placeholder="first and last name"
-            v-model="user!.name"
+            v-model="name"
           />
           <label for="name"> Email</label>
-          <input id="email" type="email" :value="user?.email" disabled />
+          <input id="email" type="email" :value="data?.user?.email" disabled />
 
           <label for="phone"> Phone number</label>
           <input

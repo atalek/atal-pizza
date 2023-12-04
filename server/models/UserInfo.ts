@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose'
 
-type UserInfo = Document & {
+export type UserInfoDocument = Document & {
   email: string
   streetAddress: string
   postalCode: string
@@ -10,7 +10,7 @@ type UserInfo = Document & {
   admin: boolean
 }
 
-const userInfoSchema = new Schema(
+const userInfoSchema = new Schema<UserInfoDocument>(
   {
     email: { type: String, required: true },
     streetAddress: { type: String },
@@ -23,6 +23,6 @@ const userInfoSchema = new Schema(
   { timestamps: true }
 )
 
-const UserInfo = mongoose.model<UserInfo>('User', userInfoSchema)
+const UserInfo = mongoose.model<UserInfoDocument>('UserInfo', userInfoSchema)
 
 export default UserInfo
