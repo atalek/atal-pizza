@@ -33,11 +33,11 @@ const { data, pending, error, refresh } = await useFetch<UserData>(
 const name = ref(data?.value?.user?.name || '')
 const image = ref('')
 const userInfo = reactive({
-  phoneNumber: data.value?.userInfo.phone || '',
-  streetAddress: data.value?.userInfo.streetAddress || '',
-  postalCode: data.value?.userInfo.postalCode || '',
-  city: data.value?.userInfo.city || '',
-  country: data.value?.userInfo.country || '',
+  phoneNumber: data.value?.userInfo?.phone || '',
+  streetAddress: data.value?.userInfo?.streetAddress || '',
+  postalCode: data.value?.userInfo?.postalCode || '',
+  city: data.value?.userInfo?.city || '',
+  country: data.value?.userInfo?.country || '',
 })
 
 async function handleProfileInfoUpdate() {
@@ -89,13 +89,13 @@ async function handleFileChange(e: Event) {
   }
 }
 
-const googleImg = ref(false)
+// const googleImg = ref(false)
 
-if (data?.value?.user) {
-  googleImg.value = computed(() =>
-    data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
-  )
-}
+// if (data?.value?.user) {
+//   googleImg.value = computed(() =>
+//     data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
+//   )
+// }
 </script>
 
 <template>
@@ -116,21 +116,18 @@ if (data?.value?.user) {
       </h1>
       <div class="flex gap-4 mt-4">
         <div class="p-2 rounded-lg">
-          <template v-if="!googleImg">
-            <NuxtImg
-              :src="data?.user?.image"
-              provider="s3Provider"
-              alt="avatar"
-              class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-            />
-          </template>
-          <template v-else>
-            <NuxtImg
-              :src="session?.user?.picture"
-              alt="avatar"
-              class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-            />
-          </template>
+          <!-- <NuxtImg
+            :src="data?.user?.image"
+            provider="s3Provider"
+            alt="avatar"
+            class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
+          /> -->
+
+          <!-- <NuxtImg
+            :src="session?.user?.picture"
+            alt="avatar"
+            class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
+          /> -->
 
           <label>
             <input type="file" class="hidden" @change="handleFileChange" />
@@ -139,6 +136,8 @@ if (data?.value?.user) {
               >Edit</span
             >
           </label>
+
+          <!-- <EditableImage :image="data?.user?.image" /> -->
         </div>
         <form class="grow" @submit.prevent="handleProfileInfoUpdate">
           <label for="name"> First and last name</label>

@@ -23,7 +23,7 @@ async function handleCategorySubmit() {
 
     if (editingCategory.value) {
       data._id = editingCategory.value
-      console.log(data)
+
       const res = await $fetch('/api/categories', {
         method: editingCategory.value ? 'PUT' : 'POST',
         body: data,
@@ -81,7 +81,7 @@ function handleEditCategory(category: Category) {
         v-for="category in categories"
         :key="category._id"
         @click="handleEditCategory(category)"
-        class="bg-slate-200 rounded-xl p-2 px-4 flex gap-1 mb-1 cursor-pointer"
+        class="rounded-xl p-2 px-4 flex gap-1 mb-1 cursor-pointer"
       >
         <span> {{ category.name }}</span>
       </button>

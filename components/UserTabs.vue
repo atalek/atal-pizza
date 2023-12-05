@@ -14,7 +14,11 @@ function isLinkActive(to: string) {
     <NuxtLink :class="{ active: isLinkActive('/categories') }" to="/categories"
       >Categories</NuxtLink
     >
-    <NuxtLink :class="{ active: isLinkActive('/menu-items') }" to="/menu-items"
+    <NuxtLink
+      :class="{
+        active: isLinkActive('/menu-items') || isLinkActive('/menu-items/new'),
+      }"
+      to="/menu-items"
       >MenuItems</NuxtLink
     >
     <NuxtLink :class="{ active: isLinkActive('/users') }" to="/users"

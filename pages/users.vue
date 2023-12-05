@@ -4,7 +4,6 @@ const { data: isAdmin, pending } = await useIsAdmin()
 const { data: categories, refresh } = await useFetch('/api/categories', {
   method: 'GET',
 })
-console.log(categories.value)
 </script>
 
 <template>
