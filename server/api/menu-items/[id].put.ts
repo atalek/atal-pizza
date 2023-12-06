@@ -6,6 +6,9 @@ type MenuItem = {
   description: string
   basePrice: string
   image: string
+  category: string
+  sizes: string[]
+  extraIngredientPrices: number[]
 }
 
 export default defineEventHandler(async event => {
@@ -21,6 +24,7 @@ export default defineEventHandler(async event => {
         description: body.description,
         basePrice: body.basePrice,
         image: body.image,
+        category: body.category,
       },
       { new: true }
     )

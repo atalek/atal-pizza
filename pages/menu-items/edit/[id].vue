@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MenuItem } from 'types'
+import { CategoryOrOptional, MenuItem } from 'types'
 
 const route = useRoute()
 const itemId = route.params.id
@@ -7,13 +7,18 @@ const { data: isAdmin } = await useIsAdmin()
 const { data: menuItem, pending } = await useFetch<MenuItem>(
   `/api/menu-items/${itemId}`
 )
+const { data: categories } = useFetch<CategoryOrOptional[]>('/api/categories')
+
 const isLoading = ref(false)
 
 const itemInfo = reactive({
-  name: menuItem!.value!.name,
-  description: menuItem!.value!.description,
-  basePrice: menuItem!.value!.basePrice,
-  image: menuItem!.value!.image,
+  name: menuItem!.value!.name || '',
+  description: menuItem!.value!.description || '',
+  basePrice: menuItem!.value!.basePrice || 0,
+  image: menuItem!.value!.image || '',
+  sizes: menuItem!.value?.sizes || '',
+  category: menuItem!.value?.category || '',
+  extraIngredientPrices: menuItem!.value?.extraIngredientPrices || [],
 })
 
 async function handleEditMenuItem() {
@@ -45,7 +50,11 @@ async function handleEditMenuItem() {
       /></NuxtLink>
     </div>
 
-    <MenuItemForm :itemInfo="itemInfo" :onSubmit="handleEditMenuItem" />
+    <MenuItemForm
+      :itemInfo="itemInfo"
+      :categories="categories"
+      :onSubmit="handleEditMenuItem"
+    />
   </section>
 </template>
 

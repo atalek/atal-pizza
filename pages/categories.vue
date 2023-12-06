@@ -23,19 +23,19 @@ async function handleCategorySubmit() {
 
     if (editingCategory.value) {
       data._id = editingCategory.value
+    }
+    const res = await $fetch('/api/categories', {
+      method: editingCategory.value ? 'PUT' : 'POST',
+      body: data,
+    })
 
-      const res = await $fetch('/api/categories', {
-        method: editingCategory.value ? 'PUT' : 'POST',
-        body: data,
-      })
-
-      if (res) {
-        categoryName.value = ''
-        refresh()
-        toast.success(
-          editingCategory.value ? 'Category updated' : 'Category added'
-        )
-      }
+    if (res) {
+      categoryName.value = ''
+      editingCategory.value = ''
+      refresh()
+      toast.success(
+        editingCategory.value ? 'Category updated' : 'Category added'
+      )
     }
   } catch (err: any) {
     error.value = err.data.message
@@ -47,6 +47,24 @@ async function handleCategorySubmit() {
 function handleEditCategory(category: Category) {
   editingCategory.value = category._id
   categoryName.value = category.name
+}
+
+async function handleDeleteCategory(_id: Types.ObjectId) {
+  isLoading.value = true
+  try {
+    const res = await $fetch('/api/categories?_id=' + _id, {
+      method: 'DELETE',
+    })
+    if (res) {
+      console.log(res)
+      refresh()
+      toast.success('Category deleted')
+    }
+  } catch (err: any) {
+    toast.error(err.data.message)
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -61,7 +79,7 @@ function handleEditCategory(category: Category) {
           <label for="name">{{
             editingCategory
               ? `Updating category ${categoryName}:`
-              : 'New category nam'
+              : 'New category name'
           }}</label>
           <input type="text" id="name" v-model="categoryName" />
         </div>
@@ -76,15 +94,27 @@ function handleEditCategory(category: Category) {
 
     <div>
       <h2 class="mt-8 text-sm text-slate-500">Edit category:</h2>
-      <button
+      <div
         v-if="categories!.length > 0 "
         v-for="category in categories"
         :key="category._id"
-        @click="handleEditCategory(category)"
-        class="rounded-xl p-2 px-4 flex gap-1 mb-1 cursor-pointer"
+        class="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
       >
-        <span> {{ category.name }}</span>
-      </button>
+        <div class="grow">
+          {{ category.name }}
+        </div>
+        <div class="flex gap-1">
+          <button type="button" @click="handleEditCategory(category)">
+            Edit
+          </button>
+          <DeleteButton
+            label="Delete"
+            :_id="category._id"
+            :onDelete="() => handleDeleteCategory(category._id)"
+          />
+        </div>
+        {{ category._id }}
+      </div>
     </div>
   </section>
 </template>

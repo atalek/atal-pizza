@@ -25,7 +25,10 @@ const menuItemsSchema = new Schema<MenuItemsDocument>(
     image: { type: String },
     name: { type: String },
     description: { type: String },
-    category: { type: Schema.Types.ObjectId },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+    },
     basePrice: { type: Number },
     sizes: { type: [extraPriceSchema], default: [] },
     extraIngredientPrices: { type: [extraPriceSchema], default: [] },

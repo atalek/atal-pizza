@@ -1,27 +1,51 @@
 <script lang="ts" setup>
+import { CategoryOrOptional } from '~/types'
+
 type ItemInfoProps = {
+  categories?: CategoryOrOptional[] | null
   itemInfo: {
     image: string
     name: string
     description: string
     basePrice: number
+    sizes: {
+      name: string
+      extraPrice: number
+    }
+    category: string
+    extraIngredientPrices: {
+      name: string
+      extraPrice: number
+    }
   }
   onSubmit: () => void
 }
-type Sizes = {
-  name: string
-  price: number
-}
-const { itemInfo, onSubmit } = defineProps<ItemInfoProps>()
-const sizes = ref<Sizes[]>([])
 
-function addSize() {
-  sizes.value = sizes.value.push({ name: '', price: 0 })
+const { itemInfo, onSubmit } = defineProps<ItemInfoProps>()
+const sizes = ref(itemInfo.sizes || [])
+const extraIngredient = ref(itemInfo.extraIngredientPrices || [])
+
+function addSizes() {
+  sizes.value.push({ name: '', extraPrice: 0 })
+}
+function removeSizes(index) {
+  sizes.value = sizes.value.filter((_, idx) => idx !== index)
+}
+
+function addExtraIngredient() {
+  extraIngredient.value.push({ name: '', extraPrice: 0 })
+}
+
+function removeExtraIngredient(index) {
+  extraIngredient.value = extraIngredient.value.filter(
+    (_, idx) => idx !== index
+  )
 }
 
 const handleImageUpload = (value: string) => {
   itemInfo.image = value
 }
+const emit = defineEmits()
 </script>
 
 <template>
@@ -40,19 +64,38 @@ const handleImageUpload = (value: string) => {
 
         <label for="description"> Description</label>
         <input type="text" id="description" v-model="itemInfo.description" />
-
+        <label for="category">Category</label>
+        <select
+          v-if="categories!.length > 0"
+          name="category"
+          id="category"
+          v-model="itemInfo.category"
+        >
+          <option
+            v-for="category in categories"
+            :key="category?._id"
+            :value="category?._id"
+          >
+            {{ category?.name }}
+          </option>
+        </select>
         <label for="base-price"> Base Price</label>
         <input type="text" id="base-price" v-model="itemInfo.basePrice" />
-        <div class="bg-slate-200 p-2 rounded-md mb-2">
-          <label for="sizes">Sizes</label>
-          <div v-if="sizes.length" v-for="size in sizes">
-            <input type="text" placeholder="Size name" />
-            <input type="number" placeholder="Extra price" />
-          </div>
-          <button @click="addSize" type="button" class="bg-white">
-            Add size(medium or large)
-          </button>
-        </div>
+
+        <MenuItemPriceProps
+          name="Sizes"
+          addLabel="Add item size"
+          :props="sizes"
+          :addExtra="addSizes"
+          @removeExtra="removeSizes"
+        />
+        <MenuItemPriceProps
+          name="Extra ingredients"
+          addLabel="Add ingredients prices"
+          :props="extraIngredient"
+          :addExtra="addExtraIngredient"
+          @removeExtra="removeExtraIngredient"
+        />
         <div class="pb-2">
           <button class="border border-primary" type="submit">Save</button>
         </div>
