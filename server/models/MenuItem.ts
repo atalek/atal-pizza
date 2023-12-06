@@ -2,8 +2,13 @@ import mongoose, { Document, Schema, Types } from 'mongoose'
 
 type ExtraPriceDocument = Document & {
   name: string
-  price: number
+  extraPrice: number
 }
+
+const extraPriceSchema = new Schema<ExtraPriceDocument>({
+  name: String,
+  extraPrice: Number,
+})
 
 type MenuItemsDocument = Document & {
   image: string
@@ -12,13 +17,8 @@ type MenuItemsDocument = Document & {
   category: Types.ObjectId
   basePrice: number
   sizes: ExtraPriceDocument[]
-  extraIngredientPrices: ExtraPriceDocument[]
+  extraIngredients: ExtraPriceDocument[]
 }
-
-const extraPriceSchema = new Schema<ExtraPriceDocument>({
-  name: String,
-  price: Number,
-})
 
 const menuItemsSchema = new Schema<MenuItemsDocument>(
   {
@@ -31,7 +31,7 @@ const menuItemsSchema = new Schema<MenuItemsDocument>(
     },
     basePrice: { type: Number },
     sizes: { type: [extraPriceSchema], default: [] },
-    extraIngredientPrices: { type: [extraPriceSchema], default: [] },
+    extraIngredients: { type: [extraPriceSchema], default: [] },
   },
   { timestamps: true }
 )

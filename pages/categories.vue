@@ -113,7 +113,6 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
             :onDelete="() => handleDeleteCategory(category._id)"
           />
         </div>
-        {{ category._id }}
       </div>
     </div>
   </section>

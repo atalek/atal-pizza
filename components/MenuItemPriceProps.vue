@@ -12,6 +12,7 @@ type MenuItemProps = {
 const { props } = defineProps<MenuItemProps>()
 
 const isOpen = ref(false)
+
 const emit = defineEmits()
 function removeExtra(index: number) {
   emit('removeExtra', index)
@@ -28,13 +29,13 @@ function removeExtra(index: number) {
       <Icon v-if="isOpen" name="fa-solid:chevron-up" />
       <Icon v-if="!isOpen" name="fa-solid:chevron-down" />
       <span>{{ name }} </span>
-      <span>{{ props!.length > 0 ? props!.length : '' }}</span>
+      <span>{{ props?.length > 0 ? props?.length : '' }}</span>
     </button>
 
     <div :class="{ block: isOpen, hidden: !isOpen }">
       <div
         class="flex items-end gap-2"
-        v-if="props!.length> 0"
+        v-if="props?.length > 0"
         v-for="(prop, index) in props"
         key="index"
       >

@@ -1,5 +1,10 @@
 import { Types } from 'mongoose'
 
+export type ExtraStuff = {
+  name: string
+  extraPrice: number
+}
+
 export type MenuItem = {
   _id: Types.ObjectId
   image: string
@@ -7,8 +12,8 @@ export type MenuItem = {
   description: string
   category: string
   basePrice: number
-  sizes: string[]
-  extraIngredientPrices?: string[]
+  sizes?: ExtraStuff[]
+  extraIngredients?: ExtraStuff[]
 }
 
 export type Category = {

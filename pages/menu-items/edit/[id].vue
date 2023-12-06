@@ -18,7 +18,7 @@ const itemInfo = reactive({
   image: menuItem!.value!.image || '',
   sizes: menuItem!.value?.sizes || '',
   category: menuItem!.value?.category || '',
-  extraIngredientPrices: menuItem!.value?.extraIngredientPrices || [],
+  extraIngredients: menuItem!.value?.extraIngredients || [],
 })
 
 async function handleEditMenuItem() {

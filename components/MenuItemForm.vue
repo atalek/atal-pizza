@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CategoryOrOptional } from '~/types'
+import { CategoryOrOptional, ExtraStuff } from '~/types'
 
 type ItemInfoProps = {
   categories?: CategoryOrOptional[] | null
@@ -8,22 +8,16 @@ type ItemInfoProps = {
     name: string
     description: string
     basePrice: number
-    sizes: {
-      name: string
-      extraPrice: number
-    }
+    sizes: ExtraStuff[]
     category: string
-    extraIngredientPrices: {
-      name: string
-      extraPrice: number
-    }
+    extraIngredients: ExtraStuff[]
   }
   onSubmit: () => void
 }
 
 const { itemInfo, onSubmit } = defineProps<ItemInfoProps>()
-const sizes = ref(itemInfo.sizes || [])
-const extraIngredient = ref(itemInfo.extraIngredientPrices || [])
+const sizes = ref(itemInfo?.sizes || [])
+const extraIngredient = ref(itemInfo?.extraIngredients || [])
 
 function addSizes() {
   sizes.value.push({ name: '', extraPrice: 0 })
