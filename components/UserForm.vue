@@ -13,7 +13,7 @@ type UserInfoProps = {
   }
 
   isLoading: boolean
-  isAdmin: boolean
+  isAdmin?: boolean
   onSubmit: () => Promise<void>
 }
 

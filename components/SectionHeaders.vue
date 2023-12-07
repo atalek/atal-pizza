@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 type SectionHeaders = {
-  subHeader: String
-  mainHeader: String
+  subHeader?: String
+  mainHeader?: String
 }
 
 const { subHeader, mainHeader } = defineProps<SectionHeaders>()

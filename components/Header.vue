@@ -16,9 +16,9 @@ if (userName?.value?.includes(' ')) {
         YEP PIZZA</NuxtLink
       >
       <NuxtLink href="/">Home</NuxtLink>
-      <NuxtLink href="/">Menu</NuxtLink>
-      <NuxtLink href="/">About</NuxtLink>
-      <NuxtLink href="/">Contact</NuxtLink>
+      <NuxtLink href="/menu">Menu</NuxtLink>
+      <NuxtLink href="/#about">About</NuxtLink>
+      <NuxtLink href="/#contact">Contact</NuxtLink>
     </nav>
 
     <nav class="flex items-center gap-4 text-slate-600">

@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { MenuItem as MenuItemType } from '~/types'
+
+const { data: menuItems } = await useFetch<MenuItemType[]>('/api/menu-items')
+
+const bestSellers = ref<MenuItemType[]>(menuItems?.value?.slice(0, 3) || [])
+</script>
 
 <template>
   <section>
@@ -11,15 +17,14 @@
       </div>
     </div>
     <section class="text-center my-16">
-      <SectionHeaders subHeader="check out" mainHeader="MENU" />
+      <SectionHeaders subHeader="check out" mainHeader="Our Best Sellers" />
     </section>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <MenuItem />
-      <MenuItem />
-      <MenuItem />
-      <MenuItem />
-      <MenuItem />
-      <MenuItem />
+    <div class="grid sm:grid-cols-3 gap-4" v-if="bestSellers.length > 0">
+      <MenuItem
+        v-for="menuItem in bestSellers"
+        :key="menuItem._id"
+        :menuItem="menuItem"
+      />
     </div>
   </section>
 </template>

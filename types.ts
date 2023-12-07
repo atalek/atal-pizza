@@ -16,6 +16,11 @@ export type MenuItem = {
   extraIngredients?: ExtraStuff[]
 }
 
+export type CartItem = {
+  product: MenuItem
+  qty: number
+}
+
 export type Category = {
   _id: Types.ObjectId
   name: string
