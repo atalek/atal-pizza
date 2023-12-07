@@ -21,4 +21,30 @@ export type Category = {
   name: string
 }
 
+export type User = {
+  _id: Types.ObjectId
+  name?: string
+  email: string
+  image: string
+  admin: boolean
+}
+
+export type UserData = {
+  user: {
+    name?: string
+    email: string
+    image: string
+    admin: string
+  }
+  userInfo: {
+    email: string
+    streetAddress: string
+    postalCode: string
+    city: string
+    country: string
+    phone: string
+    admin: boolean
+  }
+}
+
 export type CategoryOrOptional = Category | null

@@ -22,7 +22,10 @@ type MenuItemsDocument = Document & {
 
 const menuItemsSchema = new Schema<MenuItemsDocument>(
   {
-    image: { type: String },
+    image: {
+      type: String,
+      default: 'dfe55978-03b7-4ab8-89e3-d4b005d2edf5.jpg',
+    },
     name: { type: String },
     description: { type: String },
     category: {

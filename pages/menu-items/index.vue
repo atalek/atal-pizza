@@ -10,7 +10,7 @@ const {
 </script>
 
 <template>
-  <section class="mt-8 max-w-md mx-auto">
+  <section class="mt-8 max-w-xl mx-auto">
     <UserTabs v-if="isAdmin" />
     <div class="mt-8">
       <NuxtLink to="/menu-items/new" class="button"
@@ -35,7 +35,7 @@ const {
             :src="item.image"
             :alt="item.name"
             provider="s3Provider"
-            class="rounded-md h-28 w-28"
+            class="rounded-md h-28 w-full"
           />
         </div>
         <p class="text-center">{{ item.name }}</p>

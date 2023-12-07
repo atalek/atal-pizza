@@ -2,6 +2,7 @@ type MenuItem = {
   name: string
   description: string
   basePrice: string
+  image?: string
 }
 
 export default defineEventHandler(async event => {

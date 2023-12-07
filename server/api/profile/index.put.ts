@@ -3,19 +3,19 @@ import { getServerSession } from '#auth'
 type ProfileUpdateData = {
   name?: string
   image?: string
-  userInfo: {
-    streetAddress?: string
-    postalCode?: string
-    city?: string
-    country?: string
-    phone?: string
-    admin?: boolean
-  }
+  streetAddress?: string
+  postalCode?: string
+  city?: string
+  country?: string
+  phone?: string
+  admin?: boolean
 }
 
 export default defineEventHandler(async event => {
   const body = await readBody<ProfileUpdateData>(event)
   const session = await getServerSession(event)
+
+  console.log(body)
 
   const user = await User.findOne({ email: session?.user?.email }).select(
     '-password'
@@ -24,12 +24,12 @@ export default defineEventHandler(async event => {
     { email: session?.user?.email },
     {
       $set: {
-        streetAddress: body.userInfo.streetAddress,
-        postalCode: body.userInfo.postalCode,
-        city: body.userInfo.city,
-        country: body.userInfo.country,
-        phone: body.userInfo.phone,
-        admin: body.userInfo.admin,
+        streetAddress: body.streetAddress,
+        postalCode: body.postalCode,
+        city: body.city,
+        country: body.country,
+        phone: body.phone,
+        admin: body.admin,
       },
     },
     { upsert: true, new: true }

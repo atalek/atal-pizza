@@ -43,7 +43,7 @@ async function handleEditMenuItem() {
     <UserTabs v-if="isAdmin" />
     <Loader v-if="isLoading || pending" />
 
-    <div class="max-w-md mx-auto mt-8">
+    <div class="max-w-xl mx-auto mt-8">
       <NuxtLink to="/menu-items" class="button"
         >Show all menu items
         <Icon class="h-6 w-6" name="material-symbols:arrow-circle-left-outline"

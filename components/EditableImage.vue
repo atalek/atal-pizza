@@ -1,6 +1,7 @@
 <script setup lang="ts">
 type ImageProps = {
   image?: string
+  googleImg?: string
 }
 
 const { image } = defineProps<ImageProps>()
@@ -43,10 +44,19 @@ async function handleFileChange(e: Event) {
       :src="image"
       provider="s3Provider"
       alt="avatar"
-      class="rounded-lg h-28 w-28 mb-1"
+      class="rounded-lg h-28 w-full mb-1"
+    />
+    <NuxtImg
+      v-if="googleImg"
+      :src="googleImg"
+      alt="avatar"
+      class="rounded-lg h-28 w-full mb-1"
     />
 
-    <div v-else class="bg-slate-200 p-4 text-slate-500 rounded-md text-center">
+    <div
+      v-if="!image && !googleImg"
+      class="bg-slate-200 p-4 text-slate-500 rounded-md text-center"
+    >
       No image
     </div>
 

@@ -1,23 +1,6 @@
 <script lang="ts" setup>
+import { UserData } from '~/types'
 import { toast } from 'vue3-toastify'
-
-type UserData = {
-  user: {
-    name?: string
-    email: string
-    image: string
-  }
-  userInfo: {
-    email: string
-    streetAddress: string
-    postalCode: string
-    city: string
-    country: string
-    phone: string
-    admin: boolean
-  }
-}
-
 definePageMeta({
   middleware: 'guest',
 })
@@ -30,9 +13,10 @@ const { data, pending, error, refresh } = await useFetch<UserData>(
   '/api/profile'
 )
 
-const name = ref(data?.value?.user?.name || '')
-const image = ref('')
 const userInfo = reactive({
+  name: data?.value?.user?.name || '',
+  image: data?.value?.user.image || '',
+  email: data?.value?.user?.email || '',
   phoneNumber: data.value?.userInfo?.phone || '',
   streetAddress: data.value?.userInfo?.streetAddress || '',
   postalCode: data.value?.userInfo?.postalCode || '',
@@ -41,12 +25,12 @@ const userInfo = reactive({
 })
 
 async function handleProfileInfoUpdate() {
-  if (name.value.trim()) {
+  if (userInfo) {
     isLoading.value = true
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
-        body: { name: name.value, image: image.value, userInfo },
+        body: userInfo,
       })
 
       if (res) {
@@ -77,7 +61,7 @@ async function handleFileChange(e: Event) {
         'Content-Type': 'multipart/form-data',
       })
       if (res) {
-        image.value = res
+        userInfo.image = res
         refresh()
         toast.success('Profile picture updated')
       }
@@ -89,19 +73,19 @@ async function handleFileChange(e: Event) {
   }
 }
 
-// const googleImg = ref(false)
+const googleImg = ref(false)
 
-// if (data?.value?.user) {
-//   googleImg.value = computed(() =>
-//     data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
-//   )
-// }
+if (data?.value?.user) {
+  googleImg.value = computed(async () =>
+    data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
+  )
+}
 </script>
 
 <template>
   <section class="mt-6">
     <UserTabs v-if="data?.userInfo?.admin" />
-    <div class="max-w-md mx-auto">
+    <div class="max-w-xl mx-auto">
       <div v-if="isLoading" class="my-4">
         <InfoBox>Saving...</InfoBox>
       </div>
@@ -115,20 +99,21 @@ async function handleFileChange(e: Event) {
         Profile
       </h1>
       <div class="flex gap-4 mt-4">
-        <div class="p-2 rounded-lg">
-          <!-- <NuxtImg
-            :src="data?.user?.image"
+        <!-- <div class="p-2 rounded-lg">
+          <NuxtImg
+            v-if="googleImg"
+            :src="userInfo?.image"
             provider="s3Provider"
             alt="avatar"
             class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-          /> -->
+          />
 
-          <!-- <NuxtImg
+          <NuxtImg
+            v-else
             :src="session?.user?.picture"
             alt="avatar"
             class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-          /> -->
-
+          />
           <label>
             <input type="file" class="hidden" @change="handleFileChange" />
             <span
@@ -137,74 +122,17 @@ async function handleFileChange(e: Event) {
             >
           </label>
 
-          <!-- <EditableImage :image="data?.user?.image" /> -->
-        </div>
-        <form class="grow" @submit.prevent="handleProfileInfoUpdate">
-          <label for="name"> First and last name</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="first and last name"
-            v-model="name"
+          <EditableImage
+            :image="data?.user?.image"
+            :googleImg="session?.user?.picture"
           />
-          <label for="name"> Email</label>
-          <input id="email" type="email" :value="data?.user?.email" disabled />
+        </div> -->
 
-          <label for="phone"> Phone number</label>
-          <input
-            id="phone"
-            type="tel"
-            placeholder="Phone Number"
-            v-model="userInfo.phoneNumber"
-          />
-
-          <label for="street">Street address</label>
-          <input
-            id="street"
-            type="text"
-            placeholder="Street address"
-            v-model="userInfo.streetAddress"
-          />
-
-          <div class="flex gap-2">
-            <div>
-              <label for="postal-code"> Postal code</label>
-              <input
-                id="postal-code"
-                type="text"
-                placeholder="Postal Code"
-                v-model="userInfo.postalCode"
-              />
-            </div>
-
-            <div>
-              <label for="city">City</label>
-              <input
-                id="city"
-                type="text"
-                placeholder="City"
-                v-model="userInfo.city"
-              />
-            </div>
-          </div>
-
-          <label for="country">Country</label>
-          <input
-            id="country"
-            type="text"
-            placeholder="Country"
-            v-model="userInfo.country"
-          />
-
-          <template v-if="isLoading">
-            <button type="submit" :disabled="isLoading">
-              Saving...<Icon name="svg-spinners:180-ring" class="h-5" />
-            </button>
-          </template>
-          <template v-else>
-            <button type="submit">Save</button>
-          </template>
-        </form>
+        <UserForm
+          :userInfo="userInfo"
+          :isLoading="isLoading"
+          :onSubmit="handleProfileInfoUpdate"
+        />
       </div>
 
       <div v-if="error || erorr">

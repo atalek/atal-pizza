@@ -69,10 +69,10 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
 </script>
 
 <template>
-  <section class="mt-8 max-w-md mx-auto">
+  <section class="mt-8 max-w-xl mx-auto">
     <UserTabs v-if="isAdmin" />
     <Loader v-if="isLoading" />
-    {{ editingCategory }}
+
     <form class="mt-8" @submit.prevent="handleCategorySubmit">
       <div class="flex gap-2 items-end">
         <div class="grow">

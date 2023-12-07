@@ -39,11 +39,10 @@ function removeExtraIngredient(index) {
 const handleImageUpload = (value: string) => {
   itemInfo.image = value
 }
-const emit = defineEmits()
 </script>
 
 <template>
-  <form class="mt-8 max-w-md mx-auto" @submit.prevent="onSubmit">
+  <form class="mt-8 max-w-xl mx-auto" @submit.prevent="onSubmit">
     <div class="grid items-start gap-4 gridd">
       <div>
         <EditableImage
@@ -60,7 +59,7 @@ const emit = defineEmits()
         <input type="text" id="description" v-model="itemInfo.description" />
         <label for="category">Category</label>
         <select
-          v-if="categories!.length > 0"
+          v-if="categories?.length > 0"
           name="category"
           id="category"
           v-model="itemInfo.category"

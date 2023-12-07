@@ -3,11 +3,13 @@ import { toast } from 'vue3-toastify'
 
 const { data: isAdmin } = await useIsAdmin()
 const isLoading = ref(false)
+const { data: categories } = useFetch<CategoryOrOptional[]>('/api/categories')
 
 const itemInfo = reactive({
   name: '',
   description: '',
   basePrice: 0,
+
   image: '',
 })
 
@@ -35,12 +37,16 @@ async function handleCreateMenuItem() {
     <UserTabs v-if="isAdmin" />
     <Loader v-if="isLoading" />
 
-    <div class="max-w-md mx-auto mt-8">
+    <div class="max-w-xl mx-auto mt-8">
       <NuxtLink to="/menu-items" class="button"
         >Show all menu items
         <Icon class="h-6 w-6" name="material-symbols:arrow-circle-left-outline"
       /></NuxtLink>
     </div>
-    <MenuItemForm :itemInfo="itemInfo" :onSubmit="handleCreateMenuItem" />
+    <MenuItemForm
+      :itemInfo="itemInfo"
+      :categories="categories"
+      :onSubmit="handleCreateMenuItem"
+    />
   </section>
 </template>
