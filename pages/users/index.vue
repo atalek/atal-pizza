@@ -36,7 +36,7 @@ async function handleDeleteUser(_id: Types.ObjectId) {
         v-if="users!.length > 0"
         v-for="user in users"
         class="bg-slate-100 rounded-lg mb-2 p-1 px-4 flex items-center gap-4"
-        :key="user._id"
+        :key="user._id.toString()"
       >
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 grow items-center">
           <div class="text-slate-900">

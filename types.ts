@@ -22,7 +22,7 @@ export type CartItem = {
 }
 
 export type Category = {
-  _id: Types.ObjectId
+  _id: Types.ObjectId | string
   name: string
 }
 

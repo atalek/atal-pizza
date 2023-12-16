@@ -2,11 +2,9 @@
 import { MenuItem } from 'types'
 
 const { data: isAdmin } = await useIsAdmin()
-const {
-  data: menuItems,
-  pending,
-  refresh,
-} = await useFetch<MenuItem[]>('/api/menu-items')
+const { data: menuItems, pending } = await useFetch<MenuItem[]>(
+  '/api/menu-items'
+)
 </script>
 
 <template>

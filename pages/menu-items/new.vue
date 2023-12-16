@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toast } from 'vue3-toastify'
+import { CategoryOrOptional } from '~/types'
 
 const { data: isAdmin } = await useIsAdmin()
 const isLoading = ref(false)

@@ -9,7 +9,7 @@ type UserInfoProps = {
     postalCode: string
     city: string
     country: string
-    admin: boolean
+    admin?: boolean
   }
 
   isLoading: boolean
@@ -51,7 +51,6 @@ const handleImageUpload = (value: string) => {
       </label>
 
     </div> -->
-
     <EditableImage :image="userInfo.image" @imageUpload="handleImageUpload" />
     <form class="grow" @submit.prevent="onSubmit" v-if="userInfo">
       <label for="name"> First and last name</label>

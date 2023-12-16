@@ -8,9 +8,9 @@ type ItemInfoProps = {
     name: string
     description: string
     basePrice: number
-    sizes: ExtraStuff[]
-    category: string
-    extraIngredients: ExtraStuff[]
+    sizes?: ExtraStuff[]
+    category?: string
+    extraIngredients?: ExtraStuff[]
   }
   onSubmit: () => void
 }
@@ -22,7 +22,7 @@ const extraIngredient = ref(itemInfo?.extraIngredients || [])
 function addSizes() {
   sizes.value.push({ name: '', extraPrice: 0 })
 }
-function removeSizes(index) {
+function removeSizes(index: number) {
   sizes.value = sizes.value.filter((_, idx) => idx !== index)
 }
 
@@ -30,7 +30,7 @@ function addExtraIngredient() {
   extraIngredient.value.push({ name: '', extraPrice: 0 })
 }
 
-function removeExtraIngredient(index) {
+function removeExtraIngredient(index: number) {
   extraIngredient.value = extraIngredient.value.filter(
     (_, idx) => idx !== index
   )
@@ -59,14 +59,14 @@ const handleImageUpload = (value: string) => {
         <input type="text" id="description" v-model="itemInfo.description" />
         <label for="category">Category</label>
         <select
-          v-if="categories?.length > 0"
+          v-if="categories!.length > 0"
           name="category"
           id="category"
           v-model="itemInfo.category"
         >
           <option
             v-for="category in categories"
-            :key="category?._id"
+            :key="category?._id.toString()"
             :value="category?._id"
           >
             {{ category?.name }}

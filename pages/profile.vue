@@ -7,7 +7,6 @@ definePageMeta({
 
 const isLoading = ref(false)
 const erorr = ref('')
-const { data: session } = useAuth()
 
 const { data, pending, error, refresh } = await useFetch<UserData>(
   '/api/profile'

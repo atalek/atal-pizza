@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 const { data, status, signOut } = useAuth()
 const userData = ref(data?.value?.user)
+const { totalItems } = useCart()
 
-let userName = ref(userData?.value?.name || userData?.value?.email)
+const userName = ref(userData?.value?.name || userData?.value?.email)
 
 if (userName?.value?.includes(' ')) {
   userName.value = userName?.value?.split(' ')[0]
@@ -37,6 +38,13 @@ if (userName?.value?.includes(' ')) {
           >Hello, {{ userName }}</NuxtLink
         >
 
+        <NuxtLink to="/cart" v-if="totalItems > 0" class="relative mr-4">
+          <span
+            class="absolute -top-2 -right-2 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
+            >{{ totalItems }}
+          </span>
+          <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
+        </NuxtLink>
         <NuxtLink
           @click="signOut"
           class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"

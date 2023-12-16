@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Types } from 'mongoose'
+import { MenuItem } from 'types'
 
 type ExtraStuff = {
   name: string
@@ -20,9 +21,19 @@ export type MenuItemProps = {
 }
 
 const props = defineProps<MenuItemProps>()
-const showPopup = ref(true)
+const showPopup = ref(false)
 const selectedSize = ref(props.menuItem?.sizes?.[0] || null)
 const selectedExtras = ref<ExtraStuff>()
+
+function handleOpenPopup(itemId: Types.ObjectId) {
+  showPopup.value = true
+}
+
+const { cartItems, addItemToCart } = useCart()
+
+function addItem(item: MenuItem) {
+  console.log(selectedExtras.value)
+}
 </script>
 
 <template>
@@ -35,7 +46,10 @@ const selectedExtras = ref<ExtraStuff>()
       @click="e => e.stopPropagation()"
       class="my-8 bg-white p-2 rounded-lg max-w-md"
     >
-      <div class="overflow-y-scroll p-2" style="maxheight: calc(100vh - 100px)">
+      <div
+        class="overflow-y-scroll p-2"
+        style="max-height: calc(100vh - 100px)"
+      >
         <NuxtImg
           provider="s3Provider"
           :src="props.menuItem.image"
@@ -53,7 +67,7 @@ const selectedExtras = ref<ExtraStuff>()
           <h3 class="text-center text-slate-700">Pick your size</h3>
           <label
             v-for="size in props.menuItem.sizes"
-            :key="size._id"
+            :key="size.name"
             class="flex items-center gap-2 p-4 border rounded-md mb-1"
           >
             <input
@@ -70,33 +84,40 @@ const selectedExtras = ref<ExtraStuff>()
             >
           </label>
         </div>
-
         <div class="py-2" v-if="props?.menuItem?.extraIngredients.length > 0">
           <h3 class="text-center text-slate-700">Pick your size</h3>
           <label
             v-for="extraStuff in props.menuItem.extraIngredients"
-            :key="extraStuff._id"
-            for="checkbox"
+            :key="extraStuff.name"
             class="flex items-center gap-2 p-4 border rounded-md mb-1"
           >
             <input
               type="checkbox"
-              id="checkbox"
-              @click="selectedExtras!.push(extraStuff)"
+              :id="'checkbox-' + extraStuff.name"
+              :value="extraStuff"
+              v-model="selectedExtras"
             />
             <span
               >{{ extraStuff.name }} ${{
                 props.menuItem.basePrice + extraStuff.extraPrice
-              }}</span
-            >
+              }}
+              {{ selectedExtras }}
+            </span>
           </label>
         </div>
-        <button class="primary sticky bottom-2">Add to cart</button>
+        <button
+          class="primary sticky bottom-2"
+          @click="addItem(props.menuItem), (showPopup = false)"
+        >
+          Add to cart
+        </button>
         <button class="mt-2" @click="showPopup = false">Cancel</button>
       </div>
     </div>
   </div>
-  <MenuItemTile :menuItem="props.menuItem" />
-</template>
 
-<style scoped></style>
+  <MenuItemTile
+    :menuItem="props.menuItem"
+    @openPopup="handleOpenPopup(props.menuItem._id)"
+  />
+</template>

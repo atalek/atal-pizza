@@ -1,12 +1,12 @@
 <script setup lang="ts">
 type ImageProps = {
   image?: string
-  googleImg?: string
 }
 
 const { image } = defineProps<ImageProps>()
 const changeImage = ref('')
 const isLoading = ref(false)
+const profilePic = ref(image || '')
 
 const emit = defineEmits()
 
@@ -35,26 +35,28 @@ async function handleFileChange(e: Event) {
     isLoading.value = false
   }
 }
+
+const isGoogleImage = computed(() => {
+  return profilePic.value?.startsWith('https://lh3.google')
+})
 </script>
 
 <template>
   <div class="p-2 rounded-lg">
-    <NuxtImg
-      v-if="image"
-      :src="image"
-      provider="s3Provider"
-      alt="avatar"
-      class="rounded-lg h-28 w-full mb-1"
-    />
-    <NuxtImg
-      v-if="googleImg"
-      :src="googleImg"
-      alt="avatar"
-      class="rounded-lg h-28 w-full mb-1"
-    />
+    <div v-if="isGoogleImage">
+      <img :src="image" alt="avatar" class="rounded-lg h-28 w-full mb-1" />
+    </div>
+    <div v-else>
+      <NuxtImg
+        :src="image"
+        provider="s3Provider"
+        alt="avatar"
+        class="rounded-lg h-28 w-full mb-1"
+      />
+    </div>
 
     <div
-      v-if="!image && !googleImg"
+      v-if="!image"
       class="bg-slate-200 p-4 text-slate-500 rounded-md text-center"
     >
       No image

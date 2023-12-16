@@ -1,30 +1,51 @@
-import { CartItem, MenuItem as MenuItemType } from '~/types'
+import { toast } from 'vue3-toastify'
+import { CartItem, MenuItem as MenuItemType, ExtraStuff } from '~/types'
+
+const cartItems = ref<CartItem[]>([])
+
+const totalPrice = computed(() =>
+  cartItems.value.reduce((acc, item) => {
+    const productPrice =
+      item.product.basePrice +
+      (item.product.sizes?.reduce((acc, size) => acc + size.extraPrice, 0) ||
+        0) +
+      (item.product.extraIngredients?.reduce(
+        (acc, ingredient: ExtraStuff) => acc + ingredient.extraPrice,
+        0
+      ) || 0)
+
+    return acc + productPrice * item.qty
+  }, 0)
+)
 
 export const useCart = () => {
-  const cartItems = ref<CartItem[]>([])
-
   const totalItems = computed(() =>
     cartItems.value.reduce((acc, item) => {
       return acc + item.qty
     }, 0)
   )
+  function cartProductPrice(cartProduct: MenuItemType): number {
+    let price = cartProduct.basePrice
 
-  const totalPrice = computed(() =>
-    cartItems.value.reduce((acc, item) => {
-      let productPrice = item.product.basePrice
-      // Add price of size if selected
-      if (item.size) {
-        productPrice += item.size.extraPrice
+    if (cartProduct.sizes) {
+      // Assuming sizes is an array, so need to loop through each size
+      for (const size of cartProduct.sizes) {
+        price += size.extraPrice
       }
-      // Add price of each extra ingredient
-      const extraIngredientsPrice =
-        item.extraIngredients?.reduce((acc, ingredient) => {
-          return acc + ingredient.extraPrice
-        }, 0) || 0
-      productPrice += extraIngredientsPrice
-      return acc + productPrice * item.qty
-    }, 0)
-  )
+    }
+
+    if (
+      cartProduct.extraIngredients &&
+      cartProduct.extraIngredients.length > 0
+    ) {
+      // Loop through each extra ingredient
+      for (const extra of cartProduct.extraIngredients) {
+        price += extra.extraPrice
+      }
+    }
+
+    return price
+  }
 
   function saveCartToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cartItems.value))
@@ -42,7 +63,7 @@ export const useCart = () => {
     if (existingItem) {
       existingItem.qty++
     } else {
-      const newItem = { product: item, qty: 1 }
+      const newItem: CartItem = { product: item, qty: 1 }
       cartItems.value.push(newItem)
     }
 
@@ -56,6 +77,7 @@ export const useCart = () => {
     if (existingItemIndex !== -1) {
       cartItems.value.splice(existingItemIndex, 1)
     }
+    toast.success('Product removed')
     saveCartToLocalStorage()
   }
 
@@ -68,6 +90,7 @@ export const useCart = () => {
     cartItems,
     totalItems,
     totalPrice,
+    cartProductPrice,
     saveCartToLocalStorage,
     addItemToCart,
     removeItemFromCart,

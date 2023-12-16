@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const { status } = useAuth()
+const { loadCartFromLocalStorage } = useCart()
+
+if (process.client) {
+  loadCartFromLocalStorage()
+}
 </script>
 
 <template>

@@ -18,7 +18,9 @@ type MenuItemProps = {
     extraIngredients?: ExtraStuff[]
   }
 }
+
 const props = defineProps<MenuItemProps>()
+const emit = defineEmits()
 </script>
 
 <template>
@@ -39,7 +41,7 @@ const props = defineProps<MenuItemProps>()
     </p>
     <button
       class="mt-4 bg-primary text-white rounded-full px-8 py-2"
-      @click="console.log('forsen')"
+      @click="$emit('openPopup', props.menuItem._id)"
     >
       Add to cart ${{ props.menuItem.basePrice }}
     </button>

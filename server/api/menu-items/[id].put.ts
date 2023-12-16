@@ -19,7 +19,7 @@ type MenuItem = {
 export default defineEventHandler(async event => {
   const params = event.context.params
   const body = await readBody<MenuItem>(event)
-
+  console.log(body)
   if (body) {
     const menuItem = await MenuItem.findByIdAndUpdate(
       params?.id,
@@ -29,8 +29,10 @@ export default defineEventHandler(async event => {
         basePrice: body.basePrice,
         image: body.image,
         category: body.category,
-        sizes: body.sizes,
-        extraIngredients: body.extraIngredients,
+        sizes: body.sizes.filter(size => size.name !== ''),
+        extraIngredients: body.extraIngredients.filter(
+          ingredient => ingredient.name && ingredient.extraPrice !== 0
+        ),
       },
       { new: true }
     )
