@@ -18,7 +18,6 @@ export type MenuItem = {
 
 export type CartItem = {
   product: MenuItem
-  qty: number
 }
 
 export type Category = {
@@ -43,12 +42,12 @@ export type UserData = {
   }
   userInfo: {
     email: string
-    streetAddress: string
-    postalCode: string
-    city: string
-    country: string
-    phone: string
-    admin: boolean
+    streetAddress?: string
+    postalCode?: string
+    city?: string
+    country?: string
+    phone?: number
+    admin?: boolean
   }
 }
 

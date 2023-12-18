@@ -23,16 +23,40 @@ export type MenuItemProps = {
 const props = defineProps<MenuItemProps>()
 const showPopup = ref(false)
 const selectedSize = ref(props.menuItem?.sizes?.[0] || null)
-const selectedExtras = ref<ExtraStuff>()
+const selectedExtras = ref<ExtraStuff[]>()
 
 function handleOpenPopup(itemId: Types.ObjectId) {
   showPopup.value = true
+}
+
+// Handler functions
+const toggleSelection = (extraStuff: ExtraStuff) => {
+  if (isSelected(extraStuff)) {
+    // Deselect if already selected
+    selectedExtras.value = selectedExtras?.value?.filter(
+      item => item.name !== extraStuff.name
+    )
+  } else {
+    // Select if not selected
+    selectedExtras?.value?.push(extraStuff)
+  }
+}
+
+const isSelected = (extraStuff: ExtraStuff) => {
+  return selectedExtras?.value?.some(item => item.name === extraStuff.name)
 }
 
 const { cartItems, addItemToCart } = useCart()
 
 function addItem(item: MenuItem) {
   console.log(selectedExtras.value)
+
+  const newItem = {
+    ...item,
+    sizes: selectedSize.value,
+    extraIngredients: selectedExtras.value,
+  }
+  console.log(newItem.extraIngredients)
 }
 </script>
 
@@ -63,48 +87,51 @@ function addItem(item: MenuItem) {
           {{ props.menuItem.description }}
         </p>
 
-        <div class="py-2" v-if="props?.menuItem?.sizes.length > 0">
-          <h3 class="text-center text-slate-700">Pick your size</h3>
-          <label
-            v-for="size in props.menuItem.sizes"
-            :key="size.name"
-            class="flex items-center gap-2 p-4 border rounded-md mb-1"
-          >
-            <input
-              type="radio"
-              name="size"
-              :checked="selectedSize === size"
-              @click="selectedSize = size"
-              class="p-4"
-            />
-            <span
-              >{{ size.name }} ${{
-                props.menuItem.basePrice + size.extraPrice
-              }}</span
+        <div v-if="props.menuItem.sizes">
+          <div class="py-2">
+            <h3 class="text-center text-slate-700">Pick your size</h3>
+            <label
+              v-for="size in props.menuItem.sizes"
+              :key="size.name"
+              class="flex items-center gap-2 p-4 border rounded-md mb-1"
             >
-          </label>
+              <input
+                type="radio"
+                name="size"
+                :checked="selectedSize === size"
+                @change="selectedSize = size"
+                class="p-4"
+              />
+              <span
+                >{{ size.name }} ${{
+                  props.menuItem.basePrice + size.extraPrice
+                }}</span
+              >
+            </label>
+          </div>
         </div>
-        <div class="py-2" v-if="props?.menuItem?.extraIngredients.length > 0">
-          <h3 class="text-center text-slate-700">Pick your size</h3>
-          <label
-            v-for="extraStuff in props.menuItem.extraIngredients"
-            :key="extraStuff.name"
-            class="flex items-center gap-2 p-4 border rounded-md mb-1"
-          >
-            <input
-              type="checkbox"
-              :id="'checkbox-' + extraStuff.name"
-              :value="extraStuff"
-              v-model="selectedExtras"
-            />
-            <span
-              >{{ extraStuff.name }} ${{
-                props.menuItem.basePrice + extraStuff.extraPrice
-              }}
-              {{ selectedExtras }}
-            </span>
-          </label>
+
+        <!-- Checkbox inputs for extra ingredients -->
+        <div v-if="props.menuItem.extraIngredients">
+          <div class="py-2">
+            <h3 class="text-center text-slate-700">Pick your extras</h3>
+            <label
+              v-for="extraStuff in props.menuItem.extraIngredients"
+              :key="extraStuff.name"
+              class="flex items-center gap-2 p-4 border rounded-md mb-1"
+            >
+              <input
+                type="checkbox"
+                :id="'checkbox-' + extraStuff.name"
+                :value="extraStuff"
+                :checked="isSelected(extraStuff)"
+                @change="toggleSelection(extraStuff)"
+              />
+              <span>{{ extraStuff.name }} + ${{ extraStuff.extraPrice }}</span>
+            </label>
+          </div>
         </div>
+
         <button
           class="primary sticky bottom-2"
           @click="addItem(props.menuItem), (showPopup = false)"

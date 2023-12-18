@@ -43,23 +43,24 @@ const isGoogleImage = computed(() => {
 
 <template>
   <div class="p-2 rounded-lg">
-    <div v-if="isGoogleImage">
-      <img :src="image" alt="avatar" class="rounded-lg h-28 w-full mb-1" />
-    </div>
-    <div v-else>
-      <NuxtImg
-        :src="image"
-        provider="s3Provider"
-        alt="avatar"
-        class="rounded-lg h-28 w-full mb-1"
-      />
-    </div>
-
     <div
-      v-if="!image"
+      v-if="image === ''"
       class="bg-slate-200 p-4 text-slate-500 rounded-md text-center"
     >
       No image
+    </div>
+    <div v-if="image">
+      <div v-if="isGoogleImage">
+        <img :src="image" alt="avatar" class="rounded-lg h-28 w-full mb-1" />
+      </div>
+      <div v-else>
+        <NuxtImg
+          :src="image"
+          provider="s3Provider"
+          alt="avatar"
+          class="rounded-lg h-28 w-full mb-1"
+        />
+      </div>
     </div>
 
     <label>

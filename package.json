@@ -31,6 +31,7 @@
     "mongodb": "^6.3.0",
     "next-auth": "^4.21.1",
     "npm": "^10.2.4",
+    "stripe": "^14.9.0",
     "uuid": "^9.0.1",
     "vue-toast-notification": "^3.1.2",
     "vue3-toastify": "^0.1.14"

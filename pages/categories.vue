@@ -3,7 +3,7 @@ import { toast } from 'vue3-toastify'
 import { Types } from 'mongoose'
 
 type Category = {
-  _id?: Types.ObjectId
+  _id: Types.ObjectId
   name: string
 }
 

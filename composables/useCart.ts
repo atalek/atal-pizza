@@ -14,21 +14,18 @@ const totalPrice = computed(() =>
         0
       ) || 0)
 
-    return acc + productPrice * item.qty
+    return acc + productPrice
   }, 0)
 )
 
 export const useCart = () => {
-  const totalItems = computed(() =>
-    cartItems.value.reduce((acc, item) => {
-      return acc + item.qty
-    }, 0)
-  )
+  const totalItems = computed(() => {
+    return cartItems.value.length
+  })
   function cartProductPrice(cartProduct: MenuItemType): number {
     let price = cartProduct.basePrice
 
     if (cartProduct.sizes) {
-      // Assuming sizes is an array, so need to loop through each size
       for (const size of cartProduct.sizes) {
         price += size.extraPrice
       }
@@ -38,7 +35,6 @@ export const useCart = () => {
       cartProduct.extraIngredients &&
       cartProduct.extraIngredients.length > 0
     ) {
-      // Loop through each extra ingredient
       for (const extra of cartProduct.extraIngredients) {
         price += extra.extraPrice
       }
@@ -59,13 +55,8 @@ export const useCart = () => {
   }
 
   function addItemToCart(item: MenuItemType) {
-    const existingItem = cartItems.value.find(i => i.product._id === item._id)
-    if (existingItem) {
-      existingItem.qty++
-    } else {
-      const newItem: CartItem = { product: item, qty: 1 }
-      cartItems.value.push(newItem)
-    }
+    const newItem: CartItem = { product: item }
+    cartItems.value.push(newItem)
 
     saveCartToLocalStorage()
   }

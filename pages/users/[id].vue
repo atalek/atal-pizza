@@ -14,7 +14,7 @@ const userInfo = reactive({
   image: data?.value?.user?.image || '',
   email: data?.value?.user?.email || '',
   admin: data?.value?.userInfo?.admin || false,
-  phoneNumber: data.value?.userInfo?.phone || '',
+  phoneNumber: data.value?.userInfo?.phone || undefined,
   streetAddress: data.value?.userInfo?.streetAddress || '',
   postalCode: data.value?.userInfo?.postalCode || '',
   city: data.value?.userInfo?.city || '',

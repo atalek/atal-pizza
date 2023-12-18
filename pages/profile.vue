@@ -11,12 +11,13 @@ const erorr = ref('')
 const { data, pending, error, refresh } = await useFetch<UserData>(
   '/api/profile'
 )
+const { data: isAdmin } = await useIsAdmin()
 
 const userInfo = reactive({
   name: data?.value?.user?.name || '',
   image: data?.value?.user.image || '',
   email: data?.value?.user?.email || '',
-  phoneNumber: data.value?.userInfo?.phone || '',
+  phoneNumber: data.value?.userInfo?.phone || undefined,
   streetAddress: data.value?.userInfo?.streetAddress || '',
   postalCode: data.value?.userInfo?.postalCode || '',
   city: data.value?.userInfo?.city || '',
@@ -26,6 +27,7 @@ const userInfo = reactive({
 async function handleProfileInfoUpdate() {
   if (userInfo) {
     isLoading.value = true
+    console.log(userInfo)
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
@@ -46,48 +48,46 @@ async function handleProfileInfoUpdate() {
   }
 }
 
-async function handleFileChange(e: Event) {
-  isLoading.value = true
-  try {
-    const files = (e.target as HTMLInputElement).files as FileList
+// async function handleFileChange(e: Event) {
+//   isLoading.value = true
+//   try {
+//     const files = (e.target as HTMLInputElement).files as FileList
 
-    if (files && files.length > 0) {
-      const fileData = new FormData()
-      fileData.set('file', files[0])
-      const res = await $fetch('/api/upload', {
-        method: 'POST',
-        body: fileData,
-        'Content-Type': 'multipart/form-data',
-      })
-      if (res) {
-        userInfo.image = res
-        refresh()
-        toast.success('Profile picture updated')
-      }
-    }
-  } catch (err: any) {
-    erorr.value = err.data.message
-  } finally {
-    isLoading.value = false
-  }
-}
+//     if (files && files.length > 0) {
+//       const fileData = new FormData()
+//       fileData.set('file', files[0])
+//       const res = await $fetch('/api/upload', {
+//         method: 'POST',
+//         body: fileData,
+//         'Content-Type': 'multipart/form-data',
+//       })
+//       if (res) {
+//         userInfo.image = res
+//         refresh()
+//         toast.success('Profile picture updated')
+//       }
+//     }
+//   } catch (err: any) {
+//     erorr.value = err.data.message
+//   } finally {
+//     isLoading.value = false
+//   }
+// }
 
-const googleImg = ref(false)
+// const googleImg = ref(false)
 
-if (data?.value?.user) {
-  googleImg.value = computed(async () =>
-    data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
-  )
-}
+// if (data?.value?.user) {
+//   googleImg.value = computed(async () =>
+//     data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
+//   )
+// }
 </script>
 
 <template>
   <section class="mt-6">
     <UserTabs v-if="data?.userInfo?.admin" />
     <div class="max-w-xl mx-auto">
-      <div v-if="isLoading" class="my-4">
-        <InfoBox>Saving...</InfoBox>
-      </div>
+      <div v-if="isLoading" class="my-4"></div>
       <div v-if="pending">
         <Loader />
       </div>

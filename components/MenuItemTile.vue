@@ -21,6 +21,13 @@ type MenuItemProps = {
 
 const props = defineProps<MenuItemProps>()
 const emit = defineEmits()
+
+const hasExtras = computed(() => {
+  return (
+    (props.menuItem?.extraIngredients?.length ?? 0) > 0 ||
+    (props.menuItem?.sizes?.length ?? 0) > 1
+  )
+})
 </script>
 
 <template>
@@ -43,9 +50,11 @@ const emit = defineEmits()
       class="mt-4 bg-primary text-white rounded-full px-8 py-2"
       @click="$emit('openPopup', props.menuItem._id)"
     >
-      Add to cart ${{ props.menuItem.basePrice }}
+      {{
+        hasExtras
+          ? `Add to cart (from $${menuItem.basePrice})`
+          : `Add to cart $${menuItem.basePrice}`
+      }}
     </button>
   </div>
 </template>
-
-<style scoped></style>

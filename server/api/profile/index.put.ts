@@ -7,7 +7,7 @@ type ProfileUpdateData = {
   postalCode?: string
   city?: string
   country?: string
-  phone?: string
+  phoneNumber?: string
   admin?: boolean
 }
 
@@ -15,11 +15,10 @@ export default defineEventHandler(async event => {
   const body = await readBody<ProfileUpdateData>(event)
   const session = await getServerSession(event)
 
-  console.log(body)
-
   const user = await User.findOne({ email: session?.user?.email }).select(
     '-password'
   )
+
   const userInfo = await UserInfo.findOneAndUpdate(
     { email: session?.user?.email },
     {
@@ -28,7 +27,7 @@ export default defineEventHandler(async event => {
         postalCode: body.postalCode,
         city: body.city,
         country: body.country,
-        phone: body.phone,
+        phone: body.phoneNumber,
         admin: body.admin,
       },
     },
@@ -36,8 +35,9 @@ export default defineEventHandler(async event => {
   )
 
   if (user || userInfo) {
-    user!.name = body.name
-    user!.image = body.image
+    user.name = body.name
+    user.image = body.image
+
     await user?.save()
     return { user, userInfo }
   } else {

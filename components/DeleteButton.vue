@@ -4,7 +4,7 @@ import { Types } from 'mongoose'
 const { label, _id, onDelete } = defineProps<{
   label: string
   _id: Types.ObjectId
-  onDelete: (_id) => Promise<void>
+  onDelete: (_id: Types.ObjectId) => Promise<void>
 }>()
 
 const showConfirm = ref(false)

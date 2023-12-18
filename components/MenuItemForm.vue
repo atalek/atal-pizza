@@ -4,7 +4,7 @@ import { CategoryOrOptional, ExtraStuff } from '~/types'
 type ItemInfoProps = {
   categories?: CategoryOrOptional[] | null
   itemInfo: {
-    image: string
+    image?: string
     name: string
     description: string
     basePrice: number

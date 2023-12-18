@@ -44,15 +44,11 @@ button.primary {
 }
 button[type='submit']:disabled,
 .submit:disabled {
-  @apply cursor-not-allowed bg-red-400;
+  @apply cursor-not-allowed bg-green-500;
 }
 div.tabs > * {
   @apply bg-gray-300 text-gray-700 rounded-full py-2 px-4;
 }
 div.tabs > *.active {
   @apply bg-primary text-white;
-}
-
-.flying-button-parent button {
-  @apply border-primary bg-primary text-white rounded-full;
 }
