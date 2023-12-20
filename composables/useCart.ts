@@ -1,15 +1,14 @@
 import { toast } from 'vue3-toastify'
-import { CartItem, MenuItem as MenuItemType, ExtraStuff } from '~/types'
+import { MenuItem as MenuItemType, ExtraStuff } from '~/types'
 
-const cartItems = ref<CartItem[]>([])
+const cartItems = ref<MenuItemType[]>([])
 
 const totalPrice = computed(() =>
   cartItems.value.reduce((acc, item) => {
     const productPrice =
-      item.product.basePrice +
-      (item.product.sizes?.reduce((acc, size) => acc + size.extraPrice, 0) ||
-        0) +
-      (item.product.extraIngredients?.reduce(
+      item.basePrice +
+      (item.sizes?.reduce((acc, size) => acc + size.extraPrice, 0) || 0) +
+      (item.extraIngredients?.reduce(
         (acc, ingredient: ExtraStuff) => acc + ingredient.extraPrice,
         0
       ) || 0)
@@ -55,16 +54,13 @@ export const useCart = () => {
   }
 
   function addItemToCart(item: MenuItemType) {
-    const newItem: CartItem = { product: item }
-    cartItems.value.push(newItem)
+    cartItems.value.push(item)
 
     saveCartToLocalStorage()
   }
 
   function removeItemFromCart(item: MenuItemType) {
-    const existingItemIndex = cartItems.value.findIndex(
-      i => i.product._id === item._id
-    )
+    const existingItemIndex = cartItems.value.findIndex(i => i._id === item._id)
     if (existingItemIndex !== -1) {
       cartItems.value.splice(existingItemIndex, 1)
     }

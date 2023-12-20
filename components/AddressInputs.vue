@@ -7,6 +7,7 @@ type AddressInfo = {
     city?: string
     country?: string
   }
+  disabled?: boolean
 }
 
 const props = defineProps<AddressInfo>()
@@ -15,6 +16,7 @@ const props = defineProps<AddressInfo>()
 <template>
   <label for="phone"> Phone number</label>
   <input
+    :disabled="props.disabled"
     id="phone"
     type="tel"
     placeholder="Phone Number"
@@ -23,6 +25,7 @@ const props = defineProps<AddressInfo>()
 
   <label for="street">Street address</label>
   <input
+    :disabled="props.disabled"
     id="street"
     type="text"
     placeholder="Street address"
@@ -33,6 +36,7 @@ const props = defineProps<AddressInfo>()
     <div>
       <label for="postal-code"> Postal code</label>
       <input
+        :disabled="props.disabled"
         id="postal-code"
         type="text"
         placeholder="Postal Code"
@@ -43,6 +47,7 @@ const props = defineProps<AddressInfo>()
     <div>
       <label for="city">City</label>
       <input
+        :disabled="props.disabled"
         id="city"
         type="text"
         placeholder="City"
@@ -53,6 +58,7 @@ const props = defineProps<AddressInfo>()
 
   <label for="country">Country</label>
   <input
+    :disabled="props.disabled"
     id="country"
     type="text"
     placeholder="Country"

@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { toast } from 'vue3-toastify'
 import { UserData } from '~/types'
+
+const route = useRoute()
 
 const { cartItems, totalPrice, cartProductPrice, removeItemFromCart } =
   useCart()
@@ -29,7 +32,7 @@ async function proceedToCheckout() {
 
     if (res) {
       const link = res
-      window.location = link
+      window.location.href = link
     }
   } catch (error: any) {
     console.log(error.data.message)
@@ -37,68 +40,34 @@ async function proceedToCheckout() {
     isLoading.value = false
   }
 }
+
+if (process.client) {
+  if (route.fullPath.endsWith('canceled=1')) {
+    toast.error('Payment failed')
+  }
+}
 </script>
 
 <template>
-  <section class="mt-8">
+  <div v-if="cartItems.length === 0" class="mt-8 text-center max-w-md mx-auto">
+    <SectionHeaders mainHeader="Cart" />
+    <p>No products in your shopping cards</p>
+    <NuxtLink to="/menu" class="button mt-4">Start shopping</NuxtLink>
+  </div>
+  <section class="mt-8" v-else>
     <div class="text-center">
       <SectionHeaders mainHeader="Cart" />
     </div>
 
     <div class="mt-8 grid md:grid-cols-2 gap-8">
       <div>
-        <div v-if="cartItems.length === 0">
-          No products in your shopping cards
-          <NuxtLink to="/menu">Start shopping</NuxtLink>
-        </div>
-        <div
-          v-else
-          v-for="(item, index) in cartItems"
-          :key="item.product.name + index"
-          class="flex items-center gap-4 mb-2 border-b py-4"
-        >
-          <div class="w-24">
-            <NuxtImg
-              provider="s3Provider"
-              :src="item.product.image"
-              :alt="item.product.name"
-            />
-          </div>
-          <div class="grow">
-            <h3 class="font-semibold">
-              {{ item.product.name }}
-            </h3>
-            <div v-if="item.product.sizes">
-              <span
-                v-for="size in item.product.sizes"
-                :key="size.name"
-                class="text-sm"
-              >
-                Size: {{ size.name }} <br />
-              </span>
-            </div>
-            <div v-if="item.product.extraIngredients">
-              <div>
-                <div
-                  v-for="extra in item.product.extraIngredients"
-                  :key="extra.name"
-                  class="text-slate-500 text-sm"
-                >
-                  Extra {{ extra.name }} +${{ extra.extraPrice }} <br />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="text-lg font-semibold">
-            ${{ cartProductPrice(item.product) }}
-          </div>
-          <div class="ml-2">
-            <button type="button" @click="removeItemFromCart(item.product)">
-              <Icon name="fa-solid:trash-alt" />
-            </button>
-          </div>
-        </div>
-        <div class="py-2 pr-16 flex justify-end items-center">
+        <CartProduct
+          v-for="item in cartItems"
+          :key="item._id.toString()"
+          :item="item"
+        />
+
+        <div class="py-2 flex justify-end items-center">
           <div class="text-slate-500">
             Subtotal:<br />
             Delivery:<br />

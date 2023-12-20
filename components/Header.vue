@@ -34,13 +34,14 @@ if (userName?.value?.includes(' ')) {
       <div v-if="status === 'authenticated'">
         <NuxtLink
           href="/profile"
-          class="px-8 py-2 font-semibold whitespace-nowrap"
+          class="px-4 py-2 font-semibold whitespace-nowrap hover:bg-slate-200"
           >Hello, {{ userName }}</NuxtLink
         >
 
-        <NuxtLink to="/cart" v-if="totalItems > 0" class="relative mr-4">
+        <NuxtLink to="/cart" class="relative px-2 py-2 mr-2 hover:bg-slate-200">
           <span
-            class="absolute -top-2 -right-2 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
+            v-if="totalItems > 0"
+            class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
             >{{ totalItems }}
           </span>
           <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />

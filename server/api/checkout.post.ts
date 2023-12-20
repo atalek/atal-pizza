@@ -1,6 +1,5 @@
 import { getServerSession } from '#auth'
 import Stripe from 'stripe'
-import MenuItemPricePropsVue from '~/components/MenuItemPriceProps.vue'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)
@@ -22,20 +21,20 @@ export default defineEventHandler(async event => {
   const stripeLineItems = []
 
   for (const product of orderItems) {
-    const productName = product.product.name
-    const productInfo = await MenuItem.findById({ _id: product.product._id })
+    const productName = product.name
+    const productInfo = await MenuItem.findById({ _id: product._id })
     let productPrice = productInfo!.basePrice
 
-    if (product.product.size) {
+    if (product.size) {
       const size = productInfo?.sizes.find(
-        size => size._id.toString() === product.product.size._id.toString()
+        size => size._id.toString() === product.size._id.toString()
       )
 
       productPrice += size!.extraPrice
     }
 
-    if (product.product.extraIngredients.length > 0) {
-      for (const cartProductExtraThing of product.product.extraIngredients) {
+    if (product.extraIngredients.length > 0) {
+      for (const cartProductExtraThing of product.extraIngredients) {
         const extraThingInfo = productInfo?.extraIngredients.find(
           extra => extra._id.toString() === cartProductExtraThing._id.toString()
         )
@@ -55,14 +54,19 @@ export default defineEventHandler(async event => {
       },
     })
   }
-  console.log(process.env.AUTH_ORIGIN)
+
   const stripeSession = await stripe.checkout.sessions.create({
     line_items: stripeLineItems,
     mode: 'payment',
     customer_email: userEmail?.toString(),
-    success_url: process.env.AUTH_ORIGIN + '/cart?success=1',
+    success_url:
+      process.env.AUTH_ORIGIN +
+      `/orders/${orderDoc._id.toString()}?clear-cart=1`,
     cancel_url: process.env.AUTH_ORIGIN + '/cart?canceled=1',
-    metadata: { orderId: orderDoc._id.toString() },
+    metadata: {
+      orderId: orderDoc._id.toString(),
+    },
+
     shipping_options: [
       {
         shipping_rate_data: {

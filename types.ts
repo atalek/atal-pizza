@@ -16,10 +16,6 @@ export type MenuItem = {
   extraIngredients?: ExtraStuff[]
 }
 
-export type CartItem = {
-  product: MenuItem
-}
-
 export type Category = {
   _id: Types.ObjectId | string
   name: string
@@ -49,6 +45,18 @@ export type UserData = {
     phone?: number
     admin?: boolean
   }
+}
+
+export type OrderType = {
+  _id: Types.ObjectId
+  userEmail: string
+  phoneNumber: number
+  streetAddress: string
+  city: string
+  postalCode: string
+  country: string
+
+  orderItems: MenuItem[]
 }
 
 export type CategoryOrOptional = Category | null

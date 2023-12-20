@@ -29,34 +29,16 @@ function handleOpenPopup(itemId: Types.ObjectId) {
   showPopup.value = true
 }
 
-// Handler functions
-const toggleSelection = (extraStuff: ExtraStuff) => {
-  if (isSelected(extraStuff)) {
-    // Deselect if already selected
-    selectedExtras.value = selectedExtras?.value?.filter(
-      item => item.name !== extraStuff.name
-    )
-  } else {
-    // Select if not selected
-    selectedExtras?.value?.push(extraStuff)
-  }
-}
-
-const isSelected = (extraStuff: ExtraStuff) => {
-  return selectedExtras?.value?.some(item => item.name === extraStuff.name)
-}
-
 const { cartItems, addItemToCart } = useCart()
 
 function addItem(item: MenuItem) {
-  console.log(selectedExtras.value)
-
   const newItem = {
     ...item,
     sizes: selectedSize.value,
-    extraIngredients: selectedExtras.value,
   }
-  console.log(newItem.extraIngredients)
+  addItemToCart(newItem)
+
+  console.log(newItem)
 }
 </script>
 
@@ -111,7 +93,6 @@ function addItem(item: MenuItem) {
           </div>
         </div>
 
-        <!-- Checkbox inputs for extra ingredients -->
         <div v-if="props.menuItem.extraIngredients">
           <div class="py-2">
             <h3 class="text-center text-slate-700">Pick your extras</h3>
@@ -124,8 +105,7 @@ function addItem(item: MenuItem) {
                 type="checkbox"
                 :id="'checkbox-' + extraStuff.name"
                 :value="extraStuff"
-                :checked="isSelected(extraStuff)"
-                @change="toggleSelection(extraStuff)"
+                @change="console.log(extraStuff)"
               />
               <span>{{ extraStuff.name }} + ${{ extraStuff.extraPrice }}</span>
             </label>
@@ -134,7 +114,7 @@ function addItem(item: MenuItem) {
 
         <button
           class="primary sticky bottom-2"
-          @click="addItem(props.menuItem), (showPopup = false)"
+          @click="addItemToCart(props.menuItem), (showPopup = false)"
         >
           Add to cart
         </button>

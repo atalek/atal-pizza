@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const { data: isAdmin, pending } = await useIsAdmin()
+const { data: isAdmin } = await useIsAdmin()
+const { data: orders, pending } = await useFetch('/api/orders')
 </script>
 
 <template>
@@ -7,5 +8,6 @@ const { data: isAdmin, pending } = await useIsAdmin()
     <UserTabs v-if="isAdmin" />
     {{ isAdmin }}
     Orders
+    {{ orders }}
   </section>
 </template>

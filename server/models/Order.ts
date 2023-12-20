@@ -1,12 +1,14 @@
 import mongoose, { Schema } from 'mongoose'
+import { MenuItem } from '~/types'
 
 type OrderSchemaDocument = Document & {
   userEmail: string
   phoneNumber: number
   streetAddress: string
   city: string
+  postalCode: string
   country: string
-  orderItems: {}
+  orderItems: MenuItem[]
   isPaid: boolean
 }
 
@@ -16,8 +18,9 @@ const orderSchema = new Schema<OrderSchemaDocument>(
     phoneNumber: { type: Number },
     streetAddress: { type: String },
     city: { type: String },
+    postalCode: { type: String },
     country: { type: String },
-    orderItems: { type: Object },
+    orderItems: { type: [MenuItem] },
     isPaid: { type: Boolean, default: false },
   },
   { timestamps: true }
