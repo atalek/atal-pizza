@@ -17,7 +17,6 @@ if (process.client) {
     clearCart()
   }
 }
-console.log(order?.value?.orderItems)
 
 const addressInfo = reactive({
   phoneNumber: order?.value?.phoneNumber || undefined,
@@ -36,7 +35,9 @@ const addressInfo = reactive({
         <p>Thank you for ordering</p>
         <p>We will send you a message when your order goes out for delivery</p>
       </div>
+      <Loader v-if="pending" />
     </div>
+
     <div v-if="order" class="grid md:grid-cols-2 gap-8">
       <div>
         <div v-for="item in order.orderItems">
@@ -44,12 +45,17 @@ const addressInfo = reactive({
         </div>
         <div class="text-right py-2 text-slate-500">
           Subtotal:
-          <span class="text-black inline-block w-8 font-bold">$5</span>
+          <span class="text-black inline-block w-8 font-bold"
+            >${{ order.subtotal }}</span
+          >
           <br />
           Delivery:
           <span class="text-black inline-block w-8 font-bold">$5</span>
           <br />
-          Total: <span class="text-black inline-block w-8 font-bold">$5</span>
+          Total:
+          <span class="text-black inline-block w-8 font-bold"
+            >${{ order.total }}</span
+          >
           <br />
         </div>
       </div>

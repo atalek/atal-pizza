@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Types } from 'mongoose'
-import { MenuItem } from 'types'
+import { MenuItemType } from '~/types'
 
 type ExtraStuff = {
   name: string
@@ -23,7 +23,7 @@ export type MenuItemProps = {
 const props = defineProps<MenuItemProps>()
 const showPopup = ref(false)
 const selectedSize = ref(props.menuItem?.sizes?.[0] || null)
-const selectedExtras = ref<ExtraStuff[]>()
+const selectedExtras = reactive([])
 
 function handleOpenPopup(itemId: Types.ObjectId) {
   showPopup.value = true
@@ -31,14 +31,34 @@ function handleOpenPopup(itemId: Types.ObjectId) {
 
 const { cartItems, addItemToCart } = useCart()
 
-function addItem(item: MenuItem) {
-  const newItem = {
-    ...item,
-    sizes: selectedSize.value,
+function updateSelectedExtras(
+  event: HTMLInputElement,
+  extraStuff: ExtraStuff[]
+) {
+  if (event?.target?.checked) {
+    selectedExtras.push(extraStuff)
+  } else {
+    const index = selectedExtras.indexOf(extraStuff)
+    if (index !== -1) {
+      selectedExtras.splice(index, 1)
+    }
   }
-  addItemToCart(newItem)
+}
 
-  console.log(newItem)
+function addItem(item: MenuItemType) {
+  if (item?.sizes?.length > 0) {
+    const newItem = {
+      ...item,
+      sizes: [selectedSize.value],
+    }
+    if (item?.extraIngredients?.length > 0 && selectedExtras) {
+      newItem.extraIngredients = selectedExtras
+    }
+    console.log(newItem)
+    addItemToCart(newItem)
+  } else {
+    addItemToCart(item)
+  }
 }
 </script>
 
@@ -69,7 +89,7 @@ function addItem(item: MenuItem) {
           {{ props.menuItem.description }}
         </p>
 
-        <div v-if="props.menuItem.sizes">
+        <div v-if="props?.menuItem?.sizes?.length > 0">
           <div class="py-2">
             <h3 class="text-center text-slate-700">Pick your size</h3>
             <label
@@ -93,7 +113,7 @@ function addItem(item: MenuItem) {
           </div>
         </div>
 
-        <div v-if="props.menuItem.extraIngredients">
+        <div v-if="props?.menuItem?.extraIngredients?.length > 0">
           <div class="py-2">
             <h3 class="text-center text-slate-700">Pick your extras</h3>
             <label
@@ -105,16 +125,16 @@ function addItem(item: MenuItem) {
                 type="checkbox"
                 :id="'checkbox-' + extraStuff.name"
                 :value="extraStuff"
-                @change="console.log(extraStuff)"
+                @change="updateSelectedExtras($event, extraStuff)"
               />
-              <span>{{ extraStuff.name }} + ${{ extraStuff.extraPrice }}</span>
+              <span>{{ extraStuff.name }} + ${{ extraStuff.extraPrice }} </span>
             </label>
           </div>
         </div>
 
         <button
           class="primary sticky bottom-2"
-          @click="addItemToCart(props.menuItem), (showPopup = false)"
+          @click="addItem(props.menuItem), (showPopup = false)"
         >
           Add to cart
         </button>

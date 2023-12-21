@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 function isLinkActive(to: string) {
-  if (to === '/menu-items' || to === '/users') {
+  if (to === '/menu-items' || to === '/users' || to === '/orders') {
     return computed(() => route.path.startsWith(to)).value
   }
 

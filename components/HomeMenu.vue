@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MenuItem as MenuItemType } from '~/types'
+import { MenuItemType } from '~/types'
 
 const { data: menuItems } = await useFetch<MenuItemType[]>('/api/menu-items')
 
@@ -22,7 +22,7 @@ const bestSellers = ref<MenuItemType[]>(menuItems?.value?.slice(0, 3) || [])
     <div class="grid sm:grid-cols-3 gap-4" v-if="bestSellers.length > 0">
       <MenuItem
         v-for="menuItem in bestSellers"
-        :key="menuItem._id"
+        :key="menuItem._id.toString()"
         :menuItem="menuItem"
       />
     </div>

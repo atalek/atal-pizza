@@ -5,7 +5,7 @@ export type ExtraStuff = {
   extraPrice: number
 }
 
-export type MenuItem = {
+export type MenuItemType = {
   _id: Types.ObjectId
   image: string
   name: string
@@ -55,8 +55,11 @@ export type OrderType = {
   city: string
   postalCode: string
   country: string
-
-  orderItems: MenuItem[]
+  isPaid: boolean
+  subtotal: number
+  delivery: number
+  total: number
+  orderItems: MenuItemType[]
 }
 
 export type CategoryOrOptional = Category | null

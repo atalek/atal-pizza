@@ -25,12 +25,12 @@ export default defineEventHandler(async event => {
     const productInfo = await MenuItem.findById({ _id: product._id })
     let productPrice = productInfo!.basePrice
 
-    if (product.size) {
-      const size = productInfo?.sizes.find(
-        size => size._id.toString() === product.size._id.toString()
+    if (product.sizes.length > 0) {
+      const size = productInfo?.sizes.find(size =>
+        size._id.equals(product.sizes[0]._id)
       )
 
-      productPrice += size!.extraPrice
+      productPrice += size!.extraPrice || 0
     }
 
     if (product.extraIngredients.length > 0) {

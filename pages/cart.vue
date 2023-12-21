@@ -65,6 +65,7 @@ if (process.client) {
           v-for="item in cartItems"
           :key="item._id.toString()"
           :item="item"
+          :remove="true"
         />
 
         <div class="py-2 flex justify-end items-center">

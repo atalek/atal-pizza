@@ -1,27 +1,40 @@
 <script lang="ts" setup>
 import { Types } from 'mongoose'
+import { MenuItemType } from '~/types'
 
-type ExtraStuff = {
-  name: string
-  extraPrice: number
-}
+// type ExtraStuff = {
+//   name: string
+//   extraPrice: number
+// }
 
-type ProductInfo = {
+// type ProductInfo = {
+//   item: {
+//     _id: Types.ObjectId
+//     image: string
+//     name: string
+//     description: string
+//     category: string
+//     basePrice: number
+//     sizes?: ExtraStuff[]
+//     extraIngredients?: ExtraStuff[]
+//   }
+//   remove?: boolean
+// }
+
+// const props = defineProps<ProductInfo>()
+// const item = props.item
+
+defineProps({
   item: {
-    _id: Types.ObjectId
-    image: string
-    name: string
-    description: string
-    category: string
-    basePrice: number
-    sizes?: ExtraStuff[]
-    extraIngredients?: ExtraStuff[]
-  }
-  remove?: boolean
-}
-
-const props = defineProps<ProductInfo>()
-const item = props.item
+    type: Object as PropType<MenuItemType>,
+    required: true,
+  },
+  remove: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
+})
 
 const { cartProductPrice, removeItemFromCart } = useCart()
 </script>
@@ -29,21 +42,21 @@ const { cartProductPrice, removeItemFromCart } = useCart()
 <template>
   <div class="flex items-center gap-4 mb-2 border-b py-4">
     <div class="w-24">
-      <NuxtImg provider="s3Provider" :src="item.image" :alt="item.name" />
+      <NuxtImg provider="s3Provider" :src="item?.image" :alt="item?.name" />
     </div>
     <div class="grow">
       <h3 class="font-semibold">
-        {{ item.name }}
+        {{ item?.name }}
       </h3>
-      <div v-if="item.sizes">
-        <span v-for="size in item.sizes" :key="size.name" class="text-sm">
+      <div v-if="item?.sizes">
+        <span v-for="size in item?.sizes" :key="size.name" class="text-sm">
           Size: {{ size.name }} <br />
         </span>
       </div>
-      <div v-if="item.extraIngredients">
+      <div v-if="item?.extraIngredients">
         <div>
           <div
-            v-for="extra in item.extraIngredients"
+            v-for="extra in item?.extraIngredients"
             :key="extra.name"
             class="text-slate-500 text-sm"
           >

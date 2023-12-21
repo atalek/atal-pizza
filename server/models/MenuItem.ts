@@ -20,7 +20,7 @@ type MenuItemsDocument = Document & {
   extraIngredients: ExtraPriceDocument[]
 }
 
-const menuItemsSchema = new Schema<MenuItemsDocument>(
+export const menuItemsSchema = new Schema<MenuItemsDocument>(
   {
     image: {
       type: String,

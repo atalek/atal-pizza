@@ -1,5 +1,5 @@
 import { toast } from 'vue3-toastify'
-import { MenuItem as MenuItemType, ExtraStuff } from '~/types'
+import { MenuItemType, ExtraStuff } from '~/types'
 
 const cartItems = ref<MenuItemType[]>([])
 

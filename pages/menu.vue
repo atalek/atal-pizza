@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Category as CategoryType, MenuItem as MenuItemType } from '~/types'
+import { Category as CategoryType, MenuItemType } from '~/types'
 
 const { data: categories } = await useFetch<CategoryType[]>('/api/categories')
 const { data: menuItems } = await useFetch<MenuItemType[]>('/api/menu-items')
