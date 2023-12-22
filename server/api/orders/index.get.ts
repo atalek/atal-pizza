@@ -5,9 +5,11 @@ export default defineEventHandler(async event => {
   const userInfo = await UserInfo.findOne({ email: session?.user?.email })
 
   if (userInfo?.admin) {
-    const orders = await Order.find()
+    const orders = await Order.find().sort({ createdAt: -1 })
     return orders
   } else {
-    return await Order.find({ email: session?.user?.email })
+    return await Order.find({ email: session?.user?.email }).sort({
+      createdAt: -1,
+    })
   }
 })

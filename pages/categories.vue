@@ -70,7 +70,8 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
 
 <template>
   <section class="mt-8 max-w-xl mx-auto">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <Loader v-if="isLoading" />
 
     <form class="mt-8" @submit.prevent="handleCategorySubmit">

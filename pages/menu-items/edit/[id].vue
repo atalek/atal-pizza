@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { CategoryOrOptional, MenuItem } from 'types'
+import { CategoryOrOptional, MenuItemType } from 'types'
 
 const route = useRoute()
 const itemId = route.params.id
 const { data: isAdmin } = await useIsAdmin()
-const { data: menuItem, pending } = await useFetch<MenuItem>(
+const { data: menuItem, pending } = await useFetch<MenuItemType>(
   `/api/menu-items/${itemId}`
 )
 const { data: categories } = useFetch<CategoryOrOptional[]>('/api/categories')
@@ -40,7 +40,8 @@ async function handleEditMenuItem() {
 
 <template>
   <section class="mt-8 max-w-2xl mx-auto">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <Loader v-if="isLoading || pending" />
 
     <div class="max-w-xl mx-auto mt-8">

@@ -35,7 +35,8 @@ async function handleCreateMenuItem() {
 
 <template>
   <section class="mt-8 max-w-2xl mx-auto">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <Loader v-if="isLoading" />
 
     <div class="max-w-xl mx-auto mt-8">

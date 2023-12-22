@@ -45,7 +45,8 @@ async function handleUserInfoUpdate() {
 
 <template>
   <section class="mt-8 max-w-2xl mx-auto">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <Loader v-if="pending" />
 
     <NuxtLink to="/users" class="button"

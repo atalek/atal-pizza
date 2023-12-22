@@ -85,7 +85,8 @@ async function handleProfileInfoUpdate() {
 
 <template>
   <section class="mt-6">
-    <UserTabs v-if="data?.userInfo?.admin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <div class="max-w-xl mx-auto">
       <div v-if="isLoading" class="my-4"></div>
       <div v-if="pending">

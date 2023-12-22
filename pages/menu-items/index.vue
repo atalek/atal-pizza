@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { MenuItem } from 'types'
+import { MenuItemType } from 'types'
 
 const { data: isAdmin } = await useIsAdmin()
-const { data: menuItems, pending } = await useFetch<MenuItem[]>(
+const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
   '/api/menu-items'
 )
 </script>
 
 <template>
   <section class="mt-8 max-w-xl mx-auto">
-    <UserTabs v-if="isAdmin" />
+    <UserTabs :isAdmin="isAdmin" />
+
     <div class="mt-8">
       <NuxtLink to="/menu-items/new" class="button"
         >Create new menu item

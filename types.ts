@@ -60,6 +60,7 @@ export type OrderType = {
   delivery: number
   total: number
   orderItems: MenuItemType[]
+  createdAt: string
 }
 
 export type CategoryOrOptional = Category | null
