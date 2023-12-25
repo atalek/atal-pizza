@@ -2,7 +2,7 @@
 const { signIn } = useAuth()
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: 'authenticated',
 })
 
 const registerInfo = reactive({

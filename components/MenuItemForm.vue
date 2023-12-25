@@ -43,7 +43,7 @@ const handleImageUpload = (value: string) => {
 
 <template>
   <form class="mt-8 max-w-xl mx-auto" @submit.prevent="onSubmit">
-    <div class="grid items-start gap-4 gridd">
+    <div class="md:grid items-start gap-4 gridd">
       <div>
         <EditableImage
           :image="itemInfo.image"

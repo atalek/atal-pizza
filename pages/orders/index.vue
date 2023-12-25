@@ -10,6 +10,7 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
   <section class="mt-8 max-w-2xl mx-auto">
     <UserTabs :isAdmin="isAdmin" />
 
+    <Loader v-if="pending" />
     <div v-if="orders!.length > 0" class="mt-8">
       <div
         v-for="order in orders"
@@ -50,6 +51,13 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
           >
         </div>
       </div>
+    </div>
+
+    <div
+      v-else
+      class="bg-slate-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6 overflow-x-auto"
+    >
+      No orders yet...
     </div>
   </section>
 </template>

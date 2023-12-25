@@ -51,14 +51,14 @@ const isGoogleImage = computed(() => {
     </div>
     <div v-if="image">
       <div v-if="isGoogleImage">
-        <img :src="image" alt="avatar" class="rounded-lg h-28 w-full mb-1" />
+        <img :src="image" alt="avatar" class="rounded-lg h-32 w-full mb-1" />
       </div>
       <div v-else>
         <NuxtImg
           :src="image"
           provider="s3Provider"
           alt="avatar"
-          class="rounded-lg h-28 w-full mb-1"
+          class="rounded-lg h-32 w-full mb-1"
         />
       </div>
     </div>
@@ -67,7 +67,7 @@ const isGoogleImage = computed(() => {
       <input type="file" class="hidden" @change="handleFileChange" />
       <span
         class="block border mt-2 border-gray-300 rounded-lg p-2 text-center text-black cursor-pointer"
-        >Edit</span
+        >Change image</span
       >
     </label>
   </div>

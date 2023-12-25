@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { UserData } from '~/types'
 import { toast } from 'vue3-toastify'
+
 definePageMeta({
-  middleware: 'guest',
+  middleware: 'unauthenticated',
 })
 
 const isLoading = ref(false)
@@ -27,7 +28,7 @@ const userInfo = reactive({
 async function handleProfileInfoUpdate() {
   if (userInfo) {
     isLoading.value = true
-    console.log(userInfo)
+
     try {
       const res = await $fetch('/api/profile', {
         method: 'PUT',
@@ -92,42 +93,8 @@ async function handleProfileInfoUpdate() {
       <div v-if="pending">
         <Loader />
       </div>
-      <h1
-        v-if="!data?.userInfo?.admin"
-        class="text-center text-primary font-semibold text-4xl mb-4"
-      >
-        Profile
-      </h1>
-      <div class="flex gap-4 mt-4">
-        <!-- <div class="p-2 rounded-lg">
-          <NuxtImg
-            v-if="googleImg"
-            :src="userInfo?.image"
-            provider="s3Provider"
-            alt="avatar"
-            class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-          />
 
-          <NuxtImg
-            v-else
-            :src="session?.user?.picture"
-            alt="avatar"
-            class="rounded-lg h-28 max-h-full max-w-[120px] mb-1"
-          />
-          <label>
-            <input type="file" class="hidden" @change="handleFileChange" />
-            <span
-              class="block border border-gray-300 rounded-lg p-2 text-center text-black cursor-pointer"
-              >Edit</span
-            >
-          </label>
-
-          <EditableImage
-            :image="data?.user?.image"
-            :googleImg="session?.user?.picture"
-          />
-        </div> -->
-
+      <div class="flex gap-4 mt-4 items-center justify-center">
         <UserForm
           :userInfo="userInfo"
           :isLoading="isLoading"

@@ -25,7 +25,7 @@ const handleImageUpload = (value: string) => {
 </script>
 
 <template>
-  <div class="flex gap-4 mt-4">
+  <div class="md:flex gap-4 mt-4">
     <EditableImage :image="userInfo.image" @imageUpload="handleImageUpload" />
 
     <form class="grow" @submit.prevent="onSubmit" v-if="userInfo">

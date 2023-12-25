@@ -19,7 +19,7 @@ function isLinkActive(to: string) {
 </script>
 
 <template>
-  <div class="flex justify-center gap-2 tabs mb-6" v-if="isAdmin">
+  <div class="flex justify-center gap-2 tabs mb-6 flex-wrap" v-if="isAdmin">
     <NuxtLink :class="{ active: isLinkActive('/profile') }" to="/profile"
       >Profile</NuxtLink
     >

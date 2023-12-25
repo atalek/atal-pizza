@@ -34,8 +34,8 @@ const addressInfo = reactive({
       <div class="my-8">
         <p>Thank you for ordering</p>
         <p>We will send you a message when your order goes out for delivery</p>
+        <Loader v-if="pending" />
       </div>
-      <Loader v-if="pending" />
     </div>
 
     <div v-if="order" class="grid md:grid-cols-2 gap-8">

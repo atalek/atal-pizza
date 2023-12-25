@@ -19,7 +19,7 @@ type MenuItem = {
 export default defineEventHandler(async event => {
   const params = event.context.params
   const body = await readBody<MenuItem>(event)
-  console.log(body)
+
   if (body) {
     const menuItem = await MenuItem.findByIdAndUpdate(
       params?.id,

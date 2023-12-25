@@ -54,7 +54,7 @@ function addItem(item: MenuItemType) {
     if (item?.extraIngredients?.length > 0 && selectedExtras) {
       newItem.extraIngredients = selectedExtras
     }
-    console.log(newItem)
+
     addItemToCart(newItem)
   } else {
     addItemToCart(item)

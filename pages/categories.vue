@@ -56,7 +56,7 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
       method: 'DELETE',
     })
     if (res) {
-      console.log(res)
+
       refresh()
       toast.success('Category deleted')
     }
@@ -66,6 +66,14 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
     isLoading.value = false
   }
 }
+
+
+
+watchEffect(() => {
+  if (!isAdmin.value) {
+    navigateTo('/')
+  }
+})
 </script>
 
 <template>
@@ -85,9 +93,15 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
           <input type="text" id="name" v-model="categoryName" />
         </div>
 
-        <div class="pb-2">
+        <div class="flex gap-1 pb-2">
           <button class="border border-primary" type="submit">
             {{ editingCategory ? 'Update' : 'Create' }}
+          </button>
+          <button
+            v-if="editingCategory"
+            @click=";(editingCategory = ''), (categoryName = '')"
+          >
+            Cancel
           </button>
         </div>
       </div>
@@ -98,7 +112,7 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
       <div
         v-if="categories!.length > 0 "
         v-for="category in categories"
-        :key="category._id"
+        :key="category._id.toString()"
         class="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
       >
         <div class="grow">

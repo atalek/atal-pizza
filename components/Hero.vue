@@ -13,25 +13,27 @@
         delicious joy in life
       </p>
 
-      <div class="flex gap-3">
-        <button
-          class="flex bg-primary uppercase items-center gap-2 text-white rounded-full text-sm"
+      <div class="flex gap-4">
+        <NuxtLink
+          to="/menu"
+          class="flex justify-center bg-primary w-32 uppercase items-center gap-2 text-white rounded-full text-sm"
         >
           Order now
           <Icon
-            class="h-6 w-6"
+            class="h-5 w-5"
             name="material-symbols:arrow-circle-right-outline"
           />
-        </button>
-        <button
-          class="flex items-center border-0 gap-2 py-2 text-slate-600 font-semibold"
+        </NuxtLink>
+        <NuxtLink
+          to="#about"
+          class="flex items-center border-0 w-32 gap-2 py-2 text-slate-600 font-semibold"
         >
           Learn more
           <Icon
-            class="h-6 w-6"
+            class="h-5 w-5"
             name="material-symbols:arrow-circle-right-outline"
           />
-        </button>
+        </NuxtLink>
       </div>
     </div>
     <div class="hidden md:block w-full h-full">

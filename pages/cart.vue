@@ -35,7 +35,7 @@ async function proceedToCheckout() {
       window.location.href = link
     }
   } catch (error: any) {
-    console.log(error.data.message)
+    console.error(error.data.message)
   } finally {
     isLoading.value = false
   }

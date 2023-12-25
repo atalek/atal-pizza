@@ -31,7 +31,6 @@ async function handleUserInfoUpdate() {
       })
 
       if (res) {
-        console.log(res)
         navigateTo('/users')
       }
     } catch (err: any) {

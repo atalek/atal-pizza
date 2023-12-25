@@ -16,7 +16,7 @@ export type MenuItemType = {
   extraIngredients?: ExtraStuff[]
 }
 
-export type Category = {
+export type CategoryType = {
   _id: Types.ObjectId | string
   name: string
 }
@@ -63,4 +63,4 @@ export type OrderType = {
   createdAt: string
 }
 
-export type CategoryOrOptional = Category | null
+export type CategoryOrOptional = CategoryType | null

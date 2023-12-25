@@ -8,8 +8,10 @@ export default defineEventHandler(async event => {
     const orders = await Order.find().sort({ createdAt: -1 })
     return orders
   } else {
-    return await Order.find({ email: session?.user?.email }).sort({
+    const orders = await Order.find({ userEmail: session?.user?.email }).sort({
       createdAt: -1,
     })
+
+    return orders
   }
 })

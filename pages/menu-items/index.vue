@@ -22,7 +22,7 @@ const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
     <Loader v-if="pending" />
 
     <div class="text-sm text-slate-500 mt-8">Edit menu items:</div>
-    <div class="grid grid-cols-3 gap-2" v-if="menuItems!.length > 0">
+    <div class="grid md:grid-cols-3 gap-2" v-if="menuItems!.length > 0">
       <NuxtLink
         v-for="item in menuItems"
         :key="item.name"

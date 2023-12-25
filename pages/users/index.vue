@@ -7,24 +7,6 @@ const { data: isAdmin } = await useIsAdmin()
 
 const { data: users, pending, refresh } = await useFetch<User[]>('/api/users')
 const isLoading = ref(false)
-
-// async function handleDeleteUser(_id: Types.ObjectId) {
-//   isLoading.value = true
-//   try {
-//     const res = await $fetch('/api/users?_id=' + _id, {
-//       method: 'DELETE',
-//     })
-//     if (res) {
-//       console.log(res)
-//       refresh()
-//       toast.success('User deleted')
-//     }
-//   } catch (err: any) {
-//     toast.error(err.data.message)
-//   } finally {
-//     isLoading.value = false
-//   }
-// }
 </script>
 
 <template>
