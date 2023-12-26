@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import { CategoryOrOptional, ExtraStuff } from '~/types'
+import type { MenuItemType, CategoryOrOptional, ExtraStuff } from '~/types'
 
-type ItemInfoProps = {
-  categories?: CategoryOrOptional[] | null
+const { categories, itemInfo, onSubmit } = defineProps({
+  categories: {
+    type: Object as PropType<CategoryOrOptional | undefined>,
+    required: false,
+  },
   itemInfo: {
-    image?: string
-    name: string
-    description: string
-    basePrice: number
-    sizes?: ExtraStuff[]
-    category?: string
-    extraIngredients?: ExtraStuff[]
-  }
-  onSubmit: () => void
-}
+    type: Object as PropType<MenuItemType>,
+    required: true,
+  },
+  onSubmit: {
+    type: Function as PropType<(payload: Event) => void>,
+    required: true,
+  },
+})
 
-const { itemInfo, onSubmit } = defineProps<ItemInfoProps>()
 const sizes = ref(itemInfo?.sizes || [])
 const extraIngredient = ref(itemInfo?.extraIngredients || [])
 
@@ -56,10 +56,12 @@ const handleImageUpload = (value: string) => {
         <input type="text" id="name" v-model="itemInfo.name" />
 
         <label for="description"> Description</label>
-        <input type="text" id="description" v-model="itemInfo.description" />
+        <textarea id="description" rows="5" v-model="itemInfo.description" />
         <label for="category">Category</label>
         <select
-          v-if="categories!.length > 0"
+          v-if="
+            categories && Array.isArray(categories) && categories.length > 0
+          "
           name="category"
           id="category"
           v-model="itemInfo.category"
@@ -78,14 +80,14 @@ const handleImageUpload = (value: string) => {
         <MenuItemPriceProps
           name="Sizes"
           addLabel="Add item size"
-          :props="sizes"
+          :extraStuffProps="sizes"
           :addExtra="addSizes"
           @removeExtra="removeSizes"
         />
         <MenuItemPriceProps
           name="Extra ingredients"
           addLabel="Add ingredients prices"
-          :props="extraIngredient"
+          :extraStuffProps="extraIngredient"
           :addExtra="addExtraIngredient"
           @removeExtra="removeExtraIngredient"
         />

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MenuItemType } from 'types'
+import type { MenuItemType } from '~/types'
 
 const { data: isAdmin } = await useIsAdmin()
 const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
@@ -34,7 +34,7 @@ const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
             :src="item.image"
             :alt="item.name"
             provider="s3Provider"
-            class="rounded-md h-28 w-full"
+            class="rounded-md block mx-auto"
           />
         </div>
         <p class="text-center">{{ item.name }}</p>
@@ -42,5 +42,3 @@ const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
     </div>
   </section>
 </template>
-
-<style scoped></style>

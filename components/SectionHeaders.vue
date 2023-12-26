@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-type SectionHeaders = {
-  subHeader?: String
-  mainHeader?: String
-}
-
-const { subHeader, mainHeader } = defineProps<SectionHeaders>()
+defineProps({
+  subHeader: { type: String, required: false },
+  mainHeader: { type: String, required: false },
+})
 </script>
 
 <template>

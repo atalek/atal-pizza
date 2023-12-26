@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { MenuItemType } from '~/types'
+import type { MenuItemType } from '~/types'
 
 const { data: menuItems } = await useFetch<MenuItemType[]>('/api/menu-items')
 

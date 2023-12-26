@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { OrderType } from '~/types'
+import type { OrderType } from '~/types'
 import formatDate from '~/utils/formatDate'
 
 const { data: isAdmin } = await useIsAdmin()
@@ -39,7 +39,7 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
             <div
               class="text-gray-500 text-xs"
               v-for="item in order.orderItems"
-              :key="item._id.toString()"
+              :key="item!._id!.toString()"
             >
               {{ item.name }}
             </div>

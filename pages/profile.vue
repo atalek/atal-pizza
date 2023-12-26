@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { UserData } from '~/types'
+import type { UserData } from '~/types'
 import { toast } from 'vue3-toastify'
 
 definePageMeta({
@@ -48,40 +48,6 @@ async function handleProfileInfoUpdate() {
     erorr.value = 'All fields are required'
   }
 }
-
-// async function handleFileChange(e: Event) {
-//   isLoading.value = true
-//   try {
-//     const files = (e.target as HTMLInputElement).files as FileList
-
-//     if (files && files.length > 0) {
-//       const fileData = new FormData()
-//       fileData.set('file', files[0])
-//       const res = await $fetch('/api/upload', {
-//         method: 'POST',
-//         body: fileData,
-//         'Content-Type': 'multipart/form-data',
-//       })
-//       if (res) {
-//         userInfo.image = res
-//         refresh()
-//         toast.success('Profile picture updated')
-//       }
-//     }
-//   } catch (err: any) {
-//     erorr.value = err.data.message
-//   } finally {
-//     isLoading.value = false
-//   }
-// }
-
-// const googleImg = ref(false)
-
-// if (data?.value?.user) {
-//   googleImg.value = computed(async () =>
-//     data?.value?.user?.image.startsWith('https://lh3.googleusercontent.com/')
-//   )
-// }
 </script>
 
 <template>

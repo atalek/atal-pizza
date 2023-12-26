@@ -6,6 +6,7 @@ defineProps({
   isAdmin: {
     type: Boolean as PropType<boolean | null>,
     required: true,
+    default: false,
   },
 })
 

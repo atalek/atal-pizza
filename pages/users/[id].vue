@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserData } from '~/types'
+import type { UserData, UserDataType } from '~/types'
 
 const { data: isAdmin } = await useIsAdmin()
 
@@ -9,12 +9,12 @@ const { data, pending } = await useFetch<UserData>(`/api/users/${userId}`)
 const isLoading = ref(false)
 const error = ref('')
 
-const userInfo = reactive({
+const userInfo = reactive<UserDataType>({
   name: data?.value?.user?.name || '',
-  image: data?.value?.user?.image || '',
   email: data?.value?.user?.email || '',
-  admin: data?.value?.userInfo?.admin || false,
-  phoneNumber: data.value?.userInfo?.phone || undefined,
+  image: data?.value?.user?.image || '',
+  admin: data?.value?.user?.admin || false,
+  phoneNumber: data?.value?.userInfo?.phone || undefined,
   streetAddress: data.value?.userInfo?.streetAddress || '',
   postalCode: data.value?.userInfo?.postalCode || '',
   city: data.value?.userInfo?.city || '',

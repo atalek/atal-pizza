@@ -1,41 +1,26 @@
 <script lang="ts" setup>
 import { Types } from 'mongoose'
-import { MenuItemType } from '~/types'
+import type { MenuItemType, ExtraStuff } from '~/types'
 
-type ExtraStuff = {
-  name: string
-  extraPrice: number
-}
-
-export type MenuItemProps = {
+const { menuItem } = defineProps({
   menuItem: {
-    _id: Types.ObjectId
-    image: string
-    name: string
-    description: string
-    category: string
-    basePrice: number
-    sizes?: ExtraStuff[]
-    extraIngredients?: ExtraStuff[]
-  }
-}
+    type: Object as PropType<MenuItemType>,
+    required: true,
+  },
+})
 
-const props = defineProps<MenuItemProps>()
 const showPopup = ref(false)
-const selectedSize = ref(props.menuItem?.sizes?.[0] || null)
-const selectedExtras = reactive([])
+const selectedSize = ref(menuItem?.sizes?.[0] || null)
+const selectedExtras = reactive<ExtraStuff[]>([])
 
 function handleOpenPopup(itemId: Types.ObjectId) {
   showPopup.value = true
 }
 
-const { cartItems, addItemToCart } = useCart()
+const { addItemToCart } = useCart()
 
-function updateSelectedExtras(
-  event: HTMLInputElement,
-  extraStuff: ExtraStuff[]
-) {
-  if (event?.target?.checked) {
+function updateSelectedExtras(event: Event, extraStuff: ExtraStuff) {
+  if (event.target instanceof HTMLInputElement && event.target.checked) {
     selectedExtras.push(extraStuff)
   } else {
     const index = selectedExtras.indexOf(extraStuff)
@@ -46,16 +31,16 @@ function updateSelectedExtras(
 }
 
 function addItem(item: MenuItemType) {
-  if (item?.sizes?.length > 0) {
+  if (item!.sizes!.length > 0) {
     const newItem = {
       ...item,
       sizes: [selectedSize.value],
     }
-    if (item?.extraIngredients?.length > 0 && selectedExtras) {
+    if (item!.extraIngredients!.length > 0 && selectedExtras) {
       newItem.extraIngredients = selectedExtras
     }
 
-    addItemToCart(newItem)
+    addItemToCart(newItem as MenuItemType)
   } else {
     addItemToCart(item)
   }
@@ -78,22 +63,22 @@ function addItem(item: MenuItemType) {
       >
         <NuxtImg
           provider="s3Provider"
-          :src="props.menuItem.image"
+          :src="menuItem.image"
           class="h-72 w-64 mx-auto"
-          :alt="props.menuItem.name"
+          :alt="menuItem.name"
         />
         <h2 class="text-lg font-bold text-center mb-2">
-          {{ props.menuItem.name }}
+          {{ menuItem.name }}
         </h2>
         <p class="text-center text-slate-500 text-sm mb-2">
-          {{ props.menuItem.description }}
+          {{ menuItem.description }}
         </p>
 
-        <div v-if="props?.menuItem?.sizes?.length > 0">
+        <div v-if="menuItem!.sizes!.length > 0">
           <div class="py-2">
             <h3 class="text-center text-slate-700">Pick your size</h3>
             <label
-              v-for="size in props.menuItem.sizes"
+              v-for="size in menuItem.sizes"
               :key="size.name"
               class="flex items-center gap-2 p-4 border rounded-md mb-1"
             >
@@ -106,18 +91,18 @@ function addItem(item: MenuItemType) {
               />
               <span
                 >{{ size.name }} ${{
-                  props.menuItem.basePrice + size.extraPrice
+                  menuItem.basePrice + size.extraPrice
                 }}</span
               >
             </label>
           </div>
         </div>
 
-        <div v-if="props?.menuItem?.extraIngredients?.length > 0">
+        <div v-if="menuItem!.extraIngredients!.length > 0">
           <div class="py-2">
             <h3 class="text-center text-slate-700">Pick your extras</h3>
             <label
-              v-for="extraStuff in props.menuItem.extraIngredients"
+              v-for="extraStuff in menuItem.extraIngredients"
               :key="extraStuff.name"
               class="flex items-center gap-2 p-4 border rounded-md mb-1"
             >
@@ -134,7 +119,7 @@ function addItem(item: MenuItemType) {
 
         <button
           class="primary sticky bottom-2"
-          @click="addItem(props.menuItem), (showPopup = false)"
+          @click="addItem(menuItem), (showPopup = false)"
         >
           Add to cart
         </button>
@@ -144,7 +129,7 @@ function addItem(item: MenuItemType) {
   </div>
 
   <MenuItemTile
-    :menuItem="props.menuItem"
-    @openPopup="handleOpenPopup(props.menuItem._id)"
+    :menuItem="menuItem"
+    @openPopup="handleOpenPopup(menuItem._id)"
   />
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { toast } from 'vue3-toastify'
-import { UserData } from '~/types'
+import type { UserData } from '~/types'
 
 const route = useRoute()
 
@@ -63,7 +63,7 @@ if (process.client) {
       <div>
         <CartProduct
           v-for="item in cartItems"
-          :key="item._id.toString()"
+          :key="item!._id!.toString()"
           :item="item"
           :remove="true"
         />

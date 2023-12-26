@@ -31,7 +31,7 @@ const filteredCategories = computed(() => {
       >
         <MenuItem
           v-for="item in category.items"
-          :key="item._id.toString()"
+          :key="item!._id!.toString()"
           :menuItem="item"
         />
       </div>

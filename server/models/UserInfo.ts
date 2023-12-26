@@ -6,7 +6,7 @@ export type UserInfoDocument = Document & {
   postalCode: string
   city: string
   country: string
-  phone: string
+  phone: number
   admin: boolean
 }
 
@@ -17,7 +17,7 @@ const userInfoSchema = new Schema<UserInfoDocument>(
     postalCode: { type: String },
     city: { type: String },
     country: { type: String },
-    phone: { type: String },
+    phone: { type: Number },
     admin: { type: Boolean, default: false },
   },
   { timestamps: true }

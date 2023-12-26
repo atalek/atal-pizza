@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { OrderType } from '~/types'
+import type { OrderType } from '~/types'
 
 const route = useRoute()
 const orderId = route.params.id
@@ -41,7 +41,7 @@ const addressInfo = reactive({
     <div v-if="order" class="grid md:grid-cols-2 gap-8">
       <div>
         <div v-for="item in order.orderItems">
-          <CartProduct :item="item" :key="item._id.toString()" />
+          <CartProduct :item="item" :key="item!._id!.toString()" />
         </div>
         <div class="text-right py-2 text-slate-500">
           Subtotal:

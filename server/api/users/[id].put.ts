@@ -13,6 +13,7 @@ export default defineEventHandler(async event => {
   const params = event.context.params
 
   const body = await readBody<ProfileUpdateData>(event)
+  console.log(body)
 
   const user = await User.findById({ _id: params?.id }).select('-password')
   let userInfo
@@ -34,10 +35,10 @@ export default defineEventHandler(async event => {
     )
   }
 
-  if (user || userInfo) {
-    user!.name = body.name
-    user!.image = body.image
-    user!.admin = body.admin
+  if (user && userInfo) {
+    user.name = body.name || user.name
+    user.image = body.image || user.image
+    user.admin = body.admin || user.admin
 
     await user?.save()
     return { user, userInfo }

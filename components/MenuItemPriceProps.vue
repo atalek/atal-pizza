@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-type MenuItemProps = {
-  name?: string
-  addLabel: string
-  props?: {
-    name: string
-    extraPrice: number
-  }[]
-  addExtra: () => void
-}
+import type { ExtraStuff } from '~/types'
 
-const props = defineProps<MenuItemProps>()
+defineProps({
+  name: { type: String, required: false },
+  addLabel: { type: String, required: false },
+  extraStuffProps: { type: Object as PropType<ExtraStuff[]>, required: false },
+  addExtra: {
+    type: Function as PropType<(payload: MouseEvent) => void>,
+    required: true,
+  },
+})
 
 const isOpen = ref(false)
 
@@ -30,14 +30,16 @@ function removeExtra(index: number) {
       <Icon v-if="isOpen" name="fa-solid:chevron-up" />
       <Icon v-if="!isOpen" name="fa-solid:chevron-down" />
       <span>{{ name }} </span>
-      <span>{{ props.props.length > 0 ? props.length : '' }}</span>
+      <span>{{
+        extraStuffProps!.length > 0 ? extraStuffProps!.length : ''
+      }}</span>
     </button>
 
     <div :class="{ block: isOpen, hidden: !isOpen }">
       <div
         class="flex items-end gap-2"
-        v-if="props.props?.length > 0"
-        v-for="(prop, index) in props.props"
+        v-if="extraStuffProps!.length > 0"
+        v-for="(prop, index) in extraStuffProps"
         key="index"
       >
         <div>

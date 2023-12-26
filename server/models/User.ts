@@ -37,6 +37,10 @@ const userSchema = new Schema<UserDocument>(
       lowercase: true,
       default: '86fd7bcf-7c0b-45e0-92d2-f71f143c1eb7.webp',
     },
+    admin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 )

@@ -4,12 +4,17 @@ const currentYear = new Date().getFullYear()
 
 <template>
   <main class="max-w-4xl p-4 mx-auto">
-    <Header />
+    <div>
+      <Header />
 
-    <slot />
-    <footer class="border-t p-8 text-center text-slate-600 mt-16">
-      &copy; {{ currentYear }} All rights reserved
-    </footer>
+      <slot />
+      <footer class="border-t p-8 text-center text-slate-600 mt-16">
+        &copy; {{ currentYear }} All rights reserved
+      </footer>
+      <div
+        class="fixed bg-gradient-to-tr from-white to-emerald-50 z-[-1] inset-0 opacity-50"
+      />
+    </div>
   </main>
 </template>
 

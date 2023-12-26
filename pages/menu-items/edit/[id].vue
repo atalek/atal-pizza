@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CategoryOrOptional, MenuItemType } from 'types'
+import type { CategoryOrOptional, MenuItemType } from '~/types'
 
 const route = useRoute()
 const itemId = route.params.id
@@ -7,18 +7,18 @@ const { data: isAdmin } = await useIsAdmin()
 const { data: menuItem, pending } = await useFetch<MenuItemType>(
   `/api/menu-items/${itemId}`
 )
-const { data: categories } = useFetch<CategoryOrOptional[]>('/api/categories')
+const { data: categories } = useFetch<CategoryOrOptional>('/api/categories')
 
 const isLoading = ref(false)
 
-const itemInfo = reactive({
+const itemInfo = reactive<MenuItemType>({
   name: menuItem!.value!.name || '',
   description: menuItem!.value!.description || '',
   basePrice: menuItem!.value!.basePrice || 0,
   image: menuItem!.value!.image || '',
-  sizes: menuItem!.value?.sizes || [],
+  sizes: menuItem?.value?.sizes || [],
   category: menuItem!.value?.category || '',
-  extraIngredients: menuItem!.value?.extraIngredients || [],
+  extraIngredients: menuItem?.value?.extraIngredients || [],
 })
 
 async function handleEditMenuItem() {
@@ -58,5 +58,3 @@ async function handleEditMenuItem() {
     />
   </section>
 </template>
-
-<style scoped></style>

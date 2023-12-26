@@ -6,46 +6,52 @@ export type ExtraStuff = {
 }
 
 export type MenuItemType = {
-  _id: Types.ObjectId
-  image: string
-  name: string
-  description: string
-  category: string
-  basePrice: number
+  _id?: Types.ObjectId
+  image?: string
+  name?: string
+  description?: string
+  category?: string
+  basePrice?: number
   sizes?: ExtraStuff[]
   extraIngredients?: ExtraStuff[]
 }
 
-export type CategoryType = {
-  _id: Types.ObjectId | string
-  name: string
-}
-
-export type User = {
-  _id: Types.ObjectId
-  name?: string
-  email: string
-  image: string
-  admin: boolean
-}
-
 export type UserData = {
   user: {
+    _id?: Types.ObjectId
     name?: string
     email: string
     image: string
-    admin: string
+    admin: boolean
   }
   userInfo: {
+    _id?: Types.ObjectId
     email: string
     streetAddress?: string
     postalCode?: string
     city?: string
     country?: string
-    phone?: number
+    phone?: number | undefined
     admin?: boolean
   }
 }
+
+export type UserType = {
+  name?: string
+  email: string
+  image: string
+  admin?: boolean
+}
+
+export type UserInfoType = {
+  phoneNumber?: number | undefined
+  streetAddress?: string
+  postalCode?: string
+  city?: string
+  country?: string
+}
+
+export type UserDataType = UserType & UserInfoType
 
 export type OrderType = {
   _id: Types.ObjectId
@@ -61,6 +67,11 @@ export type OrderType = {
   total: number
   orderItems: MenuItemType[]
   createdAt: string
+}
+
+export type CategoryType = {
+  _id: Types.ObjectId | string
+  name: string
 }
 
 export type CategoryOrOptional = CategoryType | null

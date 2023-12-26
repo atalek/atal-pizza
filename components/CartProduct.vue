@@ -1,28 +1,5 @@
 <script lang="ts" setup>
-import { Types } from 'mongoose'
-import { MenuItemType } from '~/types'
-
-// type ExtraStuff = {
-//   name: string
-//   extraPrice: number
-// }
-
-// type ProductInfo = {
-//   item: {
-//     _id: Types.ObjectId
-//     image: string
-//     name: string
-//     description: string
-//     category: string
-//     basePrice: number
-//     sizes?: ExtraStuff[]
-//     extraIngredients?: ExtraStuff[]
-//   }
-//   remove?: boolean
-// }
-
-// const props = defineProps<ProductInfo>()
-// const item = props.item
+import type { MenuItemType } from '~/types'
 
 defineProps({
   item: {

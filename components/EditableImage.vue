@@ -37,7 +37,7 @@ async function handleFileChange(e: Event) {
 }
 
 const isGoogleImage = computed(() => {
-  return profilePic.value?.startsWith('https://lh3.google')
+  return profilePic.value.startsWith('https://lh3.google')
 })
 </script>
 

@@ -32,6 +32,10 @@ label {
 label + input {
   margin-top: -2px;
 }
+textarea {
+  @apply block w-full mb-2 rounded-xl;
+  @apply border p-2 border-gray-300 bg-gray-100;
+}
 button,
 .button {
   @apply flex w-full justify-center gap-2 text-gray-700 font-semibold;

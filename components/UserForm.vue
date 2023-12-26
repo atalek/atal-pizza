@@ -1,23 +1,12 @@
 <script lang="ts" setup>
-type UserInfoProps = {
-  userInfo: {
-    name: string
-    image: string
-    email: string
-    admin?: boolean
-    phoneNumber?: number
-    streetAddress?: string
-    postalCode?: string
-    city?: string
-    country?: string
-  }
+import type { UserDataType } from '~/types'
 
-  isLoading: boolean
-  isAdmin?: boolean | null
-  onSubmit: () => Promise<void>
-}
-
-const { userInfo, isLoading } = defineProps<UserInfoProps>()
+const { userInfo } = defineProps({
+  userInfo: { type: Object as PropType<UserDataType>, required: true },
+  isLoading: { type: Boolean as PropType<boolean>, required: true },
+  isAdmin: { type: Boolean as PropType<boolean | null>, required: false },
+  onSubmit: { type: Function as PropType<(payload: Event) => void> },
+})
 
 const handleImageUpload = (value: string) => {
   userInfo.image = value

@@ -11,7 +11,7 @@ const { data: isAdmin } = await useIsAdmin()
 const categoryName = ref('')
 const isLoading = ref(false)
 const error = ref('')
-const editingCategory = ref('')
+const editingCategory = ref<Types.ObjectId | null>(null)
 const { data: categories, refresh } = await useFetch<Category[]>(
   '/api/categories'
 )
@@ -19,10 +19,10 @@ const { data: categories, refresh } = await useFetch<Category[]>(
 async function handleCategorySubmit() {
   isLoading.value = true
   try {
-    const data: Category = { name: categoryName.value }
+    const data = { name: categoryName.value }
 
     if (editingCategory.value) {
-      data._id = editingCategory.value
+      ;(data as Category)._id = editingCategory.value
     }
     const res = await $fetch('/api/categories', {
       method: editingCategory.value ? 'PUT' : 'POST',
@@ -31,7 +31,7 @@ async function handleCategorySubmit() {
 
     if (res) {
       categoryName.value = ''
-      editingCategory.value = ''
+      editingCategory.value = null
       refresh()
       toast.success(
         editingCategory.value ? 'Category updated' : 'Category added'
@@ -56,7 +56,6 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
       method: 'DELETE',
     })
     if (res) {
-
       refresh()
       toast.success('Category deleted')
     }
@@ -66,8 +65,6 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
     isLoading.value = false
   }
 }
-
-
 
 watchEffect(() => {
   if (!isAdmin.value) {
@@ -99,7 +96,7 @@ watchEffect(() => {
           </button>
           <button
             v-if="editingCategory"
-            @click=";(editingCategory = ''), (categoryName = '')"
+            @click=";(editingCategory = null), (categoryName = '')"
           >
             Cancel
           </button>

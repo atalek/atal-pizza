@@ -33,38 +33,42 @@ const mobileNavOpen = ref(false)
         </button>
       </div>
     </div>
-    <div
-      v-if="mobileNavOpen"
-      class="md:hidden p-4 bg-slate-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
-      @click="() => (mobileNavOpen = false)"
-    >
-      <NuxtLink href="/">Home</NuxtLink>
-      <NuxtLink href="/menu">Menu</NuxtLink>
-      <NuxtLink href="/#about">About</NuxtLink>
-      <NuxtLink href="/#contact">Contact</NuxtLink>
+    <Transition name="slide-fade">
+      <div
+        v-if="mobileNavOpen"
+        class="md:hidden p-4 bg-slate-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
+        @click="() => (mobileNavOpen = false)"
+      >
+        <NuxtLink href="/">Home</NuxtLink>
+        <NuxtLink href="/menu">Menu</NuxtLink>
+        <NuxtLink href="/#about">About</NuxtLink>
+        <NuxtLink href="/#contact">Contact</NuxtLink>
 
-      <div v-if="status === 'unauthenticated'">
-        <NuxtLink href="/login" class="px-8 py-2 font-semibold">Login</NuxtLink>
-        <NuxtLink
-          href="/register"
-          class="bg-primary rounded-full text-white px-8 py-2"
-          >Register</NuxtLink
-        >
+        <div v-if="status === 'unauthenticated'">
+          <NuxtLink href="/login" class="px-8 py-2 font-semibold"
+            >Login</NuxtLink
+          >
+          <NuxtLink
+            href="/register"
+            class="bg-primary rounded-full text-white px-8 py-2"
+            >Register</NuxtLink
+          >
+        </div>
+        <div v-if="status === 'authenticated'" class="flex flex-col">
+          <NuxtLink
+            href="/profile"
+            class="px-4 py-2 font-semibold whitespace-nowrap"
+            >Hello, {{ userName }}</NuxtLink
+          >
+          <NuxtLink
+            @click="signOut"
+            class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
+          >
+            Logout
+          </NuxtLink>
+        </div>
       </div>
-      <div v-if="status === 'authenticated'" class="flex flex-col">
-        <NuxtLink
-          href="/profile"
-          class="px-4 py-2 font-semibold whitespace-nowrap"
-          >Hello, {{ userName }}</NuxtLink
-        >
-        <NuxtLink
-          @click="signOut"
-          class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
-        >
-          Logout
-        </NuxtLink>
-      </div>
-    </div>
+    </Transition>
 
     <div class="hidden md:flex items-center justify-between">
       <nav class="flex gap-6 text-slate-600 font-semibold items-center">
@@ -114,3 +118,19 @@ const mobileNavOpen = ref(false)
     </div>
   </header>
 </template>
+
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+</style>
