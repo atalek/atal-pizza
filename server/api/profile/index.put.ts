@@ -34,9 +34,9 @@ export default defineEventHandler(async event => {
     { upsert: true, new: true }
   )
 
-  if (user || userInfo) {
-    user.name = body.name
-    user.image = body.image
+  if (user && userInfo) {
+    user.name = body.name || user.name
+    user.image = body.image || user.image
 
     await user?.save()
     return { user, userInfo }

@@ -37,7 +37,7 @@ function isLinkActive(to: string) {
       >Orders</NuxtLink
     >
   </div>
-  <div v-else class="flex justify-center gap-2 tabs mb-6">
+  <div v-if="!isAdmin" class="flex justify-center gap-2 tabs mb-6">
     <NuxtLink :class="{ active: isLinkActive('/profile') }" to="/profile"
       >Profile</NuxtLink
     >

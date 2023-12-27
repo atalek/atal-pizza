@@ -2,8 +2,26 @@
 import type { OrderType } from '~/types'
 import formatDate from '~/utils/formatDate'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const { data: isAdmin } = await useIsAdmin()
-const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
+
+const orders = ref<OrderType[]>()
+const pending = ref(false)
+
+try {
+  pending.value = true
+  const res = await $fetch<OrderType[]>('/api/orders')
+  if (res) {
+    orders.value = res
+  }
+} catch (error) {
+  console.error(error)
+} finally {
+  pending.value = false
+}
 </script>
 
 <template>
@@ -11,7 +29,7 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
     <UserTabs :isAdmin="isAdmin" />
 
     <Loader v-if="pending" />
-    <div v-if="orders!.length > 0" class="mt-8">
+    <div v-if="orders" class="mt-8">
       <div
         v-for="order in orders"
         :key="order._id.toString()"
@@ -23,7 +41,7 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
               class="p-2 rounded-md text-white whitespace-nowrap w-[72px] text-center"
               :class="{
                 'bg-green-500': order.isPaid,
-                'bg-red-400': !order.isPaid,
+                'bg-red-600': !order.isPaid,
               }"
             >
               {{ order.isPaid ? 'Paid' : 'Not paid' }}
@@ -39,7 +57,7 @@ const { data: orders, pending } = await useFetch<OrderType[]>('/api/orders')
             <div
               class="text-gray-500 text-xs"
               v-for="item in order.orderItems"
-              :key="item!._id!.toString()"
+              :key="item._id.toString()"
             >
               {{ item.name }}
             </div>

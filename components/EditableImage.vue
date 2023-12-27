@@ -7,6 +7,7 @@ const { image } = defineProps<ImageProps>()
 const changeImage = ref('')
 const isLoading = ref(false)
 const profilePic = ref(image || '')
+const error = ref('')
 
 const emit = defineEmits()
 
@@ -31,6 +32,7 @@ async function handleFileChange(e: Event) {
     }
   } catch (err: any) {
     console.error(err)
+    error.value = err.data.message
   } finally {
     isLoading.value = false
   }
@@ -42,7 +44,7 @@ const isGoogleImage = computed(() => {
 </script>
 
 <template>
-  <div class="p-2 rounded-lg">
+  <div class="p-2 rounded-lg max-w-[140px]">
     <div
       v-if="image === ''"
       class="bg-slate-200 p-4 text-slate-500 rounded-md text-center"
@@ -70,5 +72,6 @@ const isGoogleImage = computed(() => {
         >Change image</span
       >
     </label>
+    <span v-if="error" class="text-red-500 text-xs">{{ error }}</span>
   </div>
 </template>

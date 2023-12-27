@@ -5,6 +5,12 @@ const { data: isAdmin } = await useIsAdmin()
 const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
   '/api/menu-items'
 )
+
+watchEffect(() => {
+  if (!isAdmin.value) {
+    navigateTo('/')
+  }
+})
 </script>
 
 <template>

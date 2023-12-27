@@ -11,6 +11,8 @@ const itemInfo = reactive({
   description: '',
   basePrice: 0,
   image: '',
+  sizes: [],
+  extraIngredients: [],
 })
 
 async function handleCreateMenuItem() {
@@ -30,6 +32,12 @@ async function handleCreateMenuItem() {
     isLoading.value = false
   }
 }
+
+watchEffect(() => {
+  if (!isAdmin.value) {
+    navigateTo('/')
+  }
+})
 </script>
 
 <template>

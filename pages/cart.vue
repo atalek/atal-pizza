@@ -4,28 +4,27 @@ import type { UserData } from '~/types'
 
 const route = useRoute()
 
-const { cartItems, totalPrice, cartProductPrice, removeItemFromCart } =
-  useCart()
+const { cartItems, totalPrice } = useCart()
 
 const total = computed(() => {
   return totalPrice.value + 5
 })
 const isLoading = ref(false)
-const { data, pending } = useFetch<UserData>('/api/profile')
+const data = await $fetch<UserData>('/api/profile')
 
 const addressInfo = reactive({
-  phoneNumber: data.value?.userInfo?.phone || undefined,
-  streetAddress: data.value?.userInfo?.streetAddress || '',
-  postalCode: data.value?.userInfo.postalCode || '',
-  city: data.value?.userInfo.city || '',
-  country: data.value?.userInfo.country || '',
+  phoneNumber: data?.userInfo?.phone || undefined,
+  streetAddress: data?.userInfo?.streetAddress || '',
+  postalCode: data?.userInfo.postalCode || '',
+  city: data?.userInfo.city || '',
+  country: data?.userInfo.country || '',
 })
 
 async function proceedToCheckout() {
   const body = { addressInfo: addressInfo, orderItems: cartItems.value }
   isLoading.value = true
   try {
-    const res = await $fetch('/api/checkout', {
+    const res = await $fetch('/api/stripe/checkout', {
       method: 'POST',
       body: body,
     })
@@ -63,7 +62,7 @@ if (process.client) {
       <div>
         <CartProduct
           v-for="item in cartItems"
-          :key="item!._id!.toString()"
+          :key="item._id"
           :item="item"
           :remove="true"
         />
@@ -83,7 +82,7 @@ if (process.client) {
       </div>
       <div class="bg-slate-100 p-4 rounded-lg">
         <h2>Checkout</h2>
-        <Loader v-if="isLoading || pending" />
+        <Loader v-if="isLoading" />
         <form @submit.prevent="proceedToCheckout">
           <AddressInputs :addressInfo="addressInfo" />
           <button type="submit">Pay ${{ total }}</button>

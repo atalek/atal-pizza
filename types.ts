@@ -37,6 +37,7 @@ export type UserData = {
 }
 
 export type UserType = {
+  _id?: Types.ObjectId
   name?: string
   email: string
   image: string

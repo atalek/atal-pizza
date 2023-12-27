@@ -5,12 +5,13 @@ definePageMeta({
   middleware: 'authenticated',
 })
 
+const route = useRoute()
+const errorMessage = route.query.error
+
 const loginInfo = reactive({
   email: '',
   password: '',
 })
-
-const error = ref('')
 
 const isLoading = ref(false)
 
@@ -23,11 +24,7 @@ async function handleLogin() {
         callbackUrl: '/',
       })
     } catch (err: any) {
-      if (err.data && err.data.error) {
-        error.value = err.data.error
-      } else {
-        console.log('Unexpected error:', err)
-      }
+      console.error(err)
     } finally {
       isLoading.value = false
     }
@@ -67,8 +64,8 @@ async function handleLogin() {
 
         <template v-else>Log in</template>
       </button>
-      <div v-if="error" class="my-1 text-red-600 text-sm text-center">
-        <p>{{ error }}</p>
+      <div v-if="errorMessage" class="my-1 text-red-600 text-center">
+        <p>{{ errorMessage }}</p>
       </div>
       <p class="my-2 text-center text-slate-600">or continue with google</p>
     </form>

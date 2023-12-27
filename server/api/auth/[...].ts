@@ -24,6 +24,7 @@ export default NuxtAuthHandler({
 
   pages: {
     signIn: '/login',
+    error: '/login',
   },
   providers: [
     // @ts-expect-error
@@ -47,14 +48,6 @@ export default NuxtAuthHandler({
       },
       async authorize(credentials: { email: string; password: string }) {
         const user = await User.findOne({ email: credentials.email })
-
-        if (!user) {
-          throw createError({
-            statusCode: 404,
-            statusMessage: 'Bad request',
-            message: 'User with that email does not exist',
-          })
-        }
 
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
           return {

@@ -49,4 +49,9 @@ export default defineNuxtConfig({
     baseURL: process.env.AUTH_ORIGIN,
     provider: { type: 'authjs' },
   },
+
+  routeRules: {
+    '/profile': { ssr: false },
+    '/cart': { ssr: false },
+  },
 })

@@ -40,6 +40,12 @@ async function handleUserInfoUpdate() {
     }
   }
 }
+
+watchEffect(() => {
+  if (!isAdmin.value) {
+    navigateTo('/')
+  }
+})
 </script>
 
 <template>

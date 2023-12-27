@@ -1,16 +1,29 @@
 <script setup lang="ts">
 import type { OrderType } from '~/types'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const route = useRoute()
 const orderId = route.params.id
 
 const { clearCart } = useCart()
 
-const {
-  data: order,
-  pending,
-  error,
-} = useFetch<OrderType>(`/api/orders/${orderId}`)
+const order = ref<OrderType>()
+const pending = ref(false)
+
+try {
+  pending.value = true
+  const res = await $fetch<OrderType>(`/api/orders/${orderId}`)
+  if (res) {
+    order.value = res
+  }
+} catch (error) {
+  console.error(error)
+} finally {
+  pending.value = false
+}
 
 if (process.client) {
   if (route.fullPath.includes('clear-cart=1')) {
@@ -41,7 +54,7 @@ const addressInfo = reactive({
     <div v-if="order" class="grid md:grid-cols-2 gap-8">
       <div>
         <div v-for="item in order.orderItems">
-          <CartProduct :item="item" :key="item!._id!.toString()" />
+          <CartProduct :item="item" :key="item._id.toString()" />
         </div>
         <div class="text-right py-2 text-slate-500">
           Subtotal:

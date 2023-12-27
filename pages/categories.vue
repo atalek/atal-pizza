@@ -60,7 +60,7 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
       toast.success('Category deleted')
     }
   } catch (err: any) {
-    toast.error(err.data.message)
+    error.value = err.data.message
   } finally {
     isLoading.value = false
   }
@@ -89,7 +89,6 @@ watchEffect(() => {
           }}</label>
           <input type="text" id="name" v-model="categoryName" />
         </div>
-
         <div class="flex gap-1 pb-2">
           <button class="border border-primary" type="submit">
             {{ editingCategory ? 'Update' : 'Create' }}
@@ -105,6 +104,8 @@ watchEffect(() => {
     </form>
 
     <div>
+      <div v-if="error" class="text-red-600">{{ error }}</div>
+
       <h2 class="mt-8 text-sm text-slate-500">Edit category:</h2>
       <div
         v-if="categories!.length > 0 "

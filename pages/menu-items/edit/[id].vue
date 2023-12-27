@@ -12,6 +12,7 @@ const { data: categories } = useFetch<CategoryOrOptional>('/api/categories')
 const isLoading = ref(false)
 
 const itemInfo = reactive<MenuItemType>({
+  _id: menuItem!.value!._id || undefined,
   name: menuItem!.value!.name || '',
   description: menuItem!.value!.description || '',
   basePrice: menuItem!.value!.basePrice || 0,
@@ -36,6 +37,25 @@ async function handleEditMenuItem() {
     isLoading.value = false
   }
 }
+
+async function handleDeleteMenuItem(menuItemId: string) {
+  try {
+    const res = await $fetch(`/api/menu-items/${menuItemId}`, {
+      method: 'DELETE',
+    })
+    if (res) {
+      navigateTo('/menu-items')
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+watchEffect(() => {
+  if (!isAdmin.value) {
+    navigateTo('/')
+  }
+})
 </script>
 
 <template>
@@ -56,5 +76,13 @@ async function handleEditMenuItem() {
       :categories="categories"
       :onSubmit="handleEditMenuItem"
     />
+
+    <div class="ml-auto md:max-w-[392px] md:mr-12">
+      <DeleteButton
+        label="Delete"
+        :_id="itemInfo._id"
+        :onDelete="() => handleDeleteMenuItem(itemInfo._id)"
+      />
+    </div>
   </section>
 </template>

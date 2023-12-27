@@ -1,9 +1,14 @@
+import { Types } from 'mongoose'
+
 export default defineEventHandler(async event => {
-  const users = await User.find().select('-password')
+  const body = event.context.params
 
   const loggedInUser = event.context.loggedInUser
   if (loggedInUser && loggedInUser.admin) {
-    return users
+    if (body?.id) {
+      await MenuItem.findByIdAndDelete(body.id)
+      return 'Menu item deleted'
+    }
   } else {
     throw createError({
       statusCode: 403,

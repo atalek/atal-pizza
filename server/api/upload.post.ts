@@ -1,10 +1,9 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import { getServerSession } from '#auth'
 import { v4 as uuid } from 'uuid'
 
 export default defineEventHandler(async event => {
   const body = await readMultipartFormData(event)
-  const session = await getServerSession(event)
+  const allowedFormats = ['png', 'jpeg', 'webp', 'avif']
 
   const s3Client = new S3Client({
     region: 'eu-central-1',
@@ -17,6 +16,14 @@ export default defineEventHandler(async event => {
   const file = body?.find(item => item.name === 'file')
 
   const ext = file?.filename?.split('.').pop()
+
+  if (ext && !allowedFormats.includes(ext)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid file format.Only png,jpeg,webp and avif allowed',
+    })
+  }
+
   const newFileName = uuid() + '.' + ext
   const bucket = 'food-orderink'
 
@@ -31,11 +38,11 @@ export default defineEventHandler(async event => {
   )
 
   if (res) {
-    User.findOneAndUpdate(
-      { email: session?.user?.email },
-      { image: newFileName }
-    ).exec()
+    return newFileName
+  } else {
+    throw createError({
+      statusCode: 400,
+      message: 'Error uploading file',
+    })
   }
-
-  return newFileName
 })
