@@ -20,7 +20,11 @@ const mobileNavOpen = ref(false)
       >
 
       <div class="flex gap-2 items-center">
-        <NuxtLink to="/cart" class="relative px-2 py-2 mr-2">
+        <NuxtLink
+          to="/cart"
+          class="relative px-2 py-2 mr-2"
+          aria-label="View Cart"
+        >
           <span
             v-if="totalItems > 0"
             class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
@@ -28,7 +32,11 @@ const mobileNavOpen = ref(false)
           </span>
           <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
         </NuxtLink>
-        <button class="p-2" @click="mobileNavOpen = !mobileNavOpen">
+        <button
+          class="p-2"
+          @click="mobileNavOpen = !mobileNavOpen"
+          aria-label="Toggle Mobile Navigation"
+        >
           <Icon name="fa-solid:bars" class="h-6 w-6" />
         </button>
       </div>
@@ -63,6 +71,7 @@ const mobileNavOpen = ref(false)
           <NuxtLink
             @click="signOut"
             class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
+            aria-label="Logout"
           >
             Logout
           </NuxtLink>
@@ -99,7 +108,11 @@ const mobileNavOpen = ref(false)
             >Hello, {{ userName }}</NuxtLink
           >
 
-          <NuxtLink to="/cart" class="relative px-2 py-2 mr-2">
+          <NuxtLink
+            to="/cart"
+            class="relative px-2 py-2 mr-2"
+            aria-label="View Cart"
+          >
             <span
               v-if="totalItems > 0"
               class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
@@ -109,7 +122,9 @@ const mobileNavOpen = ref(false)
           </NuxtLink>
           <NuxtLink
             @click="signOut"
+            to="/"
             class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
+            aria-label="Logout"
           >
             Logout
           </NuxtLink>

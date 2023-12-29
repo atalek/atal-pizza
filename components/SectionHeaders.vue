@@ -14,5 +14,3 @@ defineProps({
     {{ mainHeader }}
   </h2>
 </template>
-
-<style scoped></style>

@@ -9,13 +9,12 @@ if (process.client) {
 useSeoMeta({
   ogTitle: 'ATAL Pizza',
   ogDescription: 'Pizza ordering website example',
-  ogImage:
-    'https://seeklogo.com/images/N/nuxt-logo-1CCC5F38FD-seeklogo.com.png',
+  ogImage: 'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
   ogUrl: 'https://atal-pizza.vercel.app',
   twitterTitle: 'ATAL Pizza',
   twitterDescription: 'Pizza ordering website example built with Nuxt3',
   twitterImage:
-    'https://seeklogo.com/images/N/nuxt-logo-1CCC5F38FD-seeklogo.com.png',
+    'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
   twitterCard: 'summary',
 })
 

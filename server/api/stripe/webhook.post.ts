@@ -2,6 +2,7 @@ import Stripe from 'stripe'
 
 export default defineEventHandler(async event => {
   const body = await readRawBody(event)
+
   const stripeSignature = getHeader(event, 'stripe-signature')
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -21,6 +22,8 @@ export default defineEventHandler(async event => {
       stripeSignature,
       process.env.STRIPE_WEBHOOK_SECRET as string
     )
+    console.log(stripeEvent.type)
+
     if (stripeEvent.type === 'checkout.session.completed') {
       const orderId = stripeEvent?.data?.object?.metadata?.orderId
       const isPaid = stripeEvent?.data?.object?.payment_status === 'paid'
@@ -31,7 +34,6 @@ export default defineEventHandler(async event => {
           { isPaid: true, stripeId: stripeEvent?.data?.object?.id }
         )
       }
-      console.log(stripeEvent?.data?.object?.id)
     }
     return 'ok'
   } catch (error) {

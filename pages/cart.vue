@@ -15,9 +15,9 @@ const data = await $fetch<UserData>('/api/profile')
 const addressInfo = reactive({
   phoneNumber: data?.userInfo?.phone || undefined,
   streetAddress: data?.userInfo?.streetAddress || '',
-  postalCode: data?.userInfo.postalCode || '',
-  city: data?.userInfo.city || '',
-  country: data?.userInfo.country || '',
+  postalCode: data?.userInfo?.postalCode || '',
+  city: data?.userInfo?.city || '',
+  country: data?.userInfo?.country || '',
 })
 
 async function proceedToCheckout() {
@@ -55,7 +55,7 @@ if (process.client) {
       class="mt-8 text-center max-w-md mx-auto"
     >
       <SectionHeaders mainHeader="Cart" />
-      <p>No products in your shopping cards</p>
+      <p class="mt-8">No products in your shopping cards</p>
       <NuxtLink to="/menu" class="button mt-4">Start shopping</NuxtLink>
     </div>
     <section class="mt-8" v-else>
