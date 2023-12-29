@@ -16,7 +16,7 @@ const mobileNavOpen = ref(false)
   <header>
     <div class="flex md:hidden justify-between items-center">
       <NuxtLink class="text-primary font-semibold text-2xl" href="/">
-        ATA PIZZA</NuxtLink
+        ATAL PIZZA</NuxtLink
       >
 
       <div class="flex gap-2 items-center">
@@ -73,7 +73,7 @@ const mobileNavOpen = ref(false)
     <div class="hidden md:flex items-center justify-between">
       <nav class="flex gap-6 text-slate-600 font-semibold items-center">
         <NuxtLink class="text-primary font-semibold text-2xl" href="/">
-          ATA PIZZA</NuxtLink
+          ATAL PIZZA</NuxtLink
         >
         <NuxtLink href="/">Home</NuxtLink>
         <NuxtLink href="/menu">Menu</NuxtLink>

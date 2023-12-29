@@ -15,6 +15,8 @@ watchEffect(() => {
 
 <template>
   <section class="mt-8 max-w-xl mx-auto">
+    <Title>{{ 'Menu Items' }}</Title>
+
     <UserTabs :isAdmin="isAdmin" />
 
     <div class="mt-8">

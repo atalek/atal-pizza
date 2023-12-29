@@ -14,6 +14,8 @@ watchEffect(() => {
 
 <template>
   <section class="mt-8 max-w-2xl mx-auto">
+    <Title>{{ 'Users' }}</Title>
+
     <UserTabs :isAdmin="isAdmin" />
 
     <Loader v-if="pending" />

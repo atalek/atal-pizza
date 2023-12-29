@@ -42,11 +42,13 @@ const addressInfo = reactive({
 
 <template>
   <section class="mt-8">
+    <Title>{{ `Order ${orderId}` }}</Title>
+
     <div class="text-center">
       <SectionHeaders mainHeader="Your Order" />
       <div class="my-8">
-        <p>Thank you for ordering</p>
-        <p>We will send you a message when your order goes out for delivery</p>
+        <p>Thanks for your order.</p>
+        <p>We will call you when your order will be on the way.</p>
         <Loader v-if="pending" />
       </div>
     </div>

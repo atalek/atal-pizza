@@ -14,6 +14,7 @@ type OrderSchemaDocument = Document & {
   subtotal: number
   delivery: number
   total: number
+  stripeId: string
 }
 
 const orderSchema = new Schema<OrderSchemaDocument>(
@@ -29,6 +30,7 @@ const orderSchema = new Schema<OrderSchemaDocument>(
     subtotal: { type: Number },
     delivery: { type: Number, default: 5 },
     total: { type: Number },
+    stripeId: { type: String },
   },
   { timestamps: true }
 )

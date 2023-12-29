@@ -26,8 +26,12 @@ export default defineEventHandler(async event => {
       const isPaid = stripeEvent?.data?.object?.payment_status === 'paid'
 
       if (isPaid) {
-        await Order.updateOne({ _id: orderId }, { isPaid: true })
+        await Order.updateOne(
+          { _id: orderId },
+          { isPaid: true, stripeId: stripeEvent?.data?.object?.id }
+        )
       }
+      console.log(stripeEvent?.data?.object?.id)
     }
     return 'ok'
   } catch (error) {

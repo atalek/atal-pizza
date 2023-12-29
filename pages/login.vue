@@ -34,6 +34,8 @@ async function handleLogin() {
 
 <template>
   <section class="my-8 max-w-xs mx-auto">
+    <Title>{{ 'Log in' }}</Title>
+
     <h1 class="text-center text-primary text-4xl">Log in</h1>
     <form class="block mt-8" @submit.prevent="handleLogin">
       <input

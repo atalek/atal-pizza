@@ -75,6 +75,8 @@ watchEffect(() => {
 
 <template>
   <section class="mt-8 max-w-xl mx-auto">
+    <Title>{{ 'Categories' }}</Title>
+
     <UserTabs :isAdmin="isAdmin" />
 
     <Loader v-if="isLoading" />

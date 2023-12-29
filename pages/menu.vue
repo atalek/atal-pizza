@@ -21,6 +21,8 @@ const filteredCategories = computed(() => {
 
 <template>
   <section class="mt-8">
+    <Title>{{ 'Menu' }}</Title>
+
     <div v-for="category in filteredCategories" :key="category._id.toString()">
       <div class="text-center">
         <SectionHeaders :mainHeader="category.name" />

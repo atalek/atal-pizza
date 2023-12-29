@@ -27,6 +27,7 @@
     "@auth/mongodb-adapter": "^2.0.6",
     "@aws-sdk/client-s3": "^3.461.0",
     "bcrypt": "^5.1.1",
+    "h3-compression": "^0.3.2",
     "i": "^0.3.7",
     "mongodb": "^6.3.0",
     "next-auth": "^4.21.1",

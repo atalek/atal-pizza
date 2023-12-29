@@ -42,6 +42,8 @@ watchEffect(() => {
 
 <template>
   <section class="mt-8 max-w-2xl mx-auto">
+    <Title>{{ 'Menu Items | Create' }}</Title>
+
     <UserTabs :isAdmin="isAdmin" />
 
     <Loader v-if="isLoading" />

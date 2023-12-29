@@ -1,8 +1,19 @@
+import { Types } from 'mongoose'
+
+type ExtraStuff = {
+  name: string
+  extraPrice: number
+}
+
 type MenuItem = {
+  _id: Types.ObjectId
   name: string
   description: string
   basePrice: string
   image?: string
+  category: string
+  sizes: ExtraStuff[]
+  extraIngredients: ExtraStuff[]
 }
 
 export default defineEventHandler(async event => {
@@ -14,6 +25,10 @@ export default defineEventHandler(async event => {
       const menuItemData: MenuItem = {
         ...body,
         image: body.image || undefined,
+        sizes: body?.sizes.filter(size => size.name !== ''),
+        extraIngredients: body?.extraIngredients.filter(
+          ingredient => ingredient.name && ingredient.extraPrice !== 0
+        ),
       }
 
       const menuItem = await MenuItem.create(menuItemData)

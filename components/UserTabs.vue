@@ -10,13 +10,12 @@ defineProps({
   },
 })
 
-function isLinkActive(to: string) {
-  if (to === '/menu-items' || to === '/users' || to === '/orders') {
-    return computed(() => route.path.startsWith(to)).value
-  }
-
-  return computed(() => route.path === to).value
-}
+const isLinkActive = (to: string) =>
+  computed(() =>
+    to === '/menu-items' || to === '/users' || to === '/orders'
+      ? route.path.startsWith(to)
+      : route.path === to
+  ).value
 </script>
 
 <template>

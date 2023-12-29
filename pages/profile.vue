@@ -52,6 +52,8 @@ async function handleProfileInfoUpdate() {
 
 <template>
   <section class="mt-6">
+    <Title>{{ 'Profile' }}</Title>
+
     <UserTabs :isAdmin="isAdmin" />
 
     <div class="max-w-xl mx-auto">

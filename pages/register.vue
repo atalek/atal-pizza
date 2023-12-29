@@ -73,6 +73,8 @@ async function handleRegister() {
 
 <template>
   <section class="my-8 max-w-xs mx-auto">
+    <Title>{{ 'Register' }}</Title>
+
     <h1 class="text-center text-primary text-4xl">Register</h1>
     <form class="block mt-8" @submit.prevent="handleRegister">
       <input
