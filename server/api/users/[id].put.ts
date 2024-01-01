@@ -13,7 +13,6 @@ export default defineEventHandler(async event => {
   const params = event.context.params
 
   const body = await readBody<ProfileUpdateData>(event)
-  console.log(body)
 
   const user = await User.findById({ _id: params?.id }).select('-password')
   let userInfo

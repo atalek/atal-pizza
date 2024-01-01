@@ -10,6 +10,20 @@ if (userName?.value?.includes(' ')) {
 }
 
 const mobileNavOpen = ref(false)
+
+const y = ref(0)
+onMounted(() => {
+  const updateScroll = () => {
+    y.value = window.scrollY
+  }
+
+  window.addEventListener('scroll', updateScroll)
+  window.addEventListener('resize', updateScroll)
+})
+
+function goTop() {
+  document.body.scrollIntoView()
+}
 </script>
 
 <template>
@@ -52,7 +66,10 @@ const mobileNavOpen = ref(false)
         <NuxtLink href="/#about">About</NuxtLink>
         <NuxtLink href="/#contact">Contact</NuxtLink>
 
-        <div v-if="status === 'unauthenticated'">
+        <div
+          v-if="status === 'unauthenticated'"
+          class="flex items-center justify-center gap-8"
+        >
           <NuxtLink href="/login" class="px-8 py-2 font-semibold"
             >Login</NuxtLink
           >
@@ -90,7 +107,7 @@ const mobileNavOpen = ref(false)
         <NuxtLink href="/#contact">Contact</NuxtLink>
       </nav>
 
-      <nav class="flex items-center gap-4 text-slate-600">
+      <nav class="flex items-center gap-2 text-slate-600">
         <div v-if="status === 'unauthenticated'">
           <NuxtLink href="/login" class="px-8 py-2 font-semibold"
             >Login</NuxtLink
@@ -101,6 +118,7 @@ const mobileNavOpen = ref(false)
             >Register</NuxtLink
           >
         </div>
+
         <div v-if="status === 'authenticated'">
           <NuxtLink
             href="/profile"
@@ -108,18 +126,6 @@ const mobileNavOpen = ref(false)
             >Hello, {{ userName }}</NuxtLink
           >
 
-          <NuxtLink
-            to="/cart"
-            class="relative px-2 py-2 mr-2"
-            aria-label="View Cart"
-          >
-            <span
-              v-if="totalItems > 0"
-              class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
-              >{{ totalItems }}
-            </span>
-            <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
-          </NuxtLink>
           <NuxtLink
             @click="signOut"
             to="/"
@@ -129,7 +135,29 @@ const mobileNavOpen = ref(false)
             Logout
           </NuxtLink>
         </div>
+        <NuxtLink
+          to="/cart"
+          class="relative px-2 py-2 mr-2"
+          aria-label="View Cart"
+        >
+          <span
+            v-if="totalItems > 0"
+            class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
+            >{{ totalItems }}
+          </span>
+          <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
+        </NuxtLink>
       </nav>
+    </div>
+
+    <div class="fixed bottom-0 right-0 p-10 z-[10]">
+      <button
+        @click="goTop"
+        class="rounded-full bg-primary text-white px-3 sm:px-4 hover:bg-green-500 cursor-pointer aspect-square grid place-items-center"
+        :class="{ hidden: y < 20 }"
+      >
+        <Icon name="fa-solid:arrow-up" />
+      </button>
     </div>
   </header>
 </template>

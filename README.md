@@ -1,75 +1,36 @@
-# Nuxt 3 Minimal Starter
+# ATAL-Pizza Food Ordering App
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Description
 
-## Setup
+This project demonstrates a full-stack food ordering application built with
+modern web technologies. It features a user-friendly interface, secure
+authentication, seamless payment processing, and image storage capabilities.
 
-Make sure to install the dependencies:
+## Features
 
-```bash
-# npm
-npm install
+- Full featured shopping cart
+- User profile with orders
+- Admin product management
+- Admin user management
+- Admin Order details page
+- Checkout process (shipping, payment method, etc.)
+- Stripe payment integration
 
-# pnpm
-pnpm install
+## Built with
 
-# yarn
-yarn install
+- Nuxt 3
+- MongoDB
+- Tailwind
+- Sidebase nuxt-auth
+- AWS S3
+- Stripe
 
-# bun
-bun install
-```
+## Live Version
 
-## Development Server
+[https://nuxtshop-yep.vercel.app/](https://atal-pizza.vercel.app/)
 
-Start the development server on `http://localhost:3000`:
+## Author
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Github [@Amphei](https://github.com/Amphei) <br> Linkedin:
+[@Aleksandar Atanasovski](https://www.linkedin.com/in/aleksandar-atanasovski-16b123263/)
+<br> [Portfolio] (soon...)

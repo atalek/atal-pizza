@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { toast } from 'vue3-toastify'
 import type { UserData } from '~/types'
+const { status } = useAuth()
 
 const route = useRoute()
 
@@ -10,14 +11,37 @@ const total = computed(() => {
   return totalPrice.value + 5
 })
 const isLoading = ref(false)
-const data = await $fetch<UserData>('/api/profile')
 
 const addressInfo = reactive({
-  phoneNumber: data?.userInfo?.phone || undefined,
-  streetAddress: data?.userInfo?.streetAddress || '',
-  postalCode: data?.userInfo?.postalCode || '',
-  city: data?.userInfo?.city || '',
-  country: data?.userInfo?.country || '',
+  phoneNumber: undefined,
+  streetAddress: '',
+  postalCode: '',
+  city: '',
+  country: '',
+})
+
+if (status.value === 'authenticated') {
+  const data = await $fetch<UserData>('/api/profile')
+
+  if (data) {
+    Object.assign(addressInfo, {
+      phoneNumber: data.userInfo?.phone,
+      streetAddress: data.userInfo?.streetAddress,
+      postalCode: data.userInfo?.postalCode,
+      city: data.userInfo?.city,
+      country: data.userInfo?.country,
+    })
+  }
+}
+
+const isAddressComplete = computed(() => {
+  return (
+    addressInfo.phoneNumber &&
+    addressInfo.streetAddress &&
+    addressInfo.postalCode &&
+    addressInfo.city &&
+    addressInfo.country
+  )
 })
 
 async function proceedToCheckout() {
@@ -64,10 +88,10 @@ if (process.client) {
       </div>
 
       <div class="mt-8 grid md:grid-cols-2 gap-8">
-        <div>
+        <div class="p-4">
           <CartProduct
             v-for="item in cartItems"
-            :key="item._id"
+            :key="item._id?.toString()"
             :item="item"
             :remove="true"
           />
@@ -89,8 +113,19 @@ if (process.client) {
           <h2>Checkout</h2>
           <Loader v-if="isLoading" />
           <form @submit.prevent="proceedToCheckout">
-            <AddressInputs :addressInfo="addressInfo" />
-            <button type="submit">Pay ${{ total }}</button>
+            <AddressInputs
+              :addressInfo="addressInfo"
+              :disabled="status !== 'authenticated'"
+            />
+            <NuxtLink
+              to="/login?redirect=/cart"
+              class="button bg-primary !text-white"
+              v-if="status === 'unauthenticated'"
+              >Sign in to pay</NuxtLink
+            >
+            <button v-else type="submit" :disabled="!isAddressComplete">
+              Pay ${{ total }}
+            </button>
           </form>
         </div>
       </div>

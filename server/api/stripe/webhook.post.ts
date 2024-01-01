@@ -22,7 +22,6 @@ export default defineEventHandler(async event => {
       stripeSignature,
       process.env.STRIPE_WEBHOOK_SECRET as string
     )
-    console.log(stripeEvent.type)
 
     if (stripeEvent.type === 'checkout.session.completed') {
       const orderId = stripeEvent?.data?.object?.metadata?.orderId

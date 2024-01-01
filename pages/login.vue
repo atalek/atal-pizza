@@ -21,7 +21,7 @@ async function handleLogin() {
     try {
       await signIn('credentials', {
         ...loginInfo,
-        callbackUrl: '/',
+        callbackUrl: route.query.redirect || '/',
       })
     } catch (err: any) {
       console.error(err)
@@ -73,7 +73,9 @@ async function handleLogin() {
     </form>
     <button
       class="flex items-center"
-      @click.prevent="signIn('google', { callbackUrl: '/' })"
+      @click.prevent="
+        signIn('google', { callbackUrl: route.query.redirect || '/' })
+      "
     >
       <Icon name="logos:google-icon" /> Log in with google
     </button>
