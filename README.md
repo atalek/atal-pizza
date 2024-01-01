@@ -27,7 +27,7 @@ authentication, seamless payment processing, and image storage capabilities.
 
 ## Live Version
 
-[https://nuxtshop-yep.vercel.app/](https://atal-pizza.vercel.app/)
+[https://atal-pizza.vercel.app/](https://atal-pizza.vercel.app/)
 
 ## Author
 

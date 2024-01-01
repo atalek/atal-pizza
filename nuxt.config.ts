@@ -4,6 +4,10 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  nitro: {
+    compressPublicAssets: true,
+  },
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
