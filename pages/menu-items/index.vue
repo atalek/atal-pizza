@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import type { MenuItemType } from '~/types'
 
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
+
 const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
   '/api/menu-items'
 )
 
 watchEffect(() => {
-  if (!isAdmin.value) {
+  if (!isAdmin) {
     navigateTo('/')
   }
 })

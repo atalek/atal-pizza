@@ -12,7 +12,7 @@ const erorr = ref('')
 const { data, pending, error, refresh } = await useFetch<UserData>(
   '/api/profile'
 )
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
 
 const userInfo = reactive({
   name: data?.value?.user?.name || '',

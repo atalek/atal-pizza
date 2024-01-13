@@ -5,11 +5,7 @@ type UserInfoResponse = {
 }
 
 export const useIsAdmin = async () => {
-  const { data, pending, refresh } = await useFetch('/api/profile', {
-    transform(input: UserInfoResponse): boolean {
-      return input.userInfo.admin
-    },
-  })
+  const isAdmin = await $fetch('/api/adminCheck')
 
-  return { data, pending, refresh }
+  return isAdmin
 }

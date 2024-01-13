@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import type { UserType } from '~/types'
 
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
 
 const { data: users, pending } = await useFetch<UserType[]>('/api/users')
 
 watchEffect(() => {
-  if (!isAdmin.value) {
+  if (!isAdmin) {
     navigateTo('/')
   }
 })

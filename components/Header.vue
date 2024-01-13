@@ -96,7 +96,9 @@ function goTop() {
       </div>
     </Transition>
 
-    <div class="hidden md:flex items-center justify-between">
+    <div
+      class="hidden md:flex items-center justify-between border-b border-solid border-primary"
+    >
       <nav class="flex gap-6 text-slate-600 font-semibold items-center">
         <NuxtLink class="text-primary font-semibold text-2xl" href="/">
           ATAL PIZZA</NuxtLink

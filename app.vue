@@ -26,6 +26,7 @@ useHead({
 </script>
 
 <template>
+  <NuxtLoadingIndicator />
   <NuxtLayout>
     <Loader v-if="status === 'loading'" />
     <NuxtPage />

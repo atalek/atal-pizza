@@ -6,7 +6,7 @@ definePageMeta({
   middleware: 'unauthenticated',
 })
 
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
 
 const orders = ref<OrderType[]>()
 const pending = ref(false)

@@ -73,5 +73,10 @@ export default defineNuxtConfig({
   routeRules: {
     '/profile': { ssr: false },
     '/cart': { ssr: false },
+    '/menu-items/**': { ssr: false },
+    '/orders/**': { ssr: false },
+    '/categories': { ssr: false },
+    '/users': { ssr: false },
+    '/': { prerender: true },
   },
 })

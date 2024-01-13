@@ -3,7 +3,8 @@ import type { CategoryOrOptional, MenuItemType } from '~/types'
 
 const route = useRoute()
 const itemId = route.params.id
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
+
 const { data: menuItem, pending } = await useFetch<MenuItemType>(
   `/api/menu-items/${itemId}`
 )
@@ -52,7 +53,7 @@ async function handleDeleteMenuItem(menuItemId: string) {
 }
 
 watchEffect(() => {
-  if (!isAdmin.value) {
+  if (!isAdmin) {
     navigateTo('/')
   }
 })

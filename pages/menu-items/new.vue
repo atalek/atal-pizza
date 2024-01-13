@@ -2,7 +2,8 @@
 import { toast } from 'vue3-toastify'
 import type { CategoryOrOptional } from '~/types'
 
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
+
 const isLoading = ref(false)
 const { data: categories } = useFetch<CategoryOrOptional>('/api/categories')
 
@@ -34,7 +35,7 @@ async function handleCreateMenuItem() {
 }
 
 watchEffect(() => {
-  if (!isAdmin.value) {
+  if (!isAdmin) {
     navigateTo('/')
   }
 })

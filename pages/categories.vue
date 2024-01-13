@@ -7,7 +7,8 @@ type Category = {
   name: string
 }
 
-const { data: isAdmin } = await useIsAdmin()
+const isAdmin = await useIsAdmin()
+
 const categoryName = ref('')
 const isLoading = ref(false)
 const error = ref('')
@@ -67,7 +68,7 @@ async function handleDeleteCategory(_id: Types.ObjectId) {
 }
 
 watchEffect(() => {
-  if (!isAdmin.value) {
+  if (!isAdmin) {
     navigateTo('/')
   }
 })
