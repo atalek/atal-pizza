@@ -77,6 +77,5 @@ export default defineNuxtConfig({
     '/orders/**': { ssr: false },
     '/categories': { ssr: false },
     '/users': { ssr: false },
-    '/': { prerender: true },
   },
 })
