@@ -28,7 +28,8 @@ function goTop() {
 
 <template>
   <header>
-    <div class="flex md:hidden justify-between items-center">
+    <div
+      class="flex md:hidden justify-between items-center border-b border-solid border-primary">
       <NuxtLink class="text-primary font-semibold text-2xl" href="/">
         ATAL PIZZA</NuxtLink
       >
@@ -37,8 +38,7 @@ function goTop() {
         <NuxtLink
           to="/cart"
           class="relative px-2 py-2 mr-2"
-          aria-label="View Cart"
-        >
+          aria-label="View Cart">
           <span
             v-if="totalItems > 0"
             class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
@@ -49,8 +49,7 @@ function goTop() {
         <button
           class="p-2"
           @click="mobileNavOpen = !mobileNavOpen"
-          aria-label="Toggle Mobile Navigation"
-        >
+          aria-label="Toggle Mobile Navigation">
           <Icon name="fa-solid:bars" class="h-6 w-6" />
         </button>
       </div>
@@ -59,8 +58,7 @@ function goTop() {
       <div
         v-if="mobileNavOpen"
         class="md:hidden p-4 bg-slate-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
-        @click="() => (mobileNavOpen = false)"
-      >
+        @click="() => (mobileNavOpen = false)">
         <NuxtLink href="/">Home</NuxtLink>
         <NuxtLink href="/menu">Menu</NuxtLink>
         <NuxtLink href="/#about">About</NuxtLink>
@@ -68,8 +66,7 @@ function goTop() {
 
         <div
           v-if="status === 'unauthenticated'"
-          class="flex items-center justify-center gap-8"
-        >
+          class="flex items-center justify-center gap-8">
           <NuxtLink href="/login" class="px-8 py-2 font-semibold"
             >Login</NuxtLink
           >
@@ -88,8 +85,7 @@ function goTop() {
           <NuxtLink
             @click="signOut"
             class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
-            aria-label="Logout"
-          >
+            aria-label="Logout">
             Logout
           </NuxtLink>
         </div>
@@ -97,8 +93,7 @@ function goTop() {
     </Transition>
 
     <div
-      class="hidden md:flex items-center justify-between border-b border-solid border-primary"
-    >
+      class="hidden md:flex items-center justify-between border-b border-solid border-primary">
       <nav class="flex gap-6 text-slate-600 font-semibold items-center">
         <NuxtLink class="text-primary font-semibold text-2xl" href="/">
           ATAL PIZZA</NuxtLink
@@ -132,16 +127,14 @@ function goTop() {
             @click="signOut"
             to="/"
             class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
-            aria-label="Logout"
-          >
+            aria-label="Logout">
             Logout
           </NuxtLink>
         </div>
         <NuxtLink
           to="/cart"
           class="relative px-2 py-2 mr-2"
-          aria-label="View Cart"
-        >
+          aria-label="View Cart">
           <span
             v-if="totalItems > 0"
             class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
@@ -156,8 +149,7 @@ function goTop() {
       <button
         @click="goTop"
         class="rounded-full bg-primary text-white px-3 sm:px-4 hover:bg-green-500 cursor-pointer aspect-square grid place-items-center"
-        :class="{ hidden: y < 20 }"
-      >
+        :class="{ hidden: y < 20 }">
         <Icon name="fa-solid:arrow-up" />
       </button>
     </div>

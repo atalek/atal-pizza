@@ -8,8 +8,7 @@
       <SectionHeaders subHeader="our story" mainHeader="About us" />
       <div
         class="max-w-md mx-auto text-slate-600 mt-4 flex flex-col gap-4"
-        id="about"
-      >
+        id="about">
         <p>
           At our pizzeria, we believe in crafting more than just pizza. We're
           dedicated to creating an experience. From the first bite of our
@@ -36,7 +35,7 @@
       <SectionHeaders subHeader="Don't hesitate" mainHeader="Contact us" />
       <div class="mt-8" id="contact">
         <a class="text-4xl underline text-slate-600" href="tel:+389123456"
-          >+389 72 123 456</a
+          >+123 45 678 910</a
         >
       </div>
     </section>
