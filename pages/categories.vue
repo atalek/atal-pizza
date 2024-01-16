@@ -2,6 +2,10 @@
 import { toast } from 'vue3-toastify'
 import { Types } from 'mongoose'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 type Category = {
   _id: Types.ObjectId
   name: string
@@ -14,7 +18,7 @@ const isLoading = ref(false)
 const error = ref('')
 const editingCategory = ref<Types.ObjectId | null>(null)
 const { data: categories, refresh } = await useFetch<Category[]>(
-  '/api/categories'
+  '/api/categories',
 )
 
 async function handleCategorySubmit() {
@@ -35,7 +39,7 @@ async function handleCategorySubmit() {
       editingCategory.value = null
       refresh()
       toast.success(
-        editingCategory.value ? 'Category updated' : 'Category added'
+        editingCategory.value ? 'Category updated' : 'Category added',
       )
     }
   } catch (err: any) {
@@ -98,8 +102,7 @@ watchEffect(() => {
           </button>
           <button
             v-if="editingCategory"
-            @click=";(editingCategory = null), (categoryName = '')"
-          >
+            @click=";(editingCategory = null), (categoryName = '')">
             Cancel
           </button>
         </div>
@@ -114,8 +117,7 @@ watchEffect(() => {
         v-if="categories!.length > 0 "
         v-for="category in categories"
         :key="category._id.toString()"
-        class="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
-      >
+        class="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center">
         <div class="grow">
           {{ category.name }}
         </div>
@@ -126,8 +128,7 @@ watchEffect(() => {
           <DeleteButton
             label="Delete"
             :_id="category._id"
-            :onDelete="() => handleDeleteCategory(category._id)"
-          />
+            :onDelete="() => handleDeleteCategory(category._id)" />
         </div>
       </div>
     </div>

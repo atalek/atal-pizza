@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import type { CategoryOrOptional, MenuItemType } from '~/types'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const route = useRoute()
 const itemId = route.params.id
 const isAdmin = await useIsAdmin()
 
 const { data: menuItem, pending } = await useFetch<MenuItemType>(
-  `/api/menu-items/${itemId}`
+  `/api/menu-items/${itemId}`,
 )
 const { data: categories } = useFetch<CategoryOrOptional>('/api/categories')
 
@@ -52,9 +56,9 @@ async function handleDeleteMenuItem(menuItemId: string) {
   }
 }
 
-watchEffect(() => {
+watchEffect(async () => {
   if (!isAdmin) {
-    navigateTo('/')
+    await navigateTo('/')
   }
 })
 </script>
@@ -77,15 +81,13 @@ watchEffect(() => {
     <MenuItemForm
       :itemInfo="itemInfo"
       :categories="categories"
-      :onSubmit="handleEditMenuItem"
-    />
+      :onSubmit="handleEditMenuItem" />
 
     <div class="ml-auto md:max-w-[392px] md:mr-12">
       <DeleteButton
         label="Delete"
         :_id="itemInfo._id"
-        :onDelete="() => handleDeleteMenuItem(itemInfo._id)"
-      />
+        :onDelete="() => handleDeleteMenuItem(itemInfo._id)" />
     </div>
   </section>
 </template>

@@ -8,12 +8,13 @@ defineProps({
   },
 })
 
-const isLinkActive = (to: string) =>
-  computed(() =>
-    to === '/menu-items' || to === '/users' || to === '/orders'
-      ? route.path.startsWith(to)
-      : route.path === to
-  ).value
+const isLinkActive = (to: string) => {
+  const path = route.path
+  const isExact = path === to
+  const isNested = typeof to === 'string' && path.startsWith(to + '/')
+  const isActive = isExact || isNested
+  return isActive
+}
 </script>
 
 <template>

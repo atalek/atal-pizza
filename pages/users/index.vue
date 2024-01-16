@@ -1,13 +1,17 @@
 <script lang="ts" setup>
 import type { UserType } from '~/types'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const isAdmin = await useIsAdmin()
 
 const { data: users, pending } = await useFetch<UserType[]>('/api/users')
 
-watchEffect(() => {
+watchEffect(async () => {
   if (!isAdmin) {
-    navigateTo('/')
+    await navigateTo('/')
   }
 })
 </script>
@@ -20,12 +24,11 @@ watchEffect(() => {
 
     <Loader v-if="pending" />
     <div class="mt-8">
-      <div v-if="users?.length > 0">
+      <div v-if="users && users?.length > 0">
         <div
           v-for="user in users"
           class="bg-slate-100 rounded-lg mb-2 p-1 px-4 flex items-center gap-4"
-          :key="user!._id!.toString()"
-        >
+          :key="user!._id!.toString()">
           <div class="grid grid-cols-3 gap-4 grow items-center overflow-x-auto">
             <div class="text-slate-900">
               <span v-if="user.name" class="">{{ user.name }}</span>

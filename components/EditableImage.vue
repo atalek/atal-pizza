@@ -39,7 +39,8 @@ async function handleFileChange(e: Event) {
 }
 
 const isGoogleImage = computed(() => {
-  return profilePic.value.startsWith('https://lh3.google')
+  const googleImagePrefixes = ['https://lh3.google', 'https://www.google']
+  return googleImagePrefixes.some(prefix => profilePic.value.startsWith(prefix))
 })
 </script>
 
@@ -47,8 +48,7 @@ const isGoogleImage = computed(() => {
   <div class="p-2 rounded-lg max-w-[140px]">
     <div
       v-if="image === ''"
-      class="bg-slate-200 p-4 text-slate-500 rounded-md text-center"
-    >
+      class="bg-slate-200 p-4 text-slate-500 rounded-md text-center">
       No image
     </div>
     <div v-if="image">
@@ -60,8 +60,7 @@ const isGoogleImage = computed(() => {
           :src="image"
           provider="s3Provider"
           alt="avatar"
-          class="rounded-lg h-32 w-full mb-1"
-        />
+          class="rounded-lg h-32 w-full mb-1" />
       </div>
     </div>
 

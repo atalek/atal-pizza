@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { UserData, UserDataType } from '~/types'
 
-const { data: isAdmin } = await useIsAdmin()
+definePageMeta({
+  middleware: 'unauthenticated',
+})
 
 const route = useRoute()
 const userId = route.params.id
 const { data, pending } = await useFetch<UserData>(`/api/users/${userId}`)
+const isAdmin = await useIsAdmin()
 const isLoading = ref(false)
 const error = ref('')
 
@@ -41,9 +44,9 @@ async function handleUserInfoUpdate() {
   }
 }
 
-watchEffect(() => {
-  if (!isAdmin.value) {
-    navigateTo('/')
+watchEffect(async () => {
+  if (!isAdmin) {
+    await navigateTo('/')
   }
 })
 </script>
@@ -66,10 +69,7 @@ watchEffect(() => {
         :userInfo="userInfo"
         :onSubmit="handleUserInfoUpdate"
         :isLoading="isLoading"
-        :isAdmin="isAdmin"
-      />
+        :isAdmin="isAdmin" />
     </div>
   </section>
 </template>
-
-<style scoped></style>

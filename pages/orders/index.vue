@@ -31,12 +31,11 @@ try {
     <UserTabs :isAdmin="isAdmin" />
 
     <Loader v-if="pending" />
-    <div v-if="orders" class="mt-8">
+    <div v-if="orders && orders.length > 0" class="mt-8">
       <div
         v-for="order in orders"
         :key="order._id.toString()"
-        class="bg-slate-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6 overflow-x-auto"
-      >
+        class="bg-slate-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6 overflow-x-auto">
         <div class="grow flex flex-col md:flex-row items-center gap-6">
           <div>
             <div
@@ -44,8 +43,7 @@ try {
               :class="{
                 'bg-green-500': order.isPaid,
                 'bg-red-600': !order.isPaid,
-              }"
-            >
+              }">
               {{ order.isPaid ? 'Paid' : 'Not paid' }}
             </div>
           </div>
@@ -59,8 +57,7 @@ try {
             <div
               class="text-gray-500 text-xs"
               v-for="item in order.orderItems"
-              :key="item._id.toString()"
-            >
+              :key="item._id.toString()">
               {{ item.name }}
             </div>
           </div>
@@ -75,8 +72,7 @@ try {
 
     <div
       v-else
-      class="bg-slate-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6 overflow-x-auto"
-    >
+      class="bg-slate-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6 overflow-x-auto">
       No orders yet...
     </div>
   </section>

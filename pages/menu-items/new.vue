@@ -2,6 +2,10 @@
 import { toast } from 'vue3-toastify'
 import type { CategoryOrOptional } from '~/types'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const isAdmin = await useIsAdmin()
 
 const isLoading = ref(false)
@@ -34,9 +38,9 @@ async function handleCreateMenuItem() {
   }
 }
 
-watchEffect(() => {
+watchEffect(async () => {
   if (!isAdmin) {
-    navigateTo('/')
+    await navigateTo('/')
   }
 })
 </script>
@@ -58,7 +62,6 @@ watchEffect(() => {
     <MenuItemForm
       :itemInfo="itemInfo"
       :categories="categories"
-      :onSubmit="handleCreateMenuItem"
-    />
+      :onSubmit="handleCreateMenuItem" />
   </section>
 </template>

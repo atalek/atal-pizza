@@ -1,15 +1,19 @@
 <script lang="ts" setup>
 import type { MenuItemType } from '~/types'
 
+definePageMeta({
+  middleware: 'unauthenticated',
+})
+
 const isAdmin = await useIsAdmin()
 
 const { data: menuItems, pending } = await useFetch<MenuItemType[]>(
-  '/api/menu-items'
+  '/api/menu-items',
 )
 
-watchEffect(() => {
+watchEffect(async () => {
   if (!isAdmin) {
-    navigateTo('/')
+    await navigateTo('/')
   }
 })
 </script>
@@ -36,15 +40,13 @@ watchEffect(() => {
         v-for="item in menuItems"
         :key="item.name"
         class="bg-slate-200 rounded-lg p-4"
-        :to="`/menu-items/edit/${item._id}`"
-      >
+        :to="`/menu-items/edit/${item._id}`">
         <div class="relative">
           <NuxtImg
             :src="item.image"
             :alt="item.name"
             provider="s3Provider"
-            class="rounded-md block mx-auto"
-          />
+            class="rounded-md block mx-auto" />
         </div>
         <p class="text-center">{{ item.name }}</p>
       </NuxtLink>

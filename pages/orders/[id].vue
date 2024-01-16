@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { OrderType } from '~/types'
+const { data } = useAuth()
 
 definePageMeta({
   middleware: 'unauthenticated',
@@ -7,6 +8,7 @@ definePageMeta({
 
 const route = useRoute()
 const orderId = route.params.id
+const isAdmin = await useIsAdmin()
 
 const { clearCart } = useCart()
 
@@ -37,6 +39,14 @@ const addressInfo = reactive({
   postalCode: order?.value?.postalCode || '',
   city: order?.value?.city || '',
   country: order?.value?.country || '',
+})
+
+console.log(isAdmin)
+
+watchEffect(async () => {
+  if (!isAdmin && data.value?.user?.email !== order.value?.userEmail) {
+    await navigateTo('/')
+  }
 })
 </script>
 
