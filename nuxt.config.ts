@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@sidebase/nuxt-auth',
     'nuxt-mongoose',
+    'nuxt-vercel-analytics',
   ],
 
   runtimeConfig: {

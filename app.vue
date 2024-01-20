@@ -26,11 +26,13 @@ useHead({
 </script>
 
 <template>
-  <NuxtLoadingIndicator />
-  <NuxtLayout>
-    <Loader v-if="status === 'loading'" />
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLoadingIndicator />
+    <NuxtLayout>
+      <Loader v-if="status === 'loading'" />
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <style>
