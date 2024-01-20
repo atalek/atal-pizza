@@ -58,31 +58,31 @@ authentication, seamless payment processing, and image storage capabilities.
    - Create a `.env` file in the root of the project.
    - Add the necessary environment variables for Stripe and Cloudinary.
 
-     ```env
-     # Mongodb
-     MONGODB_URI=your_turso_db_uri
+   ```env
+   # Mongodb
+   MONGODB_URI=your_turso_db_uri
 
-     # Nuxt auth
-     AUTH_SECRET=your_auth_secret
-     AUTH_ORIGIN=url_of_your_site
-     API_ROUTE_SECRET=your_api_route_secret
+   # Nuxt auth
+   AUTH_SECRET=your_auth_secret
+   AUTH_ORIGIN=url_of_your_site
+   API_ROUTE_SECRET=your_api_route_secret
 
-     # AWS S3
-     AWS_SECRET_KEY_ID=your_aws_secret_key
-     AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
-     AWS_URL=your_s3bucket_url
+   # AWS S3
+   AWS_SECRET_KEY_ID=your_aws_secret_key
+   AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+   AWS_URL=your_s3bucket_url
 
-     # Google OAuth
-     GOOGLE_CLIENT_ID=your_google_client_id
-     GOOGLE_CLIENT_SECRET_KEY=your_google_client_secret
+   # Google OAuth
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET_KEY=your_google_client_secret
 
-     # Stripe
-     STRIPE_PUBLIC_KEY=your_stripe_public_key
-     STRIPE_SECRET_KEY=your_stripe_secret_key
-     STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+   # Stripe
+   STRIPE_PUBLIC_KEY=your_stripe_public_key
+   STRIPE_SECRET_KEY=your_stripe_secret_key
+   STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
 
-     ```
+   ```
 
 5. **Run the development server.**
 
