@@ -17,6 +17,7 @@
     "@sidebase/nuxt-auth": "^0.6.1",
     "@types/bcrypt": "^5.0.2",
     "@types/uuid": "^9.0.7",
+    "nuxt-vercel-analytics": "^0.2.2",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.6",
     "nuxt-mongoose": "^1.0.3",
