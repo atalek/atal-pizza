@@ -56,11 +56,11 @@ authentication, seamless payment processing, and image storage capabilities.
 4. **Configure environment variables.**
 
    - Create a `.env` file in the root of the project.
-   - Add the necessary environment variables for Stripe and Cloudinary.
+   - Add the necessary environment variables.
 
    ```env
    # Mongodb
-   MONGODB_URI=your_turso_db_uri
+   MONGODB_URI=your_mongodb_db_uri
 
    # Nuxt auth
    AUTH_SECRET=your_auth_secret

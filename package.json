@@ -17,7 +17,6 @@
     "@sidebase/nuxt-auth": "^0.6.1",
     "@types/bcrypt": "^5.0.2",
     "@types/uuid": "^9.0.7",
-    "nuxt-vercel-analytics": "^0.2.2",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.6",
     "nuxt-mongoose": "^1.0.3",
@@ -27,6 +26,7 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.6",
     "@aws-sdk/client-s3": "^3.461.0",
+    "@vercel/analytics": "^1.1.2",
     "bcrypt": "^5.1.1",
     "h3-compression": "^0.3.2",
     "i": "^0.3.7",
