@@ -1,4 +1,4 @@
-# ATAL-Pizza Food Ordering App
+# ATAL-Pizza
 
 ![Landing page](https://res.cloudinary.com/dkofkuquf/image/upload/v1705712862/nuxtshop/enyeltcq2s1w3j5trr1r.png)
 
@@ -15,7 +15,7 @@ authentication, seamless payment processing, and image storage capabilities.
 - Admin product management
 - Admin user management
 - Admin Order details page
-- Checkout process (shipping, payment method, etc.)
+- Checkout process (shipping, payment method)
 - Stripe payment integration
 
 ## Built with
@@ -81,7 +81,7 @@ authentication, seamless payment processing, and image storage capabilities.
    STRIPE_SECRET_KEY=your_stripe_secret_key
    STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 
-
+   NODEENV = "development"
    ```
 
 5. **Run the development server.**
@@ -102,4 +102,5 @@ authentication, seamless payment processing, and image storage capabilities.
 
 Github [@Amphei](https://github.com/Amphei) <br> Linkedin:
 [@Aleksandar Atanasovski](https://www.linkedin.com/in/aleksandar-atanasovski-16b123263/)
-<br> [Portfolio] (soon...)
+<br> Portfolio:
+[https://atal-portfolio.pages.dev/](https://atal-portfolio.pages.dev/)
