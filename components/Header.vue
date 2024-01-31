@@ -148,6 +148,7 @@ function goTop() {
     <div class="fixed bottom-0 right-0 p-10 z-[10]">
       <button
         @click="goTop"
+        aria-label="go to top button"
         class="rounded-full bg-primary text-white px-3 sm:px-4 hover:bg-green-500 cursor-pointer aspect-square grid place-items-center"
         :class="{ hidden: y < 20 }">
         <Icon name="fa-solid:arrow-up" />
