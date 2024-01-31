@@ -19,7 +19,7 @@
     "@types/uuid": "^9.0.7",
     "nuxt": "^3.10.0",
     "nuxt-icon": "^0.6.6",
-    "nuxt-mongoose": "^1.0.3",
+    "nuxt-mongoose": "^1.0.4",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },

@@ -5,7 +5,9 @@ export default eventHandler(async event => {
   const session = await getServerSession(event)
 
   if (session) {
-    const loggedInUser = await UserInfo.findOne({ email: session?.user?.email })
+    const loggedInUser = await UserInfo.findOne({
+      email: session?.user?.email,
+    }).select('-password')
 
     if (loggedInUser) {
       event.context.loggedInUser = loggedInUser
