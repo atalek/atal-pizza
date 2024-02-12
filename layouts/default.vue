@@ -7,10 +7,12 @@ const currentYear = new Date().getFullYear()
     <div>
       <Header />
 
-      <div
-        class="fixed bg-gradient-to-tr from-white to-emerald-50 z-[-1] inset-0 opacity-50" />
-      <slot />
-      <footer class="border-t p-8 text-center text-slate-600 mt-16">
+      <div class="flex flex-col min-h-screen">
+        <slot />
+        <div
+          class="fixed bg-gradient-to-tr from-white to-emerald-50 z-[-1] inset-0 opacity-50" />
+      </div>
+      <footer class="border-t p-4 text-center text-slate-600 mt-16">
         <NuxtLink to="https://github.com/Amphei/atal-pizza"
           >&copy; Atal Pizza - {{ currentYear }} made by Amphei
           <Icon name="fa6-brands:github" class="w-6 h-6"
