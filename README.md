@@ -35,7 +35,7 @@ authentication, seamless payment processing, and image storage capabilities.
 1. **Clone the repository.**
 
    ```bash
-   git clone https://github.com/Amphei/atal-pizza.git
+   git clone https://github.com/atalek/atal-pizza.git
 
    ```
 
@@ -100,7 +100,6 @@ authentication, seamless payment processing, and image storage capabilities.
 
 ## Author
 
-Github [@Amphei](https://github.com/Amphei) <br> Linkedin:
+Github [@atalek](https://github.com/atalek) <br> Linkedin:
 [@Aleksandar Atanasovski](https://www.linkedin.com/in/aleksandar-atanasovski-16b123263/)
-<br> Portfolio:
-[https://atal-portfolio.pages.dev/](https://atal-portfolio.pages.dev/)
+<br> Portfolio: [https://www.atalek.com/](https://www.atalek.com/)
