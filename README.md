@@ -96,7 +96,7 @@ authentication, seamless payment processing, and image storage capabilities.
 
 ## Live Version
 
-[https://atal-pizza.vercel.app/](https://atal-pizza.vercel.app/)
+[https://atal-pizza.atalek.com/](https://atal-pizza.atalek.com/)
 
 ## Author
 

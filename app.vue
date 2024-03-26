@@ -28,7 +28,7 @@ useHead({
     },
     { name: 'author', content: 'Aleksandar Atanasovski' },
     { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://atal-pizza.vercel.app' },
+    { property: 'og:url', content: 'https://atal-pizza.atalek.com' },
     {
       property: 'og:title',
       content: 'ATAL Pizza - Your Pizza Oasis',
@@ -47,7 +47,7 @@ useHead({
       property: 'twitter:card',
       content: 'summary_large_image',
     },
-    { property: 'twitter:url', content: 'https://atal-pizza.vercel.app' },
+    { property: 'twitter:url', content: 'https://atal-pizza.atalek.com' },
     {
       property: 'twitter:title',
       content: 'ATAL Pizza: Your Pizza Dreams, Delivered ',
