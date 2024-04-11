@@ -55,8 +55,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
-    '/menu': { isr: 3600 * 24 },
     '/profile': { ssr: false },
     '/cart': { ssr: false },
     '/menu-items/**': { ssr: false },
