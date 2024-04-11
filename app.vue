@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { status } = useAuth()
 const { loadCartFromLocalStorage } = useCart()
 
 if (process.client) {
@@ -71,7 +70,6 @@ useHead({
   <div>
     <NuxtLoadingIndicator />
     <NuxtLayout>
-      <Loader v-if="status === 'loading'" />
       <NuxtPage />
     </NuxtLayout>
   </div>

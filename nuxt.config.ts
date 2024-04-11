@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   css: ['~/assets/styles/index.css'],
 
   googleFonts: {
-    families: { Roboto: [400, 600, 700, 800] },
+    families: { Roboto: [400, 700] },
   },
 
   image: {
@@ -55,6 +55,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/': { prerender: true },
+    '/menu': { isr: 3600 * 24 },
     '/profile': { ssr: false },
     '/cart': { ssr: false },
     '/menu-items/**': { ssr: false },
