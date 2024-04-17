@@ -8,7 +8,7 @@
         is better <br />
         with a&nbsp; <span class="text-primary">Pizza</span>
       </h1>
-      <p class="my-6 text-slate-600">
+      <p class="my-6 text-slate-600 text-balance">
         Imagine, a symphony of flavors dancing on your tongue. Warm dough,
         bubbling cheese, tangy sauce, all in perfect harmony. It's not just
         pizza, it's a culinary revelation. Come, join the chorus.

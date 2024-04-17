@@ -13,20 +13,20 @@
       <div class="mx-auto w-full mt-8">
         <div class="grid gap-4 lg:grid-cols-2">
           <div class="flex flex-col items-start gap-2">
-            <p>
+            <p class="text-balance">
               At our pizzeria, we believe in crafting more than just pizza.
               We're dedicated to creating an experience. From the first bite of
               our artisanal crust to the last lingering flavor, we promise a
               journey of taste like no other.
             </p>
-            <p>
+            <p class="text-balance">
               Our passion for quality ingredients and authentic flavors is
               evident in every slice we serve. From handpicked toppings to our
               secret family sauce recipe, each element is carefully chosen to
               ensure a burst of satisfaction in every bite. We invite you to
               savor the essence of tradition with a modern twist.
             </p>
-            <p>
+            <p class="text-balance">
               Beyond the pizza, our pizzeria is a place where friends and
               families come together. We take pride in providing a warm and
               inviting atmosphere, making every visit an opportunity to connect
