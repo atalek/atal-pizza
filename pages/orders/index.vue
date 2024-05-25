@@ -57,7 +57,7 @@ try {
             <div
               class="text-gray-500 text-xs"
               v-for="item in order.orderItems"
-              :key="item._id.toString()">
+              :key="item?._id?.toString()">
               {{ item.name }}
             </div>
           </div>

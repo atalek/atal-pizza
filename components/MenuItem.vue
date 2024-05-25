@@ -11,7 +11,7 @@ const { menuItem } = defineProps({
 
 const showPopup = ref(false)
 const selectedSize = ref(menuItem?.sizes?.[0] || null)
-const selectedExtras = reactive<ExtraStuff[]>([])
+const selectedExtras = ref<ExtraStuff[]>([])
 
 function handleOpenPopup(itemId: Types.ObjectId) {
   showPopup.value = true
@@ -19,25 +19,14 @@ function handleOpenPopup(itemId: Types.ObjectId) {
 
 const { addItemToCart } = useCart()
 
-function updateSelectedExtras(event: Event, extraStuff: ExtraStuff) {
-  if (event.target instanceof HTMLInputElement && event.target.checked) {
-    selectedExtras.push(extraStuff)
-  } else {
-    const index = selectedExtras.indexOf(extraStuff)
-    if (index !== -1) {
-      selectedExtras.splice(index, 1)
-    }
-  }
-}
-
 function addItem(item: MenuItemType) {
   if (item!.sizes!.length > 0) {
     const newItem = {
       ...item,
       sizes: [selectedSize.value],
     }
-    if (item!.extraIngredients!.length > 0 && selectedExtras) {
-      newItem.extraIngredients = selectedExtras
+    if (item!.extraIngredients!.length > 0 && selectedExtras.value) {
+      newItem.extraIngredients = selectedExtras.value
     }
 
     addItemToCart(newItem as MenuItemType)
@@ -91,7 +80,7 @@ function addItem(item: MenuItemType) {
               />
               <span
                 >{{ size.name }} ${{
-                  menuItem.basePrice + size.extraPrice
+                  menuItem.basePrice! + size.extraPrice
                 }}</span
               >
             </label>
@@ -110,7 +99,7 @@ function addItem(item: MenuItemType) {
                 type="checkbox"
                 :id="'checkbox-' + extraStuff.name"
                 :value="extraStuff"
-                @change="updateSelectedExtras($event, extraStuff)"
+                v-model="selectedExtras"
               />
               <span>{{ extraStuff.name }} + ${{ extraStuff.extraPrice }} </span>
             </label>
@@ -130,6 +119,6 @@ function addItem(item: MenuItemType) {
 
   <MenuItemTile
     :menuItem="menuItem"
-    @openPopup="handleOpenPopup(menuItem._id)"
+    @openPopup="handleOpenPopup(menuItem._id!)"
   />
 </template>
