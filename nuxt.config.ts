@@ -17,8 +17,8 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxt/image',
     'nuxt-icon',
-    '@sidebase/nuxt-auth',
     'nuxt-mongoose',
+    "@sidebase/nuxt-auth"
   ],
 
   runtimeConfig: {
