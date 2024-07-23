@@ -64,4 +64,6 @@ export default defineNuxtConfig({
     '/categories': { ssr: false },
     '/users': { ssr: false },
   },
+
+  compatibilityDate: '2024-07-23',
 })

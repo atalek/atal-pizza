@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { loadCartFromLocalStorage } = useCart()
 
-if (process.client) {
+if (import.meta.client) {
   loadCartFromLocalStorage()
 }
 
@@ -39,8 +39,7 @@ useHead({
     },
     {
       property: 'og:image',
-      content:
-        'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
+      content: 'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
     },
     {
       property: 'twitter:card',
@@ -58,8 +57,7 @@ useHead({
     },
     {
       property: 'twitter:image',
-      content:
-        'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
+      content: 'https://static.toiimg.com/thumb/53110049.cms?width=1200&height=900',
     },
   ],
   link: [{ rel: 'icon', href: '/favicon.ico' }],

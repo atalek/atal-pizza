@@ -64,7 +64,7 @@ async function proceedToCheckout() {
   }
 }
 
-if (process.client) {
+if (import.meta.client) {
   if (route.fullPath.endsWith('canceled=1')) {
     toast.error('Payment failed')
   }
@@ -76,13 +76,18 @@ if (process.client) {
     <Title>{{ 'Cart' }}</Title>
     <div
       v-if="cartItems.length === 0"
-      class="mt-8 text-center max-w-md mx-auto"
-    >
+      class="mt-8 text-center max-w-md mx-auto">
       <SectionHeaders mainHeader="Cart" />
       <p class="mt-8">No products in your shopping cards</p>
-      <NuxtLink to="/menu" class="button mt-4">Start shopping</NuxtLink>
+      <NuxtLink
+        to="/menu"
+        class="button mt-4"
+        >Start shopping</NuxtLink
+      >
     </div>
-    <section class="mt-8" v-else>
+    <section
+      class="mt-8"
+      v-else>
       <div class="text-center">
         <SectionHeaders mainHeader="Cart" />
       </div>
@@ -93,8 +98,7 @@ if (process.client) {
             v-for="item in cartItems"
             :key="item._id?.toString()"
             :item="item"
-            :remove="true"
-          />
+            :remove="true" />
 
           <div class="py-2 flex justify-end items-center">
             <div class="text-slate-500">
@@ -115,15 +119,18 @@ if (process.client) {
           <form @submit.prevent="proceedToCheckout">
             <AddressInputs
               :addressInfo="addressInfo"
-              :disabled="status !== 'authenticated'"
-            />
+              :disabled="status !== 'authenticated'" />
             <NuxtLink
               to="/login?redirect=/cart"
-              class="button bg-primary !text-white"
+              class="button bg-primary hover:bg-primary/80 transition !text-white"
               v-if="status === 'unauthenticated'"
               >Sign in to pay</NuxtLink
             >
-            <button v-else type="submit" :disabled="!isAddressComplete">
+            <button
+              v-else
+              type="submit"
+              class="bg-primary hover:bg-primary/80 transition"
+              :disabled="!isAddressComplete">
               Pay ${{ total }}
             </button>
           </form>

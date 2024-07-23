@@ -30,7 +30,9 @@ function goTop() {
   <header>
     <div
       class="flex md:hidden justify-between items-center border-b border-solid border-primary">
-      <NuxtLink class="text-primary font-semibold text-2xl" href="/">
+      <NuxtLink
+        class="text-primary font-semibold text-2xl"
+        href="/">
         ATAL PIZZA</NuxtLink
       >
 
@@ -44,13 +46,17 @@ function goTop() {
             class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
             >{{ totalItems }}
           </span>
-          <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
+          <Icon
+            name="fa6-solid:cart-shopping"
+            class="h-6 w-6" />
         </NuxtLink>
         <button
           class="p-2"
           @click="mobileNavOpen = !mobileNavOpen"
           aria-label="Toggle Mobile Navigation">
-          <Icon name="fa-solid:bars" class="h-6 w-6" />
+          <Icon
+            name="fa-solid:bars"
+            class="h-6 w-6" />
         </button>
       </div>
     </div>
@@ -67,7 +73,9 @@ function goTop() {
         <div
           v-if="status === 'unauthenticated'"
           class="flex items-center justify-center gap-8">
-          <NuxtLink href="/login" class="px-8 py-2 font-semibold"
+          <NuxtLink
+            href="/login"
+            class="px-8 py-2 font-semibold"
             >Login</NuxtLink
           >
           <NuxtLink
@@ -76,7 +84,9 @@ function goTop() {
             >Register</NuxtLink
           >
         </div>
-        <div v-if="status === 'authenticated'" class="flex flex-col">
+        <div
+          v-if="status === 'authenticated'"
+          class="flex flex-col">
           <NuxtLink
             href="/profile"
             class="px-4 py-2 font-semibold whitespace-nowrap"
@@ -95,7 +105,9 @@ function goTop() {
     <div
       class="hidden md:flex items-center justify-between border-b border-solid border-primary">
       <nav class="flex gap-6 text-slate-600 font-semibold items-center">
-        <NuxtLink class="text-primary font-semibold text-2xl" href="/">
+        <NuxtLink
+          class="text-primary font-semibold text-2xl"
+          href="/">
           ATAL PIZZA</NuxtLink
         >
         <NuxtLink href="/">Home</NuxtLink>
@@ -106,7 +118,9 @@ function goTop() {
 
       <nav class="flex items-center gap-2 text-slate-600">
         <div v-if="status === 'unauthenticated'">
-          <NuxtLink href="/login" class="px-8 py-2 font-semibold"
+          <NuxtLink
+            href="/login"
+            class="px-8 py-2 font-semibold"
             >Login</NuxtLink
           >
           <NuxtLink
@@ -126,7 +140,7 @@ function goTop() {
           <NuxtLink
             @click="signOut"
             to="/"
-            class="bg-primary rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
+            class="bg-primary hover:bg-primary/80 transition rounded-full text-white px-8 py-2 font-semibold cursor-pointer"
             aria-label="Logout">
             Logout
           </NuxtLink>
@@ -140,7 +154,9 @@ function goTop() {
             class="absolute -top-1 -right-0 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3"
             >{{ totalItems }}
           </span>
-          <Icon name="fa6-solid:cart-shopping" class="h-6 w-6" />
+          <Icon
+            name="fa6-solid:cart-shopping"
+            class="h-6 w-6" />
         </NuxtLink>
       </nav>
     </div>
