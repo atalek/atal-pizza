@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 html {
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   scroll-behavior: smooth;
+}
+
+body.overflow-hidden {
+  overflow: hidden;
 }
 
 section.hero {
@@ -55,4 +59,18 @@ div.tabs > * {
 }
 div.tabs > *.active {
   @apply bg-primary text-white;
+}
+
+.Toastify__toast-body {
+  white-space: nowrap;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }

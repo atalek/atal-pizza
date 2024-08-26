@@ -21,6 +21,8 @@ const hasExtras = computed(() => {
         provider="s3Provider"
         :src="menuItem.image"
         class="block mx-auto"
+        height="290"
+        width="256"
         alt="pizza" />
     </div>
     <h4 class="font-semibold text-xl my-3">{{ menuItem.name }}</h4>

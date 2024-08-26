@@ -75,7 +75,7 @@ function goTop() {
           class="flex items-center justify-center gap-8">
           <NuxtLink
             href="/login"
-            class="px-8 py-2 font-semibold"
+            class="px-8 py-2 font-semibold border border-primary rounded-full"
             >Login</NuxtLink
           >
           <NuxtLink
@@ -120,7 +120,7 @@ function goTop() {
         <div v-if="status === 'unauthenticated'">
           <NuxtLink
             href="/login"
-            class="px-8 py-2 font-semibold"
+            class="px-8 py-2 font-semibold border border-primary rounded-full mr-4"
             >Login</NuxtLink
           >
           <NuxtLink

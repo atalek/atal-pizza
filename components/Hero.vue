@@ -9,9 +9,9 @@
         with a&nbsp; <span class="text-primary">Pizza</span>
       </h1>
       <p class="my-6 text-slate-600 text-balance">
-        Imagine, a symphony of flavors dancing on your tongue. Warm dough,
-        bubbling cheese, tangy sauce, all in perfect harmony. It's not just
-        pizza, it's a culinary revelation. Come, join the chorus.
+        Imagine, a symphony of flavors dancing on your tongue. Warm dough, bubbling
+        cheese, tangy sauce, all in perfect harmony. It's not just pizza, it's a culinary
+        revelation. Come, join the chorus.
       </p>
 
       <div class="flex gap-6">
@@ -25,7 +25,7 @@
         </NuxtLink>
         <NuxtLink
           to="#about"
-          class="flex items-center border-0 w-32 gap-2 p-2 text-slate-600 font-semibold">
+          class="flex items-center w-32 gap-2 p-2 text-slate-600 font-semibold border border-primary rounded-full">
           Learn more
           <Icon
             class="h-5 w-5"
@@ -37,7 +37,8 @@
       <img
         src="~/assets/images/pizza-webp.webp"
         class="object-fill"
-        alt="pizza" />
+        alt="pizza"
+        fetchpriority="high" />
     </div>
   </section>
 </template>

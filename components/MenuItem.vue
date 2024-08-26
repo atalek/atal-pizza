@@ -70,6 +70,8 @@ function closePopup() {
           provider="s3Provider"
           :src="menuItem.image"
           class="h-72 w-64 mx-auto"
+          height="290"
+          width="256"
           :alt="menuItem.name" />
         <h2 class="text-lg font-bold text-center mb-2">
           {{ menuItem.name }}
@@ -131,9 +133,3 @@ function closePopup() {
     :menuItem="menuItem"
     @openPopup="handleOpenPopup(menuItem._id!.toString())" />
 </template>
-
-<style>
-body.overflow-hidden {
-  overflow: hidden;
-}
-</style>

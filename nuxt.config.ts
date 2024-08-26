@@ -4,6 +4,37 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-fonts',
+    '@nuxt/image',
+    'nuxt-icon',
+    'nuxt-mongoose',
+    '@sidebase/nuxt-auth',
+  ],
+
+  hooks: {
+    'build:manifest': manifest => {
+      const css = manifest['node_modules/nuxt/dist/app/entry.js']?.css
+      if (css) {
+        for (let i = css.length - 1; i >= 0; i--) {
+          if (css[i].startsWith('entry')) css.splice(i, 1)
+        }
+      }
+
+      for (let key in manifest) {
+        const cssFiles = manifest[key]?.css
+        if (cssFiles) {
+          for (let i = cssFiles.length - 1; i >= 0; i--) {
+            if (/default\..*\.css/.test(cssFiles[i])) {
+              cssFiles.splice(i, 1)
+            }
+          }
+        }
+      }
+    },
+  },
+
   nitro: {
     compressPublicAssets: true,
   },
@@ -11,15 +42,6 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
-
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/google-fonts',
-    '@nuxt/image',
-    'nuxt-icon',
-    'nuxt-mongoose',
-    "@sidebase/nuxt-auth"
-  ],
 
   runtimeConfig: {
     public: {
@@ -30,8 +52,6 @@ export default defineNuxtConfig({
   mongoose: {
     uri: process.env.MONGODB_URI,
   },
-
-  css: ['~/assets/styles/index.css'],
 
   googleFonts: {
     families: { Roboto: [400, 700] },
@@ -55,8 +75,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { isr: 3600 * 24 },
-    '/menu': { isr: 3600 * 24 },
+    '/': { prerender: true },
+    '/menu': { prerender: true },
     '/profile': { ssr: false },
     '/cart': { ssr: false },
     '/menu-items/**': { ssr: false },
